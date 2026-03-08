@@ -51,13 +51,13 @@ main {
 .nav {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 40;
   background: var(--yellow);
   border-bottom: var(--border);
-  height: 80px;
+  min-height: 80px;
   display: flex;
   align-items: center;
-  padding: 0 1.5rem;
+  padding: 1rem 1.5rem;
 }
 
 .nav__inner {
@@ -837,7 +837,7 @@ main {
   .nav__inner {
     grid-template-columns: auto 1fr;
     grid-template-areas: "logo action" "links links";
-    row-gap: 0.5rem;
+    row-gap: 1rem;
   }
 
   .nav__logo {
@@ -847,12 +847,32 @@ main {
   .nav__links {
     grid-area: links;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Firefox */
+    gap: 0.5rem;
+  }
+
+  .nav__links::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+  }
+
+  .nav__links a {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.6rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .nav a.btn {
     grid-area: action;
     justify-self: end;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -871,6 +891,14 @@ main {
 }
 
 @media (max-width: 520px) {
+  .hero__title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .hero__content .hero__subtitle {
+    font-size: 1rem;
+  }
+
   .btn--lg {
     width: 100%;
     justify-content: center;
@@ -878,6 +906,7 @@ main {
 
   .hero__cta {
     flex-direction: column;
+    width: 100%;
   }
 
   .cta__actions {
