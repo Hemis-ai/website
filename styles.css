@@ -1166,9 +1166,27 @@ main {
   background: var(--charcoal);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+  .chatbot-toggle {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+
   .back-to-top {
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: 4.75rem;
+    /* Stacked right above mobile chatbot toggle */
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .chatbot-window {
+    bottom: 4.5rem;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: none;
   }
 }
