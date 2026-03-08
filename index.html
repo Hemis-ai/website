@@ -27,7 +27,7 @@
         <a href="#personas">Use cases</a>
         <a href="#testimonials">Proof</a>
       </nav>
-      <a class="btn btn--primary" href="#cta">Book Demo</a>
+      <a class="btn btn--primary" href="contact.html">Contact Us</a>
     </div>
   </header>
 
@@ -40,7 +40,7 @@
           red-teaming, and defensive blue-teaming operations.</p>
         <div class="hero__cta">
           <a class="btn btn--primary btn--lg" href="products.html">Explore Our Products</a>
-          <a class="btn btn--ghost btn--lg" href="#cta">Contact Sales</a>
+          <a class="btn btn--ghost btn--lg" href="contact.html">Contact Sales</a>
         </div>
         <div class="hero__meta">
           <span class="dot"></span>
@@ -53,10 +53,20 @@
       </div>
     </section>
 
-    <section class="marquee">
-      <div class="marquee__track" aria-label="Trusted brands">
-        <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
-        <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+    <section class="marquee" aria-label="Trusted brands">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+        </div>
       </div>
     </section>
 
@@ -230,8 +240,8 @@
       <div class="cta__inner shadow-lg">
         <h2>See the AI security trio stop an attack in 5 minutes.</h2>
         <div class="cta__actions">
-          <a class="btn btn--primary btn--lg" href="#top">Book a live demo</a>
-          <a class="btn btn--ghost btn--lg" href="#problem">Download runbook</a>
+          <a class="btn btn--primary btn--lg" href="contact.html">Book a live demo</a>
+          <a class="btn btn--ghost btn--lg" href="contact.html">Contact Sales</a>
         </div>
       </div>
     </section>
@@ -258,9 +268,9 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="#personas">Careers</a></li>
+          <li><a href="contact.html">Careers</a></li>
           <li><a href="#problem">Security</a></li>
-          <li><a href="#cta">Contact</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
       <div>
@@ -282,6 +292,45 @@
     </svg>
   </button>
 
+  <!-- AI Chatbot Widget -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">🤖</div>
+      <div>
+        <h3 class="chatbot-title">HemisX</h3>
+        <div class="chatbot-status">Online</div>
+      </div>
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chat-message message-bot">
+        Hi there! 👋 I'm the HemisX AI Copilot. I can help you find products, understand our playbooks, or get in touch
+        with sales. How can I assist you today?
+      </div>
+    </div>
+    <form class="chatbot-input" id="chatbotForm">
+      <input type="text" id="chatbotInput" placeholder="Ask me anything..." autocomplete="off">
+      <button type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <button class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat window">
+    <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
   <script>
     const backToTopButton = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
@@ -293,6 +342,66 @@
     });
     backToTopButton.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Chatbot Logic
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotForm = document.getElementById('chatbotForm');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotBody = document.getElementById('chatbotBody');
+
+    chatbotToggle.addEventListener('click', () => {
+      chatbotToggle.classList.toggle('open');
+      chatbotWindow.classList.toggle('show');
+      if (chatbotWindow.classList.contains('show')) {
+        setTimeout(() => chatbotInput.focus(), 300);
+      }
+    });
+
+    const botResponses = [
+      "That's a great question! Our Cloud Security Platform handles that automatically.",
+      "I'd recommend checking out our Blue Team SOAR product for automated playbooks.",
+      "You can reach our sales team directly at hello@hemisx.com!",
+      "Our Red Team Suite maps directly to MITRE ATT&CK. Want to see a demo?",
+      "I'm just a cute bot for now, but I'll make sure one of our humans gets back to you if you use the contact form!"
+    ];
+
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message message-user';
+      userMsg.textContent = message;
+      chatbotBody.appendChild(userMsg);
+
+      chatbotInput.value = '';
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+      // Simulate bot typing and response
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message message-bot';
+        botMsg.textContent = botResponses[Math.floor(Math.random() * botResponses.length)];
+        chatbotBody.appendChild(botMsg);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }, 800);
+    });
+
+    // 2D Scroll Reveal Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      observer.observe(el);
     });
   </script>
 </body>
