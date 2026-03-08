@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products – HemisX</title>
+    <title>Contact Us – HemisX</title>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -25,58 +25,60 @@
             font-size: clamp(2.5rem, 5vw, 4rem);
         }
 
-        .product-section {
+        .contact-section {
             padding: 5rem 1.5rem;
             border-bottom: var(--border);
-        }
-
-        .product-section:nth-of-type(even) {
             background: #f4f4f5;
         }
 
-        .product-grid {
+        .contact-grid {
             max-width: 1000px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
+            gap: 4rem;
         }
 
-        .product-vis {
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--white);
             border: var(--border);
             border-radius: 16px;
             padding: 2rem;
-            min-height: 300px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.5rem;
+            gap: 0.5rem;
         }
 
-        .product-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .contact-card p {
+            margin: 0;
+            color: var(--charcoal);
+            opacity: 0.9;
         }
 
-        .product-content ul {
-            margin-top: 1.5rem;
-            margin-bottom: 2rem;
+        .contact-form {
+            background: var(--white);
+            border: var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
         }
 
         @media (max-width: 768px) {
-            .product-grid {
+            .contact-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .product-grid:nth-child(even) .product-content {
-                order: 1;
-            }
-
-            .product-grid:nth-child(even) .product-vis {
-                order: 2;
+                gap: 2rem;
             }
         }
     </style>
@@ -90,79 +92,77 @@
                 <span class="nav__brand">HemisX</span>
             </a>
             <nav class="nav__links" aria-label="Primary">
-                <a href="index.html#features">Features</a>
+                <a href="products.html">Products</a>
                 <a href="index.html#how">How it works</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#testimonials">Proof</a>
             </nav>
-            <a class="btn btn--primary" href="contact.html">Contact Us</a>
+            <a class="btn btn--primary" href="contact.html">Contact</a>
         </div>
     </header>
 
     <main>
         <section class="page-header dot-grid">
-            <div class="pill" style="margin: 0 auto 1rem; color: var(--black);">The Suite</div>
-            <h1>Our Products.</h1>
-            <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto;">Enterprise-grade tools built for brutal
-                velocity and extreme clarity.</p>
+            <div class="pill" style="margin: 0 auto 1rem; color: var(--black);">Get in Touch</div>
+            <h1>Contact Us.</h1>
+            <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto;">Whether you need to secure your cloud,
+                stress-test your defenses, or join the team—we're here to help.</p>
         </section>
 
-        <section class="product-section" id="cloud">
-            <div class="product-grid">
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--yellow);">MDR / CSPM</div>
-                    <h2>Cloud Security Platform</h2>
-                    <p>Continuous monitoring and compliance enforcement for AWS, Azure, and GCP environments. Uncover
-                        hidden risks before they become breaches.</p>
-                    <ul class="list list--good">
-                        <li><span>✓</span> Continuous Posture Management (CSPM)</li>
-                        <li><span>✓</span> Identity & Entitlement (CIEM)</li>
-                        <li><span>✓</span> Cloud Workload Protection (CWPP)</li>
-                    </ul>
-                    <a href="#" class="btn btn--primary">Request Demo</a>
+        <section class="contact-section">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-card" style="border-color: var(--sage);">
+                        <h3><span class="circle circle--yellow"></span> Direct Inquiries</h3>
+                        <p>Drop us a line directly at <a href="mailto:hello@hemisx.com"
+                                style="text-decoration: underline; font-weight: 700;">hello@hemisx.com</a> for general
+                            questions.</p>
+                    </div>
+                    <div class="contact-card" style="border-color: #ff5f57;">
+                        <h3><span class="circle circle--red"></span> Incident Response</h3>
+                        <p>Under active attack? Reach our rapid response team at <a href="mailto:sos@hemisx.com"
+                                style="text-decoration: underline; font-weight: 700;">sos@hemisx.com</a>.</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3><span class="circle circle--green"></span> Global HQ</h3>
+                        <p>128 Brutalist Way<br>Tech District, 90210<br>San Francisco, CA</p>
+                    </div>
                 </div>
-                <div class="product-vis" style="background: var(--yellow);">
-                    [ Dashboard Placeholder ]
-                </div>
-            </div>
-        </section>
 
-        <section class="product-section" id="red">
-            <div class="product-grid">
-                <div class="product-vis" style="background: #ff5f57; color: var(--white);">
-                    [ Attack Path Map Placeholder ]
-                </div>
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: #272727; color: white;">Offensive</div>
-                    <h2>Offensive Red Team Suite</h2>
-                    <p>Automated adversary simulation, payload generation, and attack path mapping. Stress-test your
-                        defenses against real-world TTPs.</p>
-                    <ul class="list list--bad">
-                        <li><span>✕</span> Automated Breach & Attack Simulation</li>
-                        <li><span>✕</span> Phishing & Payload Campaigns</li>
-                        <li><span>✕</span> MITRE ATT&CK® Mapping</li>
-                    </ul>
-                    <a href="#" class="btn btn--primary">View Features</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="product-section" id="blue">
-            <div class="product-grid">
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--sage);">Defensive</div>
-                    <h2>Blue Team SOAR</h2>
-                    <p>Security orchestration, automation, and response with built-in playbooks and forensic tools.
-                        Accelerate MTTR drastically.</p>
-                    <ul class="list list--good">
-                        <li><span>✓</span> Automated Incident Playbooks</li>
-                        <li><span>✓</span> Threat Intel Integration</li>
-                        <li><span>✓</span> Deep Forensic Evidence Collection</li>
-                    </ul>
-                    <a href="#" class="btn btn--primary">Explore Platform</a>
-                </div>
-                <div class="product-vis" style="background: var(--sage);">
-                    [ War Room Placeholder ]
+                <div class="contact-form">
+                    <h2 style="margin-bottom: 1.5rem;">Send a Message</h2>
+                    <form action="#" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Jane Doe"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Work Email</label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                placeholder="jane@company.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic" class="form-label">How can we help?</label>
+                            <select id="topic" name="topic" class="form-control" required>
+                                <option value="" disabled selected>Select a topic...</option>
+                                <option value="cloud">Cloud Security Platform</option>
+                                <option value="red-team">Offensive Red Team Suite</option>
+                                <option value="blue-team">Blue Team SOAR</option>
+                                <option value="pricing">Pricing & Licensing</option>
+                                <option value="careers">Careers & Hiring</option>
+                                <option value="partnership">Partnerships</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="5"
+                                placeholder="Tell us about your needs..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--lg"
+                            style="width: 100%; margin-top: 0.5rem;">Send Message</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -186,9 +186,32 @@
                     <li><a href="index.html#testimonials">Customers</a></li>
                 </ul>
             </div>
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="contact.html">Careers</a></li>
+                    <li><a href="index.html#problem">Security</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Social</h4>
+                <div class="socials">
+                    <a href="#" aria-label="Twitter"></a>
+                    <a href="#" aria-label="LinkedIn"></a>
+                    <a href="#" aria-label="Dribbble"></a>
+                </div>
+            </div>
         </div>
         <div class="footer__note">© 2026 HemisX. All rights reserved.</div>
     </footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
 
     <!-- AI Chatbot Widget -->
     <div class="chatbot-window" id="chatbotWindow">
@@ -229,15 +252,7 @@
         </svg>
     </button>
 
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-
     <script>
-        // Back to Top Logic
         const backToTopButton = document.getElementById("backToTop");
         window.addEventListener("scroll", () => {
             if (window.scrollY > 300) {
@@ -295,18 +310,6 @@
             }, 800);
         });
 
-        // 2D Scroll Reveal Animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
-
-        document.querySelectorAll('.reveal').forEach((el) => {
-            observer.observe(el);
-        });
     </script>
 </body>
 
