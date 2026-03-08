@@ -436,6 +436,7 @@ main {
   border: var(--border);
   font-weight: 700;
   background: var(--white);
+  color: var(--black);
   box-shadow: var(--shadow-sm);
   margin-bottom: 0.75rem;
 }
@@ -497,6 +498,7 @@ main {
   border-radius: 999px;
   font-weight: 700;
   background: var(--white);
+  color: var(--black);
   box-shadow: var(--shadow-sm);
   margin-bottom: 0.75rem;
 }
