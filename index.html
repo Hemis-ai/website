@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hemis – Neo-Brutalist SaaS</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <title>HemisX – Advanced Cloud Security & Red/Blue Team Tools</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <link rel="preconnect" href="https://api.fontshare.com">
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <header class="nav">
     <div class="nav__inner">
-      <div class="nav__logo">
+      <a href="index.html" class="nav__logo">
         <span class="nav__bolt" aria-hidden="true">⚡</span>
-        <span class="nav__brand">Hemis</span>
-      </div>
+        <span class="nav__brand">HemisX</span>
+      </a>
       <nav class="nav__links" aria-label="Primary">
-        <a href="#features">Features</a>
+        <a href="products.html">Products</a>
         <a href="#how">How it works</a>
+        <a href="#about">About</a>
         <a href="#personas">Use cases</a>
         <a href="#testimonials">Proof</a>
       </nav>
@@ -28,56 +33,22 @@
 
   <main>
     <section class="hero dot-grid" id="top">
-      <div class="hero__content">
-        <div class="pill">NEW: AI Security Suite 2.0</div>
-        <h1 class="hero__title">Stop breaches with <span class="stroke">unreasonably fast</span> response.</h1>
-        <p class="hero__subtitle">Three AI cybersecurity products that hunt threats, harden identity, and automate incident playbooks—without slowing engineering.</p>
+      <div class="hero__content hero__content--centered">
+        <div class="pill">HemisX</div>
+        <h1 class="hero__title">Advanced Cloud Security & <br><span class="stroke">Red/Blue Team</span> Tools.</h1>
+        <p class="hero__subtitle">We provide enterprise-grade solutions for cloud infrastructure protection, offensive
+          red-teaming, and defensive blue-teaming operations.</p>
         <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="#cta">Book a live demo</a>
-          <a class="btn btn--ghost btn--lg" href="#features">See the suite</a>
+          <a class="btn btn--primary btn--lg" href="products.html">Explore Our Products</a>
+          <a class="btn btn--ghost btn--lg" href="#cta">Contact Sales</a>
         </div>
         <div class="hero__meta">
           <span class="dot"></span>
-          <span>24/7 managed detection</span>
+          <span>Cloud Security</span>
           <span class="dot"></span>
-          <span>ISO 27001 | SOC2</span>
-        </div>
-      </div>
-      <div class="hero__visual">
-        <div class="browser">
-          <div class="browser__bar">
-            <span class="circle circle--red"></span>
-            <span class="circle circle--yellow"></span>
-            <span class="circle circle--green"></span>
-            <span class="browser__title">dashboard.hemi.so</span>
-          </div>
-          <div class="browser__body">
-            <div class="browser__panel browser__panel--wide">
-              <div class="panel__label">Incidents Resolved</div>
-              <div class="panel__value">148</div>
-              <div class="panel__bar">
-                <span style="width:86%"></span>
-              </div>
-            </div>
-            <div class="browser__grid">
-              <div class="browser__card browser__card--sage">
-                <p class="card__title">Threats linked</p>
-                <p class="card__meta">23 entities</p>
-              </div>
-              <div class="browser__card browser__card--dark">
-                <p class="card__title">Containment</p>
-                <p class="card__value">+12 hosts</p>
-              </div>
-              <div class="browser__card browser__card--sage">
-                <p class="card__title">IAM fixes</p>
-                <p class="card__meta">9 PRs merged</p>
-              </div>
-              <div class="browser__card browser__card--dark">
-                <p class="card__title">Auto tasks</p>
-                <p class="card__meta">17 steps run</p>
-              </div>
-            </div>
-          </div>
+          <span>Red Team</span>
+          <span class="dot"></span>
+          <span>Blue Team</span>
         </div>
       </div>
     </section>
@@ -112,40 +83,31 @@
 
     <section class="features dot-grid" id="features">
       <div class="section__header">
-        <p class="eyebrow">The suite</p>
-        <h2>Three AI products that cover the kill chain.</h2>
+        <p class="eyebrow">The Suite</p>
+        <h2>Our Core Products.</h2>
       </div>
-      <div class="feature__grid">
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Threat Graph</h3>
-          <p>Correlates EDR, cloud, and network signals into one storyline with root-cause verdicts.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Identity Guard</h3>
-          <p>Continuously scores permissions, flags toxic combinations, and ships least-privilege fixes.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Response Copilot</h3>
-          <p>Autonomous playbooks that gather evidence, isolate assets, and draft comms.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Signal Quality</h3>
-          <p>Ranked alerts with confidence scores, deduped across all sources.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Data Vault</h3>
-          <p>Sensitive data discovery with auto-redaction and retention controls.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"></div>
-          <h3>Ops Console</h3>
-          <p>Unified war-room with audit trails, approvals, and exports to SIEM/SOAR.</p>
-        </article>
+      <div class="feature__grid feature__grid--3col">
+        <a href="products.html#cloud" class="feature feature--link">
+          <div class="feature__icon" style="background: var(--yellow);"></div>
+          <h3>Cloud Security Platform</h3>
+          <p>Continuous monitoring and compliance enforcement for AWS, Azure, and GCP environments.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+        <a href="products.html#red" class="feature feature--link shadow-lg" style="background: #272727; color: white;">
+          <div class="feature__icon" style="background: #ff5f57;"></div>
+          <h3>Offensive Red Team Suite</h3>
+          <p>Automated adversary simulation, payload generation, and attack path mapping.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+        <a href="products.html#blue" class="feature feature--link">
+          <div class="feature__icon" style="background: var(--sage);"></div>
+          <h3>Blue Team SOAR</h3>
+          <p>Security orchestration, automation, and response with built-in playbooks and forensic tools.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+      </div>
+      <div class="section__action" style="text-align: center; margin-top: 3rem;">
+        <a href="products.html" class="btn btn--primary btn--lg">View All Products</a>
       </div>
     </section>
 
@@ -223,6 +185,47 @@
       </div>
     </section>
 
+    <section class="about" id="about">
+      <div class="section__header">
+        <p class="eyebrow">About Us</p>
+        <h2>The team behind HemisX.</h2>
+      </div>
+      <div class="team__grid">
+        <article class="team-card shadow-lg">
+          <div class="team-card__image">
+            <!-- Placeholder for Image 1 -->
+            <div class="placeholder-avatar"></div>
+          </div>
+          <div class="team-card__info">
+            <h3>Person One</h3>
+            <p class="team-card__role">Co-Founder & CEO</p>
+            <p class="team-card__bio">Former security lead with 10+ years experience building threat detection systems
+              at scale.</p>
+            <div class="socials">
+              <a href="#" aria-label="LinkedIn"></a>
+              <a href="#" aria-label="Twitter"></a>
+            </div>
+          </div>
+        </article>
+        <article class="team-card shadow-lg">
+          <div class="team-card__image">
+            <!-- Placeholder for Image 2 -->
+            <div class="placeholder-avatar"></div>
+          </div>
+          <div class="team-card__info">
+            <h3>Person Two</h3>
+            <p class="team-card__role">Co-Founder & CTO</p>
+            <p class="team-card__bio">AI researcher turned platform engineer, obsessed with brutalist design and fast
+              incident response.</p>
+            <div class="socials">
+              <a href="#" aria-label="LinkedIn"></a>
+              <a href="#" aria-label="GitHub"></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="cta dot-grid" id="cta">
       <div class="cta__inner shadow-lg">
         <h2>See the AI security trio stop an attack in 5 minutes.</h2>
@@ -237,17 +240,18 @@
   <footer class="footer">
     <div class="footer__grid">
       <div>
-        <div class="nav__logo footer__logo">
+        <a href="index.html" class="nav__logo footer__logo">
           <span class="nav__bolt" aria-hidden="true">⚡</span>
-          <span class="nav__brand">Hemis</span>
-        </div>
+          <span class="nav__brand">HemisX</span>
+        </a>
         <p>AI cybersecurity built to hunt, decide, and respond in one brutalist console.</p>
       </div>
       <div>
         <h4>Product</h4>
         <ul>
-          <li><a href="#features">Features</a></li>
+          <li><a href="products.html">All Products</a></li>
           <li><a href="#how">Workflow</a></li>
+          <li><a href="#about">About Us</a></li>
           <li><a href="#testimonials">Customers</a></li>
         </ul>
       </div>
@@ -268,11 +272,14 @@
         </div>
       </div>
     </div>
-    <div class="footer__note">© 2026 Hemis. All rights reserved.</div>
+    <div class="footer__note">© 2026 HemisX. All rights reserved.</div>
   </footer>
 
   <button id="backToTop" class="back-to-top" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+      stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
   </button>
 
   <script>
@@ -289,4 +296,5 @@
     });
   </script>
 </body>
+
 </html>
