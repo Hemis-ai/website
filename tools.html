@@ -342,8 +342,17 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
-  btn.classList.add('active');
+  var tabBtn = btn || document.querySelector('.tab-btn.' + tab);
+  if (tabBtn) tabBtn.classList.add('active');
 }
+
+// Open correct tab from URL hash (e.g. tools.html#blue)
+function openTabFromHash() {
+  var hash = (location.hash || '').slice(1).toLowerCase();
+  if (hash === 'red' || hash === 'blue' || hash === 'cloud') switchTab(hash);
+}
+document.addEventListener('DOMContentLoaded', openTabFromHash);
+window.addEventListener('hashchange', openTabFromHash);
 
 // ── HELPERS ────────────────────────────────────────────────
 function setLoading(id, statusId, isLoading) {
