@@ -809,19 +809,28 @@ main {
 }
 
 .socials a {
-  width: 10px;
-  height: 10px;
+  height: 32px;
+  padding: 0 0.75rem;
   display: inline-flex;
-  border: 2px solid #d1d5db;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   background: #272727;
-  box-shadow: var(--shadow-sm);
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 16px;
+  box-shadow: 2px 2px 0 0 var(--black);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .socials a:hover {
   background: var(--yellow);
+  color: var(--black);
   transform: translate(2px, 2px);
   box-shadow: 0 0 0 0 var(--black);
+  border-color: var(--black);
 }
 
 .footer__logo .nav__bolt {
