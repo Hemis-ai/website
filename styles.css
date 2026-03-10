@@ -1235,3 +1235,118 @@ main {
     max-width: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   HemisX — Reusable Animated Background System
+   Apply any variant class to a section with:
+     position: relative; overflow: hidden;
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Shared base for all bg-* variants ── */
+.bg-grid-pan,
+.bg-scanline,
+.bg-noise-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIANT A — .bg-grid-pan
+   Panning dot grid + warm centre glow
+   Use on: Hero, CTA sections
+   ═══════════════════════════════════════════════════════════════ */
+.bg-grid-pan {
+  background-color: #0d1210;
+  background-image: radial-gradient(circle, rgba(255, 225, 124, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: bgGridPan 18s linear infinite;
+}
+
+@keyframes bgGridPan {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+/* Centre warm glow overlay */
+.bg-grid-pan::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%,
+      rgba(255, 225, 124, 0.05) 0%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIANT B — .bg-scanline
+   Terminal/monitor scanline effect with sweeping bar
+   Use on: Dark product / feature sections
+   ═══════════════════════════════════════════════════════════════ */
+.bg-scanline {
+  background-color: #0d1210;
+  background-image: repeating-linear-gradient(to bottom,
+      transparent 0%,
+      transparent 49%,
+      rgba(255, 255, 255, 0.015) 49%,
+      rgba(255, 255, 255, 0.015) 51%);
+  background-size: 100% 4px;
+}
+
+/* Sweeping scan line */
+.bg-scanline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(183, 198, 194, 0.15);
+  top: -5%;
+  z-index: 0;
+  pointer-events: none;
+  animation: bgScanSweep 4s linear infinite;
+}
+
+@keyframes bgScanSweep {
+  0% {
+    top: -5%;
+  }
+
+  100% {
+    top: 105%;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIANT C — .bg-noise-glow
+   Gradient base + JS-driven parallax blobs
+   Use on: "How it works" dark section
+   ═══════════════════════════════════════════════════════════════ */
+.bg-noise-glow {
+  background: linear-gradient(135deg, #0d1210 0%, #1a2b25 100%);
+}
+
+/* Blob base style (injected by JS) */
+.bg-noise-glow__blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+/* ── Ensure section content sits above bg layers ── */
+.bg-grid-pan>*:not([class*="__blob"]),
+.bg-scanline>*:not([class*="__blob"]),
+.bg-noise-glow>*:not(.bg-noise-glow__blob) {
+  position: relative;
+  z-index: 1;
+}
