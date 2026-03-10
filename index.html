@@ -32,26 +32,471 @@
   </header>
 
   <main>
-    <section class="hero dot-grid" id="top">
-      <div class="hero__content hero__content--centered">
-        <div class="pill">HemisX</div>
-        <h1 class="hero__title">Advanced Cloud Security & <br><span class="stroke">Red/Blue Team</span> Tools.</h1>
-        <p class="hero__subtitle">The AI-native cybersecurity platform purpose-built for SMBs. Delivering offensive
-          simulation, autonomous defense, and cloud posture management mapped to SOC 2 and ISO 27001.</p>
-        <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="products.html">Explore Our Products</a>
-          <a class="btn btn--ghost btn--lg" href="contact.html">Contact Sales</a>
+    <!-- ═══════════════════════════════════════════════════════════════
+         HEMISX CINEMATIC HERO — Self-contained section
+         ═══════════════════════════════════════════════════════════════ -->
+    <style>
+      /* ── Hero Layout ── */
+      .hero-x {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 6rem 1.5rem 4rem;
+        background: #0d1210;
+        overflow: hidden;
+        border-bottom: none;
+      }
+
+      /* ── Animated Dot Grid ── */
+      .hero-x__grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 225, 124, 0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+        animation: heroGridPan 20s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes heroGridPan {
+        0% {
+          background-position: 0 0;
+        }
+
+        100% {
+          background-position: 32px 32px;
+        }
+      }
+
+      /* ── Ambient Glow Blobs ── */
+      .hero-x__blob {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        animation: heroBlobFloat 8s ease-in-out infinite alternate;
+      }
+
+      .hero-x__blob--1 {
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 225, 124, 0.07);
+        top: -8%;
+        left: -6%;
+        filter: blur(80px);
+        animation-delay: 0s;
+      }
+
+      .hero-x__blob--2 {
+        width: 380px;
+        height: 380px;
+        background: rgba(255, 95, 87, 0.05);
+        bottom: -5%;
+        right: -4%;
+        filter: blur(80px);
+        animation-delay: 3s;
+      }
+
+      .hero-x__blob--3 {
+        width: 280px;
+        height: 280px;
+        background: rgba(183, 198, 194, 0.04);
+        top: 30%;
+        right: 8%;
+        filter: blur(60px);
+        animation-delay: 5s;
+      }
+
+      .hero-x__blob.is-visible {
+        opacity: 1;
+      }
+
+      @keyframes heroBlobFloat {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+          transform: translate(30px, -40px) scale(1.15);
+        }
+      }
+
+      /* ── Content Layer ── */
+      .hero-x__content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      /* ── Eyebrow Pill ── */
+      .hero-x__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.45rem 1.1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.02em;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .hero-x__eyebrow.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-x__pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+        animation: heroPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes heroPulse {
+
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+        }
+
+        50% {
+          box-shadow: 0 0 0 6px rgba(52, 211, 153, 0);
+        }
+      }
+
+      /* ── Split Title ── */
+      .hero-x__title {
+        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
+        font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+        margin: 0;
+      }
+
+      .split-word {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+        padding-bottom: 0.05em;
+      }
+
+      .split-word>span {
+        display: inline-block;
+        transform: translateY(110%);
+        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .split-word.is-visible>span {
+        transform: translateY(0);
+      }
+
+      .split-word--stroke>span {
+        color: transparent;
+        -webkit-text-stroke: 2px #ffe17c;
+      }
+
+      /* ── Subtitle ── */
+      .hero-x__subtitle {
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 620px;
+        line-height: 1.65;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .hero-x__subtitle.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── CTA Buttons ── */
+      .hero-x__ctas {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .hero-x__ctas.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-x__btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.9rem 1.75rem;
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        background: #000;
+        border: 2px solid #000;
+        border-radius: 12px;
+        box-shadow: 4px 4px 0 0 #ffe17c;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          box-shadow 0.2s ease;
+      }
+
+      .hero-x__btn-primary:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 0 #ffe17c;
+      }
+
+      .hero-x__btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.9rem 1.75rem;
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: border-color 0.3s ease, background 0.3s ease;
+      }
+
+      .hero-x__btn-ghost:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      /* ── Meta Row ── */
+      .hero-x__meta {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .hero-x__meta.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-x__meta-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      /* ── Scroll Indicator ── */
+      .hero-x__scroll {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 1;
+        opacity: 0;
+        animation: heroScrollFadeIn 0.6s 2s ease forwards;
+      }
+
+      @keyframes heroScrollFadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .hero-x__scroll-label {
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 0.1em;
+      }
+
+      .hero-x__scroll-line {
+        position: relative;
+        width: 1px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .hero-x__scroll-bar {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: #ffe17c;
+        animation: heroScrollBar 1.6s ease-in-out infinite;
+      }
+
+      @keyframes heroScrollBar {
+        0% {
+          top: -100%;
+        }
+
+        100% {
+          top: 200%;
+        }
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 640px) {
+        .hero-x {
+          padding: 5rem 1.25rem 5rem;
+        }
+
+        .hero-x__title {
+          letter-spacing: -0.02em;
+        }
+
+        .hero-x__ctas {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .hero-x__btn-primary,
+        .hero-x__btn-ghost {
+          width: 100%;
+          justify-content: center;
+          max-width: 300px;
+        }
+
+        .hero-x__scroll {
+          bottom: 1.25rem;
+        }
+      }
+    </style>
+
+    <section class="hero-x" id="top">
+      <!-- Ambient background layers -->
+      <div class="hero-x__grid"></div>
+      <div class="hero-x__blob hero-x__blob--1"></div>
+      <div class="hero-x__blob hero-x__blob--2"></div>
+      <div class="hero-x__blob hero-x__blob--3"></div>
+
+      <div class="hero-x__content">
+        <!-- Eyebrow -->
+        <div class="hero-x__eyebrow" id="heroEyebrow">
+          <span class="hero-x__pulse"></span>
+          AI-Native Cybersecurity Platform
         </div>
-        <div class="hero__meta">
-          <span class="dot"></span>
+
+        <!-- Split-word animated title -->
+        <h1 class="hero-x__title" id="heroTitle">
+          <span class="split-word"><span>Advanced</span></span>
+          <span class="split-word"><span>Cloud</span></span>
+          <span class="split-word"><span>Security</span></span>
+          <span class="split-word split-word--stroke"><span>Red/Blue</span></span>
+          <span class="split-word split-word--stroke"><span>Team</span></span>
+          <span class="split-word"><span>Tools.</span></span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-x__subtitle" id="heroSub">
+          Purpose-built for SMBs. Offensive simulation, autonomous defense, and cloud
+          posture management — mapped to SOC&nbsp;2 and ISO&nbsp;27001.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-x__ctas" id="heroCtas">
+          <a href="products.html" class="hero-x__btn-primary">Explore the Suite →</a>
+          <a href="#how" class="hero-x__btn-ghost">See How It Works</a>
+        </div>
+
+        <!-- Meta -->
+        <div class="hero-x__meta" id="heroMeta">
           <span>Cloud Security</span>
-          <span class="dot"></span>
+          <span class="hero-x__meta-dot"></span>
           <span>Red Team</span>
-          <span class="dot"></span>
+          <span class="hero-x__meta-dot"></span>
           <span>Blue Team</span>
         </div>
       </div>
+
+      <!-- Scroll indicator -->
+      <div class="hero-x__scroll">
+        <span class="hero-x__scroll-label">Scroll</span>
+        <div class="hero-x__scroll-line">
+          <div class="hero-x__scroll-bar"></div>
+        </div>
+      </div>
     </section>
+
+    <script>
+      (function heroAnim() {
+        // Blobs fade in immediately
+        document.querySelectorAll('.hero-x__blob').forEach(b => b.classList.add('is-visible'));
+
+        // Eyebrow at 0.2s
+        setTimeout(() => {
+          document.getElementById('heroEyebrow').classList.add('is-visible');
+        }, 200);
+
+        // Split words: stagger starting at 0.3s, 0.12s apart
+        const words = document.querySelectorAll('.split-word');
+        words.forEach((w, i) => {
+          setTimeout(() => w.classList.add('is-visible'), 300 + i * 120);
+        });
+
+        // Subtitle at 1.0s
+        setTimeout(() => {
+          document.getElementById('heroSub').classList.add('is-visible');
+        }, 1000);
+
+        // CTAs at 1.2s
+        setTimeout(() => {
+          document.getElementById('heroCtas').classList.add('is-visible');
+        }, 1200);
+
+        // Meta at 1.4s
+        setTimeout(() => {
+          document.getElementById('heroMeta').classList.add('is-visible');
+        }, 1400);
+      })();
+    </script>
+    <!-- ═══════ END HEMISX CINEMATIC HERO ═══════ -->
 
     <section class="marquee" aria-label="Trusted brands">
       <div class="marquee__track">
@@ -121,31 +566,464 @@
       </div>
     </section>
 
-    <section class="how" id="how">
-      <div class="section__header section__header--dark">
-        <p class="eyebrow eyebrow--light">Flow</p>
-        <h2>How it works.</h2>
-      </div>
-      <div class="how__steps">
-        <div class="step">
-          <div class="step__node step__node--sage">1</div>
-          <h3>Collect (< 5s log-to-alert)</h3>
-              <p>Ingest AWS CloudTrail, VPC Flow Logs, and GuardDuty via Kinesis into a live threat graph.</p>
-        </div>
-        <div class="step__line"></div>
-        <div class="step">
-          <div class="step__node step__node--yellow">2</div>
-          <h3>Decide with AI/LLM</h3>
-          <p>Copilot drafts verdicts, compliance mapping, and next moves with source evidence attached.</p>
-        </div>
-        <div class="step__line"></div>
-        <div class="step">
-          <div class="step__node step__node--white">3</div>
-          <h3>>70% MTTR Reduction</h3>
-          <p>Auto-run playbooks, isolate assets, revoke access, and generate compliance-ready reports.</p>
+    <!-- ═══════════════════════════════════════════════════════════════
+         HEMISX "HOW IT WORKS" — Scroll-Pinned Storytelling Section
+         ═══════════════════════════════════════════════════════════════ -->
+    <style>
+      /* ── How It Works: Scroll-Pinned Container ── */
+      .how-pinned {
+        position: relative;
+        height: 400vh;
+        background: linear-gradient(135deg, #0d1210 0%, #1a2b25 100%);
+        overflow: clip;
+      }
+
+      .how-pinned__sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .how-pinned__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        max-width: 1200px;
+        width: 100%;
+        padding: 0 2rem;
+        align-items: center;
+      }
+
+      /* ── Left Column: Dynamic Text ── */
+      .how-pinned__left {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .how-pinned__label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #b7c6c2;
+      }
+
+      .how-pinned__label::before {
+        content: '';
+        display: block;
+        width: 24px;
+        height: 1px;
+        background: #b7c6c2;
+        flex-shrink: 0;
+      }
+
+      .how-pinned__headline {
+        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
+        font-size: clamp(2rem, 3.5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+        margin: 0;
+        min-height: 3.6em;
+      }
+
+      .how-pinned__headline em {
+        font-style: normal;
+        color: #ffe17c;
+      }
+
+      .how-pinned__headline-inner {
+        display: block;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .how-pinned__headline-inner.is-active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .how-pinned__body {
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+        margin: 0;
+        min-height: 4.5em;
+      }
+
+      .how-pinned__body-inner {
+        display: block;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .how-pinned__body-inner.is-active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── Progress Dots ── */
+      .how-pinned__dots {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding-top: 0.5rem;
+      }
+
+      .how-pinned__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .how-pinned__dot.is-active {
+        width: 10px;
+        height: 10px;
+        background: #ffe17c;
+        box-shadow: 0 0 8px rgba(255, 225, 124, 0.4);
+      }
+
+      /* ── Right Column: Step Cards ── */
+      .how-pinned__right {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .how-pinned__card {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: #1a2b25;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 1.5rem;
+        opacity: 0.15;
+        transform: translateX(40px);
+        transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+      }
+
+      .how-pinned__card.is-active {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .how-pinned__card.is-current {
+        border-color: rgba(255, 225, 124, 0.25);
+        box-shadow: 0 0 20px rgba(255, 225, 124, 0.06);
+      }
+
+      .how-pinned__card-num {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 8px;
+        background: rgba(255, 225, 124, 0.1);
+        color: #ffe17c;
+        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 800;
+      }
+
+      .how-pinned__card-content h4 {
+        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.35rem;
+      }
+
+      .how-pinned__card-content p {
+        font-family: 'Satoshi', system-ui, sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.5);
+        margin: 0;
+      }
+
+      /* ── Ambient Blobs ── */
+      .how-pinned__blob {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        animation: howBlobFloat 10s ease-in-out infinite alternate;
+      }
+
+      .how-pinned__blob--1 {
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 225, 124, 0.04);
+        top: 10%;
+        left: -5%;
+        filter: blur(100px);
+      }
+
+      .how-pinned__blob--2 {
+        width: 300px;
+        height: 300px;
+        background: rgba(183, 198, 194, 0.04);
+        bottom: 15%;
+        right: -3%;
+        filter: blur(80px);
+        animation-delay: 4s;
+      }
+
+      @keyframes howBlobFloat {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+          transform: translate(20px, -30px) scale(1.1);
+        }
+      }
+
+      /* ── Responsive: Mobile ── */
+      @media (max-width: 768px) {
+        .how-pinned {
+          height: auto;
+          padding: 4rem 1.25rem;
+        }
+
+        .how-pinned__sticky {
+          position: relative;
+          height: auto;
+        }
+
+        .how-pinned__grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 0;
+        }
+
+        .how-pinned__left {
+          text-align: center;
+          align-items: center;
+        }
+
+        /* Hide dynamic headline/body stages, show static fallback */
+        .how-pinned__headline-inner,
+        .how-pinned__body-inner {
+          display: none !important;
+        }
+
+        .how-pinned__headline-static,
+        .how-pinned__body-static {
+          display: block !important;
+        }
+
+        .how-pinned__headline {
+          min-height: auto;
+        }
+
+        .how-pinned__body {
+          min-height: auto;
+        }
+
+        .how-pinned__dots {
+          display: none;
+        }
+
+        /* Show all cards statically */
+        .how-pinned__card {
+          opacity: 1 !important;
+          transform: translateX(0) !important;
+        }
+      }
+
+      /* Desktop: hide static fallback */
+      @media (min-width: 769px) {
+
+        .how-pinned__headline-static,
+        .how-pinned__body-static {
+          display: none;
+        }
+      }
+    </style>
+
+    <section class="how-pinned" id="how">
+      <!-- Ambient blobs -->
+      <div class="how-pinned__blob how-pinned__blob--1"></div>
+      <div class="how-pinned__blob how-pinned__blob--2"></div>
+
+      <div class="how-pinned__sticky">
+        <div class="how-pinned__grid">
+          <!-- LEFT COLUMN — Dynamic Text -->
+          <div class="how-pinned__left">
+            <div class="how-pinned__label">How It Works</div>
+
+            <h2 class="how-pinned__headline" id="howHeadline">
+              <!-- Dynamic headlines (desktop) -->
+              <span class="how-pinned__headline-inner is-active" data-stage="0"><em>Collect.</em> Decide.
+                Respond.</span>
+              <span class="how-pinned__headline-inner" data-stage="1">Correlate. <em>Analyze.</em> Map.</span>
+              <span class="how-pinned__headline-inner" data-stage="2">Draft. <em>Decide.</em> Comply.</span>
+              <span class="how-pinned__headline-inner" data-stage="3">Respond. <em>Isolate.</em> Report.</span>
+              <!-- Static fallback (mobile) -->
+              <span class="how-pinned__headline-static">Collect. Decide. <em>Respond.</em></span>
+            </h2>
+
+            <div class="how-pinned__body" id="howBody">
+              <!-- Dynamic body paragraphs (desktop) -->
+              <span class="how-pinned__body-inner is-active" data-stage="0">HemisX ingests AWS CloudTrail, VPC Flow
+                Logs, and GuardDuty findings via Kinesis in under 5 seconds. Every event is normalized and fed into a
+                live threat graph — your real-time security nervous system.</span>
+              <span class="how-pinned__body-inner" data-stage="1">The AI engine maps every event across services and
+                identities, correlating lateral movement chains and privilege escalation patterns. Real attacks surface
+                from noise — automatically, continuously.</span>
+              <span class="how-pinned__body-inner" data-stage="2">The LLM copilot drafts verdicts, playbooks, and
+                compliance narratives with full source evidence attached. Every decision is human-in-the-loop — you
+                approve, refine, or override before action.</span>
+              <span class="how-pinned__body-inner" data-stage="3">Auto-run playbooks isolate affected assets, revoke IAM
+                credentials, and generate compliance-ready reports in minutes. Mean time to respond drops by 70% — from
+                hours to single-digit minutes.</span>
+              <!-- Static fallback (mobile) -->
+              <span class="how-pinned__body-static">From log ingestion to automated response, HemisX's AI pipeline
+                collects, correlates, decides, and acts — cutting mean time to respond by 70%.</span>
+            </div>
+
+            <div class="how-pinned__dots" id="howDots">
+              <span class="how-pinned__dot is-active" data-dot="0"></span>
+              <span class="how-pinned__dot" data-dot="1"></span>
+              <span class="how-pinned__dot" data-dot="2"></span>
+              <span class="how-pinned__dot" data-dot="3"></span>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN — Step Cards -->
+          <div class="how-pinned__right">
+            <div class="how-pinned__card is-active is-current" data-step="0">
+              <div class="how-pinned__card-num">01</div>
+              <div class="how-pinned__card-content">
+                <h4>Collect</h4>
+                <p>Ingest AWS CloudTrail, VPC Flow Logs, and GuardDuty via Kinesis into a live threat graph in under 5
+                  seconds.</p>
+              </div>
+            </div>
+            <div class="how-pinned__card" data-step="1">
+              <div class="how-pinned__card-num">02</div>
+              <div class="how-pinned__card-content">
+                <h4>Correlate</h4>
+                <p>The AI maps every event to your live threat graph, correlating across services and identities to
+                  surface real attacks from noise.</p>
+              </div>
+            </div>
+            <div class="how-pinned__card" data-step="2">
+              <div class="how-pinned__card-num">03</div>
+              <div class="how-pinned__card-content">
+                <h4>Decide</h4>
+                <p>The LLM copilot drafts verdicts, playbooks, and compliance narratives with full source evidence —
+                  human-in-the-loop at every step.</p>
+              </div>
+            </div>
+            <div class="how-pinned__card" data-step="3">
+              <div class="how-pinned__card-num">04</div>
+              <div class="how-pinned__card-content">
+                <h4>Respond</h4>
+                <p>Auto-run playbooks isolate affected assets, revoke IAM access, and generate compliance-ready reports.
+                  MTTR drops by 70%.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <script>
+      (function howPinnedScroll() {
+        const container = document.querySelector('.how-pinned');
+        if (!container) return;
+
+        const headlines = container.querySelectorAll('.how-pinned__headline-inner');
+        const bodies = container.querySelectorAll('.how-pinned__body-inner');
+        const dots = container.querySelectorAll('.how-pinned__dot');
+        const cards = container.querySelectorAll('.how-pinned__card');
+
+        let currentStage = 0;
+
+        function updateStage(stage) {
+          if (stage === currentStage) return;
+          currentStage = stage;
+
+          // Update headlines
+          headlines.forEach(h => {
+            const s = parseInt(h.dataset.stage, 10);
+            h.classList.toggle('is-active', s === stage);
+          });
+
+          // Update body paragraphs
+          bodies.forEach(b => {
+            const s = parseInt(b.dataset.stage, 10);
+            b.classList.toggle('is-active', s === stage);
+          });
+
+          // Update dots
+          dots.forEach(d => {
+            const s = parseInt(d.dataset.dot, 10);
+            d.classList.toggle('is-active', s === stage);
+          });
+
+          // Update cards — activate up to current stage
+          cards.forEach(c => {
+            const s = parseInt(c.dataset.step, 10);
+            c.classList.toggle('is-active', s <= stage);
+            c.classList.toggle('is-current', s === stage);
+          });
+        }
+
+        // Skip scroll logic on mobile
+        const mql = window.matchMedia('(max-width: 768px)');
+        if (mql.matches) return;
+
+        function onScroll() {
+          const rect = container.getBoundingClientRect();
+          const containerHeight = container.offsetHeight;
+          const windowHeight = window.innerHeight;
+          const scrollable = containerHeight - windowHeight;
+
+          if (scrollable <= 0) return;
+
+          const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+          const stage = Math.min(3, Math.floor(progress * 4));
+
+          updateStage(stage);
+        }
+
+        // Use rAF-throttled scroll
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              onScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+
+        // Initial check
+        onScroll();
+      })();
+    </script>
+    <!-- ═══════ END HEMISX "HOW IT WORKS" SCROLL-PINNED ═══════ -->
 
     <section class="personas" id="personas">
       <div class="section__header">
@@ -402,6 +1280,7 @@
       observer.observe(el);
     });
   </script>
+  <script src="cursor.js"></script>
 </body>
 
 </html>
