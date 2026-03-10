@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Suite – HemisX</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{--yellow:#ffe17c;--charcoal:#171e19;--sage:#b7c6c2;--white:#ffffff;--black:#000000;--red:#ff5f57;--shadow-sm:4px 4px 0 0 var(--black);--shadow-lg:8px 8px 0 0 var(--black);--border:2px solid var(--black)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:'Satoshi',system-ui,sans-serif;background:#f4f4f5;color:var(--black);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cabinet Grotesk','Satoshi',sans-serif;margin:0 0 .5rem;letter-spacing:-.01em}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:40;background:var(--yellow);border-bottom:var(--border);min-height:70px;display:flex;align-items:center;padding:.85rem 1.5rem}
+.nav__inner{width:100%;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav__logo{display:inline-flex;align-items:center;gap:.5rem;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:1.15rem}
+.nav__bolt{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--black);color:var(--yellow);border-radius:4px;border:var(--border);box-shadow:var(--shadow-sm);font-size:16px}
+.nav__right{display:flex;align-items:center;gap:.75rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.65rem 1.1rem;font-weight:700;border:var(--border);border-radius:10px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;font-family:inherit;font-size:.9rem}
+.btn--primary{background:var(--black);color:var(--white)}
+.btn--ghost{background:var(--white);color:var(--black)}
+.btn--sm{padding:.45rem .85rem;font-size:.85rem}
+.btn:hover{transform:translate(3px,3px);box-shadow:0 0 0 0 var(--black)}
+.btn:disabled{opacity:.5;pointer-events:none}
+
+/* PAGE HEADER */
+.page-header{padding:4rem 1.5rem 3rem;text-align:center;background:var(--charcoal);color:var(--white);border-bottom:var(--border);background-image:radial-gradient(rgba(255,255,255,.04) 12%,transparent 13%);background-size:32px 32px}
+.page-header h1{font-size:clamp(2rem,4vw,3.5rem)}
+.page-header p{font-size:1.1rem;max-width:580px;margin:.75rem auto 0;opacity:.8}
+.pill{display:inline-flex;align-items:center;padding:.35rem .9rem;border-radius:999px;background:var(--yellow);border:var(--border);font-weight:700;box-shadow:var(--shadow-sm);color:var(--black);margin-bottom:1rem}
+
+/* TABS */
+.tabs-wrapper{max-width:1300px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.tabs-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:2rem}
+.tab-btn{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;padding:1.1rem 1.25rem;background:var(--white);border:var(--border);border-radius:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;font-family:inherit;text-align:left}
+.tab-btn:hover{transform:translate(3px,3px);box-shadow:0 0 0 0 var(--black)}
+.tab-btn.active{transform:translate(4px,4px);box-shadow:0 0 0 0 var(--black)}
+.tab-btn.active.red{background:#ff5f57;color:var(--white)}
+.tab-btn.active.blue{background:var(--sage)}
+.tab-btn.active.cloud{background:var(--yellow)}
+.tab-dot{width:14px;height:14px;border-radius:50%;border:var(--border)}
+.tab-dot.red{background:#ff5f57}
+.tab-dot.blue{background:var(--sage)}
+.tab-dot.cloud{background:var(--yellow)}
+.tab-label{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:1rem}
+.tab-sub{font-size:.8rem;opacity:.7;font-weight:600}
+
+/* PANEL */
+.panel{display:none}
+.panel.active{display:grid;grid-template-columns:340px 1fr;gap:1.5rem;align-items:start}
+@media(max-width:900px){.panel.active{grid-template-columns:1fr}.tabs-nav{grid-template-columns:1fr}.tab-btn{flex-direction:row;align-items:center}}
+
+/* FORM CARD */
+.form-card{background:var(--white);border:var(--border);border-radius:20px;box-shadow:var(--shadow-lg);padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem}
+.form-card h3{font-size:1.35rem;margin-bottom:.25rem}
+.form-card p.desc{font-size:.875rem;opacity:.7;margin:0}
+.field{display:flex;flex-direction:column;gap:.45rem}
+.field label{font-weight:700;font-size:.875rem}
+.field select,.field textarea,.field input{font-family:inherit;font-size:.9rem;padding:.7rem .9rem;border:var(--border);border-radius:8px;background:#f9f9f9;color:var(--charcoal);outline:none;transition:box-shadow .2s,transform .2s;resize:vertical}
+.field select:focus,.field textarea:focus,.field input:focus{box-shadow:var(--shadow-sm);transform:translate(-2px,-2px);background:var(--white)}
+.field textarea{min-height:100px}
+
+/* BADGE ROW */
+.badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
+.badge{display:inline-flex;align-items:center;padding:.25rem .65rem;border-radius:999px;border:var(--border);font-weight:700;font-size:.78rem;background:var(--white);box-shadow:2px 2px 0 0 var(--black)}
+.badge-red{background:#ff5f57;color:var(--white)}
+.badge-blue{background:var(--sage)}
+.badge-yellow{background:var(--yellow)}
+.badge-green{background:#28c840}
+.badge-orange{background:#ff9800}
+
+/* OUTPUT CARD */
+.output-card{background:var(--charcoal);border:var(--border);border-radius:20px;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;min-height:520px;overflow:hidden}
+.output-header{padding:1rem 1.5rem;border-bottom:2px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.output-header h3{color:var(--white);font-size:1.1rem;margin:0}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#28c840;flex-shrink:0}
+.status-dot.idle{background:#4b5563}
+.status-dot.loading{background:var(--yellow);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.output-body{flex:1;padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1rem;font-size:.9rem;color:#d1d5db;font-family:'Satoshi',monospace}
+.output-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:.75rem;opacity:.4;color:var(--white);text-align:center}
+.output-empty svg{opacity:.5}
+
+/* OUTPUT SECTIONS */
+.out-section{border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden}
+.out-section-header{padding:.6rem 1rem;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.1)}
+.out-section-header.red{background:rgba(255,95,87,.15);color:#ff8a85}
+.out-section-header.blue{background:rgba(183,198,194,.1);color:var(--sage)}
+.out-section-header.yellow{background:rgba(255,225,124,.1);color:var(--yellow)}
+.out-section-header.green{background:rgba(40,200,64,.1);color:#6ee680}
+.out-section-body{padding:1rem;font-size:.875rem;line-height:1.65;white-space:pre-wrap;color:#e5e7eb}
+
+/* SEVERITY */
+.severity{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .6rem;border-radius:6px;font-weight:700;font-size:.78rem;border:1px solid}
+.sev-critical{background:rgba(220,38,38,.2);border-color:#dc2626;color:#f87171}
+.sev-high{background:rgba(234,88,12,.2);border-color:#ea580c;color:#fb923c}
+.sev-medium{background:rgba(202,138,4,.2);border-color:#ca8a04;color:#fbbf24}
+.sev-low{background:rgba(22,163,74,.2);border-color:#16a34a;color:#4ade80}
+
+/* COPY BTN */
+.copy-btn{background:rgba(255,255,255,.08);color:#9ca3af;border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:.3rem .7rem;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;font-family:inherit}
+.copy-btn:hover{background:rgba(255,255,255,.15);color:var(--white)}
+
+/* LOADING ANIMATION */
+.typing{display:inline-flex;gap:4px;align-items:center;padding:.5rem 0}
+.typing span{width:7px;height:7px;background:var(--yellow);border-radius:50%;animation:bounce .9s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+
+/* MITRE tags */
+.mitre-tag{display:inline-flex;align-items:center;padding:.2rem .55rem;background:rgba(255,225,124,.1);border:1px solid rgba(255,225,124,.3);border-radius:4px;font-size:.75rem;font-weight:700;color:var(--yellow);margin:.15rem}
+
+/* Footer */
+.footer{background:var(--charcoal);color:var(--white);padding:2rem 1.5rem;border-top:var(--border);text-align:center;font-size:.875rem;opacity:.8}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__bolt">⚡</span>
+      <span>HemisX</span>
+    </a>
+    <div class="nav__right">
+      <a href="products.html" class="btn btn--ghost btn--sm">← Products</a>
+      <a href="contact.html" class="btn btn--primary btn--sm">Contact Sales</a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="pill">Live Security Suite</div>
+  <h1>AI-Powered Security Tools.</h1>
+  <p>Three intelligent consoles for SMB security teams — Red Team simulation, Blue Team analysis, and Cloud Security advisory. Powered by Claude AI.</p>
+</section>
+
+<!-- TABS -->
+<div class="tabs-wrapper">
+  <nav class="tabs-nav" role="tablist">
+    <button class="tab-btn active red" role="tab" onclick="switchTab('red',this)">
+      <div class="tab-dot red"></div>
+      <span class="tab-label">🎯 Red Team Engine</span>
+      <span class="tab-sub">Generate attack payloads & lures</span>
+    </button>
+    <button class="tab-btn blue" role="tab" onclick="switchTab('blue',this)">
+      <div class="tab-dot blue"></div>
+      <span class="tab-label">🛡 Blue Team Analyst</span>
+      <span class="tab-sub">Analyze threats & build playbooks</span>
+    </button>
+    <button class="tab-btn cloud" role="tab" onclick="switchTab('cloud',this)">
+      <div class="tab-dot cloud"></div>
+      <span class="tab-label">☁️ Cloud Security Advisor</span>
+      <span class="tab-sub">AWS risk analysis & intel</span>
+    </button>
+  </nav>
+
+  <!-- ====== RED TEAM PANEL ====== -->
+  <div class="panel active" id="panel-red">
+    <div class="form-card">
+      <div>
+        <h3>🎯 Red Team Engine</h3>
+        <p class="desc">Generate realistic attack payloads, phishing lures, and adversarial scripts for security testing against your own systems.</p>
+      </div>
+      <div class="field">
+        <label>Attack Type</label>
+        <select id="rt-type">
+          <option value="prompt_injection">Prompt Injection / Jailbreak</option>
+          <option value="phishing">Phishing Lure</option>
+          <option value="exfiltration">Data Exfiltration Payload</option>
+          <option value="social_engineering">Social Engineering Script</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Target Context</label>
+        <input id="rt-target" type="text" placeholder="e.g. SaaS login page, corporate HR team, internal LLM chatbot…">
+      </div>
+      <div class="field">
+        <label>Sophistication Level</label>
+        <select id="rt-level">
+          <option value="basic">Basic – Script kiddie</option>
+          <option value="intermediate" selected>Intermediate – Experienced attacker</option>
+          <option value="advanced">Advanced – Nation-state / APT</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Additional Context <span style="opacity:.5">(optional)</span></label>
+        <textarea id="rt-context" placeholder="Describe your environment, any specific vectors you want tested, compliance scope…"></textarea>
+      </div>
+      <button class="btn btn--primary" onclick="runRedTeam()" id="rt-btn">Generate Attack Payload →</button>
+      <div class="badge-row">
+        <span class="badge badge-red">MITRE ATT&CK Mapped</span>
+        <span class="badge">For authorized use only</span>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-header">
+        <h3>HEMIS Engine Output</h3>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="copy-btn" onclick="copyOutput('rt-output')">Copy</button>
+          <div class="status-dot idle" id="rt-status"></div>
+        </div>
+      </div>
+      <div class="output-body" id="rt-output">
+        <div class="output-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <strong>Red Team Engine Idle</strong>
+          <span>Configure your attack parameters and hit Generate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== BLUE TEAM PANEL ====== -->
+  <div class="panel" id="panel-blue">
+    <div class="form-card">
+      <div>
+        <h3>🛡 Blue Team Analyst</h3>
+        <p class="desc">Paste suspicious logs, describe an attack, or input an indicator of compromise. The AI maps to MITRE ATT&CK and generates a full response playbook.</p>
+      </div>
+      <div class="field">
+        <label>Analysis Mode</label>
+        <select id="bt-mode">
+          <option value="log_analysis">Analyze Suspicious Logs / Input</option>
+          <option value="attack_defense">Suggest Defenses for an Attack</option>
+          <option value="ttp_explain">Explain Attack TTPs (MITRE)</option>
+          <option value="ir_playbook">Generate Incident Response Playbook</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Input Data / Description</label>
+        <textarea id="bt-input" style="min-height:140px" placeholder="Paste logs, describe an attack vector, enter a CVE, or describe an incident scenario…"></textarea>
+      </div>
+      <div class="field">
+        <label>Environment</label>
+        <select id="bt-env">
+          <option value="aws">AWS Cloud</option>
+          <option value="azure">Azure</option>
+          <option value="gcp">GCP</option>
+          <option value="onprem">On-Premise</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+      <button class="btn btn--primary" onclick="runBlueTeam()" id="bt-btn">Analyze Threat →</button>
+      <div class="badge-row">
+        <span class="badge badge-blue">MITRE ATT&CK</span>
+        <span class="badge badge-green">Auto Playbook</span>
+        <span class="badge">SOC 2 Aligned</span>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-header">
+        <h3>Blue Team Analysis</h3>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="copy-btn" onclick="copyOutput('bt-output')">Copy</button>
+          <div class="status-dot idle" id="bt-status"></div>
+        </div>
+      </div>
+      <div class="output-body" id="bt-output">
+        <div class="output-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <strong>Analyst Idle</strong>
+          <span>Submit logs or an attack description to begin analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== CLOUD PANEL ====== -->
+  <div class="panel" id="panel-cloud">
+    <div class="form-card">
+      <div>
+        <h3>☁️ Cloud Security Advisor</h3>
+        <p class="desc">Analyze AWS configs, IAM policies, and S3 exposure risks. Get threat intel answers and remediation guidance mapped to CIS Benchmarks.</p>
+      </div>
+      <div class="field">
+        <label>Check Type</label>
+        <select id="cs-type">
+          <option value="aws_misconfig">AWS Misconfiguration Checker</option>
+          <option value="iam_policy">IAM Policy Risk Analyzer</option>
+          <option value="s3_exposure">S3 Bucket Exposure Scan (Simulated)</option>
+          <option value="cloud_intel">Cloud Threat Intel Q&A</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Input (config JSON, policy, or question)</label>
+        <textarea id="cs-input" style="min-height:160px" placeholder='Paste AWS IAM policy JSON, bucket config, CloudTrail log, or ask a cloud security question…
+
+Example: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"*","Resource":"*"}]}'></textarea>
+      </div>
+      <div class="field">
+        <label>Compliance Framework</label>
+        <select id="cs-framework">
+          <option value="soc2">SOC 2 Type II</option>
+          <option value="iso27001">ISO 27001</option>
+          <option value="cis">CIS AWS Foundations Benchmark</option>
+          <option value="nist">NIST CSF</option>
+        </select>
+      </div>
+      <button class="btn btn--primary" onclick="runCloudSec()" id="cs-btn">Run Cloud Analysis →</button>
+      <div class="badge-row">
+        <span class="badge badge-yellow">AWS Native</span>
+        <span class="badge">CIS Benchmarks</span>
+        <span class="badge badge-green">Auto-Remediation Tips</span>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-header">
+        <h3>Cloud Security Report</h3>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="copy-btn" onclick="copyOutput('cs-output')">Copy</button>
+          <div class="status-dot idle" id="cs-status"></div>
+        </div>
+      </div>
+      <div class="output-body" id="cs-output">
+        <div class="output-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          <strong>Cloud Advisor Idle</strong>
+          <span>Paste a config or ask a cloud security question to begin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  © 2026 HemisX — AI cybersecurity built to hunt, decide, and respond. For authorized security testing only.
+</footer>
+
+<script>
+// ── TAB SWITCHING ──────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── HELPERS ────────────────────────────────────────────────
+function setLoading(id, statusId, isLoading) {
+  const btn = document.getElementById(id);
+  const dot = document.getElementById(statusId);
+  if (isLoading) {
+    btn.disabled = true;
+    btn.textContent = 'Running…';
+    dot.className = 'status-dot loading';
+  } else {
+    btn.disabled = false;
+    dot.className = 'status-dot';
+  }
+}
+
+function showLoading(outputId) {
+  document.getElementById(outputId).innerHTML =
+    '<div style="padding:2rem;display:flex;align-items:center;gap:.75rem;color:var(--yellow)"><div class="typing"><span></span><span></span><span></span></div><span style="font-weight:600;opacity:.8">AI is analyzing…</span></div>';
+}
+
+function copyOutput(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.closest('.output-card').querySelector('.copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 1800);
+  });
+}
+
+async function callClaude(systemPrompt, userPrompt) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.content.map(b => b.text || '').join('');
+}
+
+// ── RED TEAM ───────────────────────────────────────────────
+async function runRedTeam() {
+  const type = document.getElementById('rt-type').value;
+  const target = document.getElementById('rt-target').value.trim();
+  const level = document.getElementById('rt-level').value;
+  const context = document.getElementById('rt-context').value.trim();
+  if (!target) { alert('Please enter a target context.'); return; }
+
+  setLoading('rt-btn','rt-status',true);
+  showLoading('rt-output');
+
+  const typeLabels = {
+    prompt_injection:'Prompt Injection / Jailbreak Attack',
+    phishing:'Phishing Lure',
+    exfiltration:'Data Exfiltration Payload',
+    social_engineering:'Social Engineering Script'
+  };
+
+  const sys = `You are HEMIS, an AI red team engine built by HemisX for authorized offensive security testing. You help SMB security teams understand real attack techniques so they can defend against them. Always frame outputs as educational red team simulations for authorized testing only. Format your response in these exact sections using the labels:
+
+ATTACK_OVERVIEW: Brief description of the attack type and why it's dangerous.
+MITRE_MAPPING: List 2-3 relevant MITRE ATT&CK technique IDs and names.
+SEVERITY: Rate as CRITICAL / HIGH / MEDIUM / LOW with a one-line justification.
+PAYLOAD: The actual simulated attack payload, code, script, or message (clearly marked as SIMULATION).
+EVASION_NOTES: How an attacker might try to evade detection.
+DETECTION_HOOKS: 2-3 specific signals defenders should monitor for.
+
+Be technical, realistic and detailed. This is for defensive security education.`;
+
+  const usr = `Generate a ${typeLabels[type]} attack simulation.
+Target: ${target}
+Sophistication: ${level}
+${context ? `Additional context: ${context}` : ''}`;
+
+  try {
+    const raw = await callClaude(sys, usr);
+    renderRedOutput(raw, type);
+  } catch(e) {
+    document.getElementById('rt-output').innerHTML = `<div style="color:#f87171;padding:1rem">Error: ${e.message}</div>`;
+  }
+  setLoading('rt-btn','rt-status',false);
+}
+
+function renderRedOutput(raw, type) {
+  const out = document.getElementById('rt-output');
+  const sections = [
+    { key:'ATTACK_OVERVIEW', label:'Attack Overview', cls:'red' },
+    { key:'MITRE_MAPPING', label:'MITRE ATT&CK Mapping', cls:'yellow' },
+    { key:'SEVERITY', label:'Severity Assessment', cls:'red' },
+    { key:'PAYLOAD', label:'Simulated Payload', cls:'red' },
+    { key:'EVASION_NOTES', label:'Evasion Techniques', cls:'yellow' },
+    { key:'DETECTION_HOOKS', label:'Detection Hooks for Blue Team', cls:'blue' }
+  ];
+  out.innerHTML = sections.map(s => {
+    const content = extractSection(raw, s.key);
+    if (!content) return '';
+    return `<div class="out-section">
+      <div class="out-section-header ${s.cls}">${s.label}</div>
+      <div class="out-section-body">${escHtml(content)}</div>
+    </div>`;
+  }).filter(Boolean).join('') || `<div class="out-section-body" style="padding:1rem">${escHtml(raw)}</div>`;
+}
+
+// ── BLUE TEAM ──────────────────────────────────────────────
+async function runBlueTeam() {
+  const mode = document.getElementById('bt-mode').value;
+  const input = document.getElementById('bt-input').value.trim();
+  const env = document.getElementById('bt-env').value;
+  if (!input) { alert('Please enter logs, an attack description, or a question.'); return; }
+
+  setLoading('bt-btn','bt-status',true);
+  showLoading('bt-output');
+
+  const modeLabels = {
+    log_analysis:'Analyze the following suspicious logs / input for threats',
+    attack_defense:'Provide defensive countermeasures for this attack',
+    ttp_explain:'Explain the MITRE ATT&CK TTPs involved in this attack',
+    ir_playbook:'Generate a complete incident response playbook for'
+  };
+
+  const sys = `You are an expert Blue Team AI Analyst working for HemisX, specializing in threat detection, MITRE ATT&CK mapping, and incident response for SMB security teams. Format your response in these exact sections:
+
+THREAT_SUMMARY: A concise description of what you've identified.
+MITRE_TTPS: List specific MITRE ATT&CK technique IDs and names that apply.
+SEVERITY: CRITICAL / HIGH / MEDIUM / LOW with justification.
+IMMEDIATE_ACTIONS: Numbered list of containment steps to take RIGHT NOW.
+INVESTIGATION_STEPS: Detailed forensic investigation guidance.
+DEFENSIVE_CONTROLS: Security controls to prevent recurrence.
+IR_PLAYBOOK: Step-by-step incident response playbook if applicable.
+
+Be precise, technical, and actionable. Reference specific tools and commands where relevant.`;
+
+  const usr = `Environment: ${env}
+Mode: ${modeLabels[mode]}
+
+Input:
+${input}`;
+
+  try {
+    const raw = await callClaude(sys, usr);
+    renderBlueOutput(raw);
+  } catch(e) {
+    document.getElementById('bt-output').innerHTML = `<div style="color:#f87171;padding:1rem">Error: ${e.message}</div>`;
+  }
+  setLoading('bt-btn','bt-status',false);
+}
+
+function renderBlueOutput(raw) {
+  const out = document.getElementById('bt-output');
+  const sections = [
+    { key:'THREAT_SUMMARY', label:'Threat Summary', cls:'red' },
+    { key:'MITRE_TTPS', label:'MITRE ATT&CK TTPs', cls:'yellow' },
+    { key:'SEVERITY', label:'Severity', cls:'red' },
+    { key:'IMMEDIATE_ACTIONS', label:'Immediate Containment Actions', cls:'red' },
+    { key:'INVESTIGATION_STEPS', label:'Investigation Steps', cls:'blue' },
+    { key:'DEFENSIVE_CONTROLS', label:'Defensive Controls', cls:'blue' },
+    { key:'IR_PLAYBOOK', label:'Incident Response Playbook', cls:'green' }
+  ];
+  out.innerHTML = sections.map(s => {
+    const content = extractSection(raw, s.key);
+    if (!content) return '';
+    return `<div class="out-section">
+      <div class="out-section-header ${s.cls}">${s.label}</div>
+      <div class="out-section-body">${escHtml(content)}</div>
+    </div>`;
+  }).filter(Boolean).join('') || `<div class="out-section-body" style="padding:1rem">${escHtml(raw)}</div>`;
+}
+
+// ── CLOUD SECURITY ─────────────────────────────────────────
+async function runCloudSec() {
+  const type = document.getElementById('cs-type').value;
+  const input = document.getElementById('cs-input').value.trim();
+  const framework = document.getElementById('cs-framework').value;
+  if (!input) { alert('Please enter a config, policy, or question.'); return; }
+
+  setLoading('cs-btn','cs-status',true);
+  showLoading('cs-output');
+
+  const typeLabels = {
+    aws_misconfig:'Identify AWS misconfigurations and security risks',
+    iam_policy:'Analyze IAM policy for privilege escalation and least-privilege violations',
+    s3_exposure:'Assess S3 bucket exposure risks and public access concerns',
+    cloud_intel:'Answer this cloud security threat intelligence question'
+  };
+
+  const frameworkLabels = {
+    soc2:'SOC 2 Type II', iso27001:'ISO 27001', cis:'CIS AWS Foundations Benchmark v1.4', nist:'NIST CSF'
+  };
+
+  const sys = `You are an expert Cloud Security AI Advisor at HemisX, specializing in AWS security, IAM hardening, and cloud posture management for SMBs. Format your response in these exact sections:
+
+EXEC_SUMMARY: 2-3 sentence executive summary of findings.
+FINDINGS: List each security finding with its severity (CRITICAL/HIGH/MEDIUM/LOW) and a brief description.
+COMPLIANCE_GAPS: Specific ${frameworkLabels[framework]} controls that are violated.
+RISK_RATING: Overall risk rating (CRITICAL/HIGH/MEDIUM/LOW) with justification.
+REMEDIATION_STEPS: Numbered, specific remediation actions with AWS CLI commands or console steps where applicable.
+HARDENING_RECOMMENDATIONS: Additional proactive hardening recommendations.
+
+Be specific with AWS resource names, IAM actions, and provide concrete remediation guidance.`;
+
+  const usr = `Compliance Framework: ${frameworkLabels[framework]}
+Task: ${typeLabels[type]}
+
+Input:
+${input}`;
+
+  try {
+    const raw = await callClaude(sys, usr);
+    renderCloudOutput(raw);
+  } catch(e) {
+    document.getElementById('cs-output').innerHTML = `<div style="color:#f87171;padding:1rem">Error: ${e.message}</div>`;
+  }
+  setLoading('cs-btn','cs-status',false);
+}
+
+function renderCloudOutput(raw) {
+  const out = document.getElementById('cs-output');
+  const sections = [
+    { key:'EXEC_SUMMARY', label:'Executive Summary', cls:'blue' },
+    { key:'FINDINGS', label:'Security Findings', cls:'red' },
+    { key:'COMPLIANCE_GAPS', label:'Compliance Gaps', cls:'yellow' },
+    { key:'RISK_RATING', label:'Overall Risk Rating', cls:'red' },
+    { key:'REMEDIATION_STEPS', label:'Remediation Steps', cls:'green' },
+    { key:'HARDENING_RECOMMENDATIONS', label:'Hardening Recommendations', cls:'blue' }
+  ];
+  out.innerHTML = sections.map(s => {
+    const content = extractSection(raw, s.key);
+    if (!content) return '';
+    return `<div class="out-section">
+      <div class="out-section-header ${s.cls}">${s.label}</div>
+      <div class="out-section-body">${escHtml(content)}</div>
+    </div>`;
+  }).filter(Boolean).join('') || `<div class="out-section-body" style="padding:1rem">${escHtml(raw)}</div>`;
+}
+
+// ── UTILS ──────────────────────────────────────────────────
+function extractSection(text, key) {
+  const re = new RegExp(key + ':\\s*([\\s\\S]*?)(?=(?:ATTACK_OVERVIEW|MITRE_MAPPING|SEVERITY|PAYLOAD|EVASION_NOTES|DETECTION_HOOKS|THREAT_SUMMARY|MITRE_TTPS|IMMEDIATE_ACTIONS|INVESTIGATION_STEPS|DEFENSIVE_CONTROLS|IR_PLAYBOOK|EXEC_SUMMARY|FINDINGS|COMPLIANCE_GAPS|RISK_RATING|REMEDIATION_STEPS|HARDENING_RECOMMENDATIONS):|$)', 'i');
+  const m = text.match(re);
+  return m ? m[1].trim() : '';
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+</script>
+</body>
+</html>
