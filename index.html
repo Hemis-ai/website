@@ -11,405 +11,6 @@
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* ── Hide native cursor ── */
-    html,
-    html *,
-    a,
-    button,
-    input,
-    select,
-    textarea,
-    label,
-    [role="button"] {
-      cursor: none !important;
-    }
-
-    /* ── Inner dot ── */
-    .hx-cursor-dot {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #ffe17c;
-      mix-blend-mode: difference;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s ease,
-        height 0.25s ease,
-        background 0.25s ease,
-        opacity 0.25s ease;
-      will-change: transform, width, height;
-    }
-
-    /* ── Outer ring ── */
-    .hx-cursor-ring {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(255, 225, 124, 0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s ease,
-        height 0.25s ease,
-        border-color 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      will-change: transform, width, height;
-    }
-
-    /* ── "VIEW" label inside ring (cursor-text mode) ── */
-    .hx-cursor-ring__label {
-      font-family: 'Satoshi', system-ui, sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #fff;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* ── Hover: interactive elements ── */
-    .hx-cursor-dot.is-hovering {
-      width: 36px;
-      height: 36px;
-      background: #ff5f57;
-    }
-
-    .hx-cursor-ring.is-hovering {
-      width: 24px;
-      height: 24px;
-      border-color: rgba(255, 95, 87, 0.6);
-    }
-
-    /* ── Hover: .cursor-text ── */
-    .hx-cursor-dot.is-text {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .hx-cursor-ring.is-text {
-      width: 80px;
-      height: 80px;
-      border-color: rgba(255, 255, 255, 0.8);
-    }
-
-    .hx-cursor-ring.is-text .hx-cursor-ring__label {
-      opacity: 1;
-    }
-
-    /* ── Mousedown squish ── */
-    .hx-cursor-dot.is-pressing {
-      transform: translate(-50%, -50%) scale(0.7) !important;
-    }
-
-    .hx-cursor-dot.is-releasing {
-      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        width 0.25s ease,
-        height 0.25s ease,
-        background 0.25s ease,
-        opacity 0.25s ease;
-    }
-
-    /* ── Magnetic pull on hovered element ── */
-    .hx-magnet-pull {
-      transition: transform 0.25s ease;
-      transform: scale(1.1);
-    }
-
-    /* ── Mobile: leave cursor alone ── */
-    @media (pointer: coarse) {
-
-      .hx-cursor-dot,
-      .hx-cursor-ring {
-        display: none !important;
-      }
-
-      html,
-      html * {
-        cursor: auto !important;
-      }
-    }
-  </style>
-  <style>
-    /* ========================================================
-       COMPONENT A & B SHARED AND SPECIFIC STYLES
-       ======================================================== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .fade-up.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .stats-ribbon {
-      width: 100%;
-      background-color: #ffe17c;
-      border-top: 2px solid #000;
-      border-bottom: 2px solid #000;
-      padding: 3rem 2rem;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: relative;
-    }
-
-    .stat-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 0.5rem;
-      flex: 1;
-      position: relative;
-    }
-
-    .stat-block:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 60px;
-      background-color: rgba(0, 0, 0, 0.12);
-    }
-
-    .stat-number {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      color: #000;
-      line-height: 1;
-      will-change: transform;
-      transform-origin: center;
-    }
-
-    .stat-number.bounce {
-      animation: statBounce 0.3s ease-out forwards;
-    }
-
-    @keyframes statBounce {
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.04);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    .stat-label {
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      font-weight: 700;
-      opacity: 0.55;
-      letter-spacing: 0.1em;
-      color: #000;
-    }
-
-    .products-section {
-      padding: 8rem 2.5rem;
-      background-color: #0d1210;
-      color: #fff;
-    }
-
-    .products-header {
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto 5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .eyebrow-chip {
-      display: inline-flex;
-      padding: 0.4rem 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 9999px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.5);
-      letter-spacing: 0.05em;
-    }
-
-    .products-header h2 {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      color: #fff;
-      line-height: 1.05;
-    }
-
-    .products-header p {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .card-wrapper {
-      opacity: 0;
-      transform: translateY(60px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .card-wrapper.delay-0 {
-      transition-delay: 0s;
-    }
-
-    .card-wrapper.delay-1 {
-      transition-delay: 0.15s;
-    }
-
-    .card-wrapper.delay-2 {
-      transition-delay: 0.3s;
-    }
-
-    .card-wrapper.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .product-card {
-      height: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .product-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .card-1:hover {
-      border-color: rgba(255, 95, 87, 0.4);
-    }
-
-    .card-2:hover {
-      border-color: rgba(183, 198, 194, 0.4);
-    }
-
-    .card-3:hover {
-      border-color: rgba(255, 225, 124, 0.4);
-    }
-
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .card-1 .card-icon {
-      background: rgba(255, 95, 87, 0.12);
-    }
-
-    .card-2 .card-icon {
-      background: rgba(183, 198, 194, 0.12);
-    }
-
-    .card-3 .card-icon {
-      background: rgba(255, 225, 124, 0.12);
-    }
-
-    .card-content h3 {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: #fff;
-    }
-
-    .card-content p {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.6);
-      line-height: 1.5;
-    }
-
-    .card-tag {
-      margin-top: auto;
-      align-self: flex-start;
-      padding: 0.4rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: rgba(255, 225, 124, 0.1);
-      border: 1px solid rgba(255, 225, 124, 0.2);
-      color: #ffe17c;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    @media (max-width: 992px) {
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .stats-ribbon {
-        flex-direction: column;
-        gap: 3rem;
-        padding: 3.5rem 1.5rem;
-      }
-
-      .stat-block:not(:last-child)::after {
-        right: 50%;
-        bottom: -1.5rem;
-        top: auto;
-        transform: translateX(50%);
-        width: 60px;
-        height: 1px;
-      }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .products-section {
-        padding: 5rem 1.5rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -808,7 +409,7 @@
       }
     </style>
 
-    <section class="hero-x bg-grid-pan" id="top">
+    <section class="hero-x" id="top">
       <!-- Ambient background layers -->
       <div class="hero-x__grid"></div>
       <div class="hero-x__blob hero-x__blob--1"></div>
@@ -897,167 +498,22 @@
     </script>
     <!-- ═══════ END HEMISX CINEMATIC HERO ═══════ -->
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         HEMISX VELOCITY MARQUEE
-         ═══════════════════════════════════════════════════════════════ -->
-    <style>
-      .marquee-outer {
-        position: relative;
-        width: 100%;
-        height: 56px;
-        overflow: hidden;
-        background: rgba(255, 225, 124, 0.05);
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        align-items: center;
-
-        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
-        font-weight: 800;
-        font-size: 0.85rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: rgba(255, 225, 124, 0.45);
-        transition: color 0.3s ease;
-      }
-
-      .marquee-outer:hover {
-        color: rgba(255, 225, 124, 0.75);
-      }
-
-      .marquee-outer:hover .marquee-group {
-        animation-play-state: paused !important;
-      }
-
-      .marquee-inner {
-        display: flex;
-        gap: 3rem;
-        width: max-content;
-      }
-
-      .marquee-group {
-        display: flex;
-        gap: 3rem;
-        flex-shrink: 0;
-        white-space: nowrap;
-        align-items: center;
-
-        animation: marqueeScroll 24s linear infinite;
-        transition: animation-duration 1.5s ease;
-      }
-
-      .marquee-separator {
-        color: #ff5f57;
-        font-size: 0.55rem;
-      }
-
-      @keyframes marqueeScroll {
-        from {
-          transform: translateX(0);
-        }
-
-        to {
-          transform: translateX(calc(-100% - 3rem));
-        }
-      }
-    </style>
-
-    <div class="marquee-outer">
-      <div class="marquee-inner" id="marqueeInner">
-        <div class="marquee-group">
-          <span>RED TEAM ENGINE</span><span class="marquee-separator">⚡</span>
-          <span>BLUE TEAM SOAR</span><span class="marquee-separator">⚡</span>
-          <span>CLOUD POSTURE MGMT</span><span class="marquee-separator">⚡</span>
-          <span>MITRE ATT&amp;CK MAPPED</span><span class="marquee-separator">⚡</span>
-          <span>SOC 2 READY</span><span class="marquee-separator">⚡</span>
-          <span>AWS NATIVE</span><span class="marquee-separator">⚡</span>
-          <span>ISO 27001</span><span class="marquee-separator">⚡</span>
-          <span>LLM RED TEAMING</span><span class="marquee-separator">⚡</span>
-          <span>PROMPT INJECTION DEFENSE</span><span class="marquee-separator">⚡</span>
-          <span>IAM HARDENING</span><span class="marquee-separator">⚡</span>
-          <span>INCIDENT RESPONSE</span><span class="marquee-separator">⚡</span>
+    <section class="marquee" aria-label="Trusted brands">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
         </div>
-        <div class="marquee-group" aria-hidden="true">
-          <span>RED TEAM ENGINE</span><span class="marquee-separator">⚡</span>
-          <span>BLUE TEAM SOAR</span><span class="marquee-separator">⚡</span>
-          <span>CLOUD POSTURE MGMT</span><span class="marquee-separator">⚡</span>
-          <span>MITRE ATT&amp;CK MAPPED</span><span class="marquee-separator">⚡</span>
-          <span>SOC 2 READY</span><span class="marquee-separator">⚡</span>
-          <span>AWS NATIVE</span><span class="marquee-separator">⚡</span>
-          <span>ISO 27001</span><span class="marquee-separator">⚡</span>
-          <span>LLM RED TEAMING</span><span class="marquee-separator">⚡</span>
-          <span>PROMPT INJECTION DEFENSE</span><span class="marquee-separator">⚡</span>
-          <span>IAM HARDENING</span><span class="marquee-separator">⚡</span>
-          <span>INCIDENT RESPONSE</span><span class="marquee-separator">⚡</span>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
         </div>
-        <div class="marquee-group" aria-hidden="true">
-          <span>RED TEAM ENGINE</span><span class="marquee-separator">⚡</span>
-          <span>BLUE TEAM SOAR</span><span class="marquee-separator">⚡</span>
-          <span>CLOUD POSTURE MGMT</span><span class="marquee-separator">⚡</span>
-          <span>MITRE ATT&amp;CK MAPPED</span><span class="marquee-separator">⚡</span>
-          <span>SOC 2 READY</span><span class="marquee-separator">⚡</span>
-          <span>AWS NATIVE</span><span class="marquee-separator">⚡</span>
-          <span>ISO 27001</span><span class="marquee-separator">⚡</span>
-          <span>LLM RED TEAMING</span><span class="marquee-separator">⚡</span>
-          <span>PROMPT INJECTION DEFENSE</span><span class="marquee-separator">⚡</span>
-          <span>IAM HARDENING</span><span class="marquee-separator">⚡</span>
-          <span>INCIDENT RESPONSE</span><span class="marquee-separator">⚡</span>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span>ARGON</span><span>SENTRIX</span><span>CYNET</span><span>VAULTREE</span><span>FORTIVE</span><span>OSIRIS</span><span>QUANTA</span><span>REDTEAM</span>
         </div>
       </div>
-    </div>
-
-    <script>
-      (function initVelocityMarquee() {
-        const groups = document.querySelectorAll('#marqueeInner .marquee-group');
-        if (!groups.length) return;
-
-        let lastScroll = window.scrollY || window.pageYOffset;
-        let isReversed = false;
-        let scrollTimeout;
-        let directionTimeout;
-        const baseDuration = 24;
-
-        window.addEventListener('scroll', () => {
-          const currentScroll = window.scrollY || window.pageYOffset;
-          const vel = currentScroll - lastScroll;
-          lastScroll = currentScroll;
-
-          if (vel < 0 && !isReversed) {
-            isReversed = true;
-            groups.forEach(g => g.style.animationDirection = 'reverse');
-          } else if (vel > 0 && isReversed) {
-            isReversed = false;
-            groups.forEach(g => g.style.animationDirection = 'normal');
-          }
-
-          clearTimeout(directionTimeout);
-          directionTimeout = setTimeout(() => {
-            if (isReversed) {
-              isReversed = false;
-              groups.forEach(g => g.style.animationDirection = 'normal');
-            }
-          }, 200);
-
-          const speedFactor = Math.max(0.2, 1 - Math.abs(vel) * 0.04);
-
-          groups.forEach(g => {
-            g.style.transition = 'none';
-            g.style.animationDuration = `${baseDuration * speedFactor}s`;
-          });
-
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            groups.forEach(g => {
-              g.style.transition = 'animation-duration 1.5s ease';
-              g.style.animationDuration = `${baseDuration}s`;
-            });
-          }, 150);
-        }, { passive: true });
-      })();
-    </script>
-    <!-- ═══════ END HEMISX VELOCITY MARQUEE ═══════ -->
-
-
+    </section>
 
     <section class="split" id="problem">
       <div class="card card--muted">
@@ -1080,55 +536,33 @@
       </div>
     </section>
 
-    <!-- COMPONENT B: Staggered Card Reveal Grid -->
-    <section class="products-section bg-scanline" id="features">
-      <div class="products-header fade-up">
-        <div class="eyebrow-chip">The Suite</div>
-        <h2>Three AI weapons. One console.</h2>
-        <p>Enterprise-grade tools built for brutal velocity and extreme clarity.</p>
+    <section class="features dot-grid" id="features">
+      <div class="section__header">
+        <p class="eyebrow">The Suite</p>
+        <h2>Our Core Products.</h2>
       </div>
-
-      <div class="products-grid" id="products-grid">
-
-        <!-- Card 1 -->
-        <div class="card-wrapper delay-0">
-          <div class="product-card card-1">
-            <div class="card-icon">🎯</div>
-            <div class="card-content">
-              <h3>HEMIS Red Team Engine</h3>
-              <p>AI/LLM-powered adversarial simulation. Natural language attack generation mapped to MITRE
-                ATT&CK with evasion analysis and detection hook recommendations.</p>
-            </div>
-            <div class="card-tag">ATT&CK Mapped</div>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card-wrapper delay-1">
-          <div class="product-card card-2">
-            <div class="card-icon">🛡</div>
-            <div class="card-content">
-              <h3>AI Blue Team SOAR</h3>
-              <p>Real-time threat response engine that monitors, correlates, and autonomously responds to
-                active threats. Generates incident response playbooks in seconds.</p>
-            </div>
-            <div class="card-tag">Auto Playbooks</div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card-wrapper delay-2">
-          <div class="product-card card-3">
-            <div class="card-icon">☁️</div>
-            <div class="card-content">
-              <h3>Cloud Posture Manager</h3>
-              <p>Automated detection and remediation of AWS misconfigs mapped to SOC 2 and ISO 27001. IAM risk
-                analysis, S3 exposure scans, and CIS Benchmark scoring.</p>
-            </div>
-            <div class="card-tag">SOC 2 Ready</div>
-          </div>
-        </div>
-
+      <div class="feature__grid feature__grid--3col">
+        <a href="products.html#cloud" class="feature feature--link">
+          <div class="feature__icon" style="background: var(--yellow);"></div>
+          <h3>Cloud Misconfiguration Scanner</h3>
+          <p>Automated detection and remediation of AWS security misconfigs in under 60 seconds.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+        <a href="products.html#red" class="feature feature--link shadow-lg" style="background: #272727; color: white;">
+          <div class="feature__icon" style="background: #ff5f57;"></div>
+          <h3>HEMIS (Red Team Engine)</h3>
+          <p>AI/LLM-powered red team simulation engine driving natural language adversarial techniques.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+        <a href="products.html#blue" class="feature feature--link">
+          <div class="feature__icon" style="background: var(--blue);"></div>
+          <h3>AI Blue Team</h3>
+          <p>Real-time AI threat response engine that autonomously responds to active threats.</p>
+          <span class="feature__arrow">→</span>
+        </a>
+      </div>
+      <div class="section__action" style="text-align: center; margin-top: 3rem;">
+        <a href="products.html" class="btn btn--primary btn--lg">View All Products</a>
       </div>
     </section>
 
@@ -1425,7 +859,7 @@
       }
     </style>
 
-    <section class="how-pinned bg-noise-glow" id="how">
+    <section class="how-pinned" id="how">
       <!-- Ambient blobs -->
       <div class="how-pinned__blob how-pinned__blob--1"></div>
       <div class="how-pinned__blob how-pinned__blob--2"></div>
@@ -1584,32 +1018,12 @@
             ticking = true;
           }
         }, { passive: true });
+
         // Initial check
         onScroll();
       })();
     </script>
     <!-- ═══════ END HEMISX "HOW IT WORKS" SCROLL-PINNED ═══════ -->
-
-    <!-- COMPONENT A: Stats Counter Ribbon -->
-    <section class="stats-ribbon">
-      <div class="stat-block">
-        <!-- Format parameters inside data attributes -->
-        <div class="stat-number" data-target="70" data-prefix="&gt;" data-suffix="%">&gt;0%</div>
-        <div class="stat-label">MTTR Reduction</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number" data-target="5" data-prefix="&lt;" data-suffix="s">&lt;0s</div>
-        <div class="stat-label">Log-to-Alert</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number" data-target="150" data-prefix="" data-suffix="+">0+</div>
-        <div class="stat-label">MITRE Techniques Covered</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number" data-target="3" data-prefix="" data-suffix="">0</div>
-        <div class="stat-label">AI-Powered Tools</div>
-      </div>
-    </section>
 
     <section class="personas" id="personas">
       <div class="section__header">
@@ -1698,7 +1112,7 @@
       </div>
     </section>
 
-    <section class="cta dot-grid bg-grid-pan" id="cta">
+    <section class="cta dot-grid" id="cta">
       <div class="cta__inner shadow-lg">
         <h2>See the AI security trio stop an attack in 5 minutes.</h2>
         <div class="cta__actions">
@@ -1866,245 +1280,7 @@
       observer.observe(el);
     });
   </script>
-  <script>
-    /*  HemisX — Premium Magnetic Cursor Logic
-     *  Self-initializes on DOMContentLoaded
-     */
-    (function () {
-      'use strict';
-
-      /* ── Skip on touch devices ── */
-      if (window.matchMedia('(pointer: coarse)').matches) return;
-
-      /* ══════════════════════════════════════════════════════════
-         Create cursor DOM
-         ══════════════════════════════════════════════════════════ */
-      const dot = document.createElement('div');
-      dot.className = 'hx-cursor-dot';
-
-      const ring = document.createElement('div');
-      ring.className = 'hx-cursor-ring';
-
-      const label = document.createElement('span');
-      label.className = 'hx-cursor-ring__label';
-      label.textContent = 'VIEW';
-      ring.appendChild(label);
-
-      document.body.appendChild(dot);
-      document.body.appendChild(ring);
-
-      /* ══════════════════════════════════════════════════════════
-         Tracking state
-         ══════════════════════════════════════════════════════════ */
-      let mouseX = 0, mouseY = 0;
-      let ringX = 0, ringY = 0;
-      const LERP = 0.12;          // outer ring lag factor
-
-      let hoveredEl = null;      // element currently hovered
-      let isText = false;
-      let isHovering = false;
-
-      /* ── Mouse move: inner dot follows instantly ── */
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-      });
-
-      /* ── Outer ring lerp loop ── */
-      function tick() {
-        ringX += (mouseX - ringX) * LERP;
-        ringY += (mouseY - ringY) * LERP;
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-
-      /* ══════════════════════════════════════════════════════════
-         Hover detection (event delegation)
-         ══════════════════════════════════════════════════════════ */
-      function getInteractive(el) {
-        return el.closest('a, button, .hoverable');
-      }
-      function getCursorText(el) {
-        return el.closest('.cursor-text');
-      }
-
-      document.addEventListener('mouseover', (e) => {
-        const textTarget = getCursorText(e.target);
-        if (textTarget) {
-          isText = true;
-          isHovering = false;
-          dot.classList.add('is-text');
-          dot.classList.remove('is-hovering');
-          ring.classList.add('is-text');
-          ring.classList.remove('is-hovering');
-          return;
-        }
-
-        const interactive = getInteractive(e.target);
-        if (interactive && interactive !== hoveredEl) {
-          hoveredEl = interactive;
-          isHovering = true;
-          dot.classList.add('is-hovering');
-          ring.classList.add('is-hovering');
-          hoveredEl.classList.add('hx-magnet-pull');
-        }
-      });
-
-      document.addEventListener('mouseout', (e) => {
-        /* cursor-text leave */
-        if (isText) {
-          const textTarget = getCursorText(e.target);
-          if (textTarget && !textTarget.contains(e.relatedTarget)) {
-            isText = false;
-            dot.classList.remove('is-text');
-            ring.classList.remove('is-text');
-          }
-        }
-
-        /* interactive leave */
-        if (hoveredEl) {
-          const interactive = getInteractive(e.target);
-          if (interactive === hoveredEl && !hoveredEl.contains(e.relatedTarget)) {
-            hoveredEl.classList.remove('hx-magnet-pull');
-            hoveredEl = null;
-            isHovering = false;
-            dot.classList.remove('is-hovering');
-            ring.classList.remove('is-hovering');
-          }
-        }
-      });
-
-      /* ══════════════════════════════════════════════════════════
-         Press & release
-         ══════════════════════════════════════════════════════════ */
-      document.addEventListener('mousedown', () => {
-        dot.classList.remove('is-releasing');
-        dot.classList.add('is-pressing');
-      });
-
-      document.addEventListener('mouseup', () => {
-        dot.classList.remove('is-pressing');
-        dot.classList.add('is-releasing');
-        /* Remove the releasing class after the bounce finishes */
-        setTimeout(() => dot.classList.remove('is-releasing'), 450);
-      });
-
-      /* ══════════════════════════════════════════════════════════
-         Hide when pointer leaves the viewport
-         ══════════════════════════════════════════════════════════ */
-      document.addEventListener('mouseleave', () => {
-        dot.style.opacity = '0';
-        ring.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', () => {
-        dot.style.opacity = '1';
-        ring.style.opacity = '1';
-      });
-    })();
-  </script>
-  <script>
-    // --- 0. UTILITIES ---
-    // Cubic ease-out function
-    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
-
-    // Fade-Up Observer (Shared Utility)
-    const fadeUpObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          fadeUpObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-up').forEach(el => fadeUpObserver.observe(el));
-
-
-    // --- 1. COMPONENT A LOGIC: Stats Counter ---
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // Trigger animation when half of the ribbon is in view
-        if (entry.isIntersecting) {
-          const statNumbers = entry.target.querySelectorAll('.stat-number');
-
-          statNumbers.forEach((el, index) => {
-            const target = parseInt(el.getAttribute('data-target'), 10);
-            const prefix = el.getAttribute('data-prefix') || '';
-            const suffix = el.getAttribute('data-suffix') || '';
-            const delay = index * 150; // 0.15s stagger
-
-            animateCounter(el, target, prefix, suffix, delay);
-          });
-
-          // Animate exactly once
-          statsObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-
-    const ribbon = document.querySelector('.stats-ribbon');
-    if (ribbon) statsObserver.observe(ribbon);
-
-    // Core Animation Engine for Counters
-    const animateCounter = (el, target, prefix, suffix, delay) => {
-      setTimeout(() => {
-        let startTimestamp = null;
-        const duration = 1800; // 1.8 seconds full duration
-
-        const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp;
-          const progress = timestamp - startTimestamp;
-
-          // Normalized time [0, 1]
-          let t = Math.min(progress / duration, 1);
-
-          // Apply easing
-          const easedT = easeOutCubic(t);
-
-          // Calculate current integer value
-          const currentVal = Math.floor(easedT * target);
-
-          // Update DOM text
-          el.innerText = `${prefix}${currentVal}${suffix}`;
-
-          if (progress < duration) {
-            requestAnimationFrame(step);
-          } else {
-            // Force exact target representation on complete
-            el.innerText = `${prefix}${target}${suffix}`;
-            // Trigger bounce animation
-            el.classList.add('bounce');
-          }
-        };
-
-        // Kickoff animation loop
-        requestAnimationFrame(step);
-      }, delay);
-    };
-
-
-    // --- 2. COMPONENT B LOGIC: Staggered Card Reveal ---
-    const gridObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Find and trigger all card wrappers inside the grid
-          const cardWrappers = entry.target.querySelectorAll('.card-wrapper');
-          cardWrappers.forEach(card => card.classList.add('in'));
-
-          // Animate exactly once
-          gridObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const productsGrid = document.getElementById('products-grid');
-    if (productsGrid) gridObserver.observe(productsGrid);
-
-  </script>
+  <script src="cursor.js"></script>
 </body>
 
 </html>
