@@ -3,6 +3,7 @@
   --yellow: #ffe17c;
   --charcoal: #171e19;
   --sage: #b7c6c2;
+  --blue: #3b82f6;
   --white: #ffffff;
   --black: #000000;
   --shadow-sm: 4px 4px 0 0 var(--black);
@@ -274,6 +275,10 @@ main {
 
 .circle--green {
   background: #28c840;
+}
+
+.circle--blue {
+  background: var(--blue);
 }
 
 .browser__title {
