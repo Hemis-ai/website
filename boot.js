@@ -129,6 +129,19 @@
     #boot-text.scale-up .boot-bolt {
       box-shadow: 6px 6px 0 0 #ffe17c, 0 0 40px rgba(255, 225, 124, 0.4);
     }
+
+    @media (max-width: 768px) {
+      #boot-text.logo-style {
+        flex-direction: column;
+        gap: 0.8rem;
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+      }
+      .boot-bolt {
+        width: clamp(48px, 15vw, 64px) !important;
+        height: clamp(48px, 15vw, 64px) !important;
+        font-size: clamp(24px, 8vw, 32px) !important;
+      }
+    }
   `;
   document.head.appendChild(style);
 
@@ -233,7 +246,8 @@
 
   function initParticles() {
     particles = [];
-    const count = Math.min(window.innerWidth / 10, 200); // Increased max particles for a better shape
+    // Ensure enough particles on mobile to form the thunder shape, max 200 on desktop
+    const count = Math.max(120, Math.min(window.innerWidth / 10, 200));
     for (let i = 0; i < count; i++) {
         particles.push(new Particle());
     }
