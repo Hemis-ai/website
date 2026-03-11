@@ -269,11 +269,14 @@
         const dy = particles[i].y - particles[j].y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 120) {
+        const isMobile = window.innerWidth < 768;
+        const connectDistance = isMobile ? 60 : 120;
+        
+        if (distance < connectDistance) {
           ctx.beginPath();
-          // Increased opacity from 0.15 to 0.35 and reduced distance fade
-          ctx.strokeStyle = `rgba(183, 198, 194, ${0.35 - distance / 500})`; 
-          ctx.lineWidth = 1.5; /* Slightly thicker line */
+          const fadeDivisor = isMobile ? 250 : 500;
+          ctx.strokeStyle = `rgba(183, 198, 194, ${0.35 - distance / fadeDivisor})`; 
+          ctx.lineWidth = isMobile ? 1.0 : 1.5; 
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
           ctx.stroke();
@@ -324,7 +327,10 @@
 
         // Reshape particles to the HemisX Thunder Logo!
         isFormingLogo = true;
-        const scale = Math.min(canvas.width, canvas.height) * 0.45;
+        const isMobileScale = window.innerWidth < 768;
+        const scale = isMobileScale 
+          ? Math.min(canvas.width, canvas.height) * 0.75 
+          : Math.min(canvas.width, canvas.height) * 0.45;
         const cx = canvas.width / 2;
         const cy = canvas.height / 2;
         
