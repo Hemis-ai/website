@@ -102,14 +102,14 @@
     </header>
 
     <main>
-        <section class="page-header dot-grid">
+        <section class="page-header dot-grid reveal">
             <div class="pill" style="margin: 0 auto 1rem; color: var(--black);">Get in Touch</div>
             <h1>Contact Us.</h1>
             <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto;">Whether you need to secure your cloud,
                 stress-test your defenses, or join the team—we're here to help.</p>
         </section>
 
-        <section class="contact-section">
+        <section class="contact-section reveal">
             <div class="contact-grid">
                 <div class="contact-info">
                     <div class="contact-card" style="border-color: var(--sage);">
@@ -310,6 +310,20 @@
             }, 800);
         });
 
+    </script>
+    <script>
+        // 2D Scroll Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
     </script>
     <script src="cursor.js"></script>
 </body>

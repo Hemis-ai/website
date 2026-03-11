@@ -664,7 +664,7 @@
   </header>
 
   <!-- PAGE HEADER -->
-  <section class="page-header">
+  <section class="page-header reveal">
     <div class="pill">Live Security Suite</div>
     <h1>AI-Powered Security Tools.</h1>
     <p>Three intelligent consoles for SMB security teams — Red Team simulation, Blue Team analysis, and Cloud Security
@@ -1146,6 +1146,20 @@ ${input}`;
     function escHtml(s) {
       return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
     }
+  </script>
+  <script>
+    // 2D Scroll Reveal Animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+    });
   </script>
   <script src="cursor.js"></script>
 </body>

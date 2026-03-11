@@ -240,14 +240,14 @@
     </header>
 
     <main>
-        <section class="page-header dot-grid">
+        <section class="page-header dot-grid reveal">
             <div class="pill" style="margin: 0 auto 1rem; color: var(--black);">The Team</div>
             <h1>Meet the Founders.</h1>
             <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto;">The offensive security researchers and blue
                 team engineers building the future of cloud defense.</p>
         </section>
 
-        <section class="team-profile-section">
+        <section class="team-profile-section reveal">
             <div class="profile-container">
 
                 <!-- Profile: Sai Varma -->
@@ -506,6 +506,20 @@
                 chatbotBody.appendChild(botMsg);
                 chatbotBody.scrollTop = chatbotBody.scrollHeight;
             }, 800);
+        });
+    </script>
+    <script>
+        // 2D Scroll Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
         });
     </script>
     <script src="cursor.js"></script>
