@@ -190,9 +190,101 @@ document.addEventListener('DOMContentLoaded', () => {
   const windowHalfX = window.innerWidth / 2;
   const windowHalfY = window.innerHeight / 2;
 
+  // 4b. Background Reactive Neural Network Particles
+  const bgParticleCount = 1500;
+  const bgGeometry = new THREE.BufferGeometry();
+  const bgPositions = new Float32Array(bgParticleCount * 3);
+  const bgColors = new Float32Array(bgParticleCount * 3);
+  const bgSizes = new Float32Array(bgParticleCount);
+  const bgVelocities = [];
+  
+  const mouse3D = new THREE.Vector3(0, 0, -100);
+
+  // Spread particles widely in the background behind the globe
+  for (let i = 0; i < bgParticleCount; i++) {
+    const x = (Math.random() - 0.5) * window.innerWidth * 1.5;
+    const y = (Math.random() - 0.5) * window.innerHeight * 1.5;
+    const z = -200 - Math.random() * 300; // Deep background
+
+    bgPositions[i * 3] = x;
+    bgPositions[i * 3 + 1] = y;
+    bgPositions[i * 3 + 2] = z;
+
+    // Use theme colors: Dark Void/Green/Red/Yellow
+    const rand = Math.random();
+    let pColor;
+    if (rand < 0.6) pColor = new THREE.Color('#34d399'); // Green
+    else if (rand < 0.9) pColor = new THREE.Color('#ffe17c'); // Yellow
+    else pColor = new THREE.Color('#ff5f57'); // Red
+
+    // Subdue background colors
+    pColor.multiplyScalar(0.3 + Math.random() * 0.4);
+
+    bgColors[i * 3] = pColor.r;
+    bgColors[i * 3 + 1] = pColor.g;
+    bgColors[i * 3 + 2] = pColor.b;
+    
+    bgSizes[i] = Math.random() * 2.5 + 0.5;
+    
+    bgVelocities.push({
+      x: (Math.random() - 0.5) * 0.5,
+      y: (Math.random() - 0.5) * 0.5,
+      ox: x, // original x
+      oy: y  // original y
+    });
+  }
+
+  bgGeometry.setAttribute('position', new THREE.BufferAttribute(bgPositions, 3));
+  bgGeometry.setAttribute('color', new THREE.BufferAttribute(bgColors, 3));
+  bgGeometry.setAttribute('size', new THREE.BufferAttribute(bgSizes, 1));
+
+  const bgMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      color: { value: new THREE.Color(0xffffff) },
+      pointTexture: { value: createCircleTexture() }
+    },
+    vertexShader: `
+      attribute float size;
+      attribute vec3 color;
+      varying vec3 vColor;
+      void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size * (300.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color;
+      uniform sampler2D pointTexture;
+      varying vec3 vColor;
+      void main() {
+        gl_FragColor = vec4(color * vColor, 0.6); // Slightly more transparent than globe
+        gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+      }
+    `,
+    blending: THREE.AdditiveBlending,
+    depthTest: false,
+    transparent: true
+  });
+
+  const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
+  scene.add(bgParticles);
+
+  // Raycaster for mouse-particle interaction plane
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 200); // Intersect plane roughly at particle Z depth
+
   document.addEventListener('mousemove', (event) => {
     mouseX = (event.clientX - windowHalfX);
     mouseY = (event.clientY - windowHalfY);
+    
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+    raycaster.setFromCamera(mouse, camera);
+    raycaster.ray.intersectPlane(planeZ, mouse3D);
   });
 
   // 5. Animation loop
@@ -210,8 +302,47 @@ document.addEventListener('DOMContentLoaded', () => {
     scene.rotation.y += (targetX - scene.rotation.y) * 0.05;
     scene.rotation.x += (targetY - scene.rotation.x) * 0.05;
 
+    // Animate background particles (Neural network fluid effect)
+    const positions = bgParticles.geometry.attributes.position.array;
+    for (let i = 0; i < bgParticleCount; i++) {
+        const i3 = i * 3;
+        const pX = positions[i3];
+        const pY = positions[i3 + 1];
+        
+        let dx = pX - mouse3D.x;
+        let dy = pY - mouse3D.y;
+        const distSq = dx*dx + dy*dy;
+        const interactionRadiusSq = 40000; // Radius of mouse influence
+
+        // Repel particles from mouse
+        if (distSq < interactionRadiusSq) {
+            const force = (interactionRadiusSq - distSq) / interactionRadiusSq;
+            bgVelocities[i].x += (dx / Math.sqrt(distSq)) * force * 1.5;
+            bgVelocities[i].y += (dy / Math.sqrt(distSq)) * force * 1.5;
+        }
+
+        // Return to original position slowly
+        bgVelocities[i].x += (bgVelocities[i].ox - pX) * 0.01;
+        bgVelocities[i].y += (bgVelocities[i].oy - pY) * 0.01;
+        
+        // Add some drift
+        bgVelocities[i].x += (Math.random() - 0.5) * 0.1;
+        bgVelocities[i].y += (Math.random() - 0.5) * 0.1;
+
+        // Apply drag/friction
+        bgVelocities[i].x *= 0.92;
+        bgVelocities[i].y *= 0.92;
+
+        positions[i3] += bgVelocities[i].x;
+        positions[i3 + 1] += bgVelocities[i].y;
+    }
+    bgParticles.geometry.attributes.position.needsUpdate = true;
+    bgParticles.rotation.y -= 0.0005; // Slow rotation opposite to globe
+
     // Animate arcs
     arcs.forEach(arc => {
+
+
         arc.progress += arc.speed;
         
         if (arc.progress > 1.3) {
