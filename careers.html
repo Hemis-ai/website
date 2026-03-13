@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers | HemisX</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .careers-hero {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 1.5rem;
+      background: #0d1210;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .thunder-container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .thunder-bolt-large {
+      font-size: clamp(8rem, 20vw, 12rem);
+      line-height: 1;
+      filter: drop-shadow(0 0 30px var(--yellow));
+      animation: thunderStrike 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      user-select: none;
+    }
+
+    @keyframes thunderStrike {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 30px var(--yellow));
+      }
+      50% {
+        transform: scale(1.1) rotate(5deg);
+        filter: drop-shadow(0 0 60px var(--yellow));
+      }
+      52% {
+        opacity: 0.7;
+      }
+      54% {
+        opacity: 1;
+      }
+    }
+
+    .thunder-text {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      max-width: 800px;
+    }
+
+    .thunder-subtext {
+      font-size: 1.25rem;
+      opacity: 0.7;
+      max-width: 600px;
+    }
+
+    .nav__links a.active {
+        color: var(--yellow);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <span class="nav__bolt" aria-hidden="true">⚡</span>
+        <span class="nav__brand">HemisX</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="products.html">Products</a>
+        <a href="index.html#how">How it works</a>
+        <a href="about.html">About</a>
+        <a href="index.html#testimonials">Proof</a>
+      </nav>
+      <a class="btn btn--primary" href="contact.html">Contact Us</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="careers-hero dot-grid">
+      <div class="thunder-container">
+        <div class="thunder-bolt-large">⚡</div>
+        <h1 class="thunder-text">Wait for the future updates</h1>
+        <p class="thunder-subtext">Careers are opening soon. Stay tuned for opportunities to join the HemisX team in hunting threats and securing the cloud.</p>
+        <div style="margin-top: 2rem;">
+            <a href="index.html" class="btn btn--ghost">Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <a href="index.html" class="nav__logo footer__logo">
+          <span class="nav__bolt" aria-hidden="true">⚡</span>
+          <span class="nav__brand">HemisX</span>
+        </a>
+        <p>AI cybersecurity built to hunt, decide, and respond in one brutalist console.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="index.html#how">Workflow</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#testimonials">Customers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#problem">Security</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">AI Ethics</a></li>
+        </ul>
+      </div>
+    </div>
+    <div
+      style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; opacity: 0.6; font-size: 0.9rem;">
+      <p>© 2026 HemisX Security. All rights reserved.</p>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AI Chatbot Widget -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar" style="font-family: sans-serif;">⚡</div>
+      <div>
+        <h3 class="chatbot-title">HemisX</h3>
+        <div class="chatbot-status">Online</div>
+      </div>
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chat-message message-bot">
+        Hi there! 👋 I'm the HemisX AI Copilot. I can help you find products, understand our playbooks, or get in touch
+        with sales. How can I assist you today?
+      </div>
+    </div>
+    <form class="chatbot-input" id="chatbotForm">
+      <input type="text" id="chatbotInput" placeholder="Ask me anything..." autocomplete="off">
+      <button type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <button class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat window">
+    <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <script>
+    // Chatbot Logic
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotForm = document.getElementById('chatbotForm');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotBody = document.getElementById('chatbotBody');
+
+    chatbotToggle.addEventListener('click', () => {
+      chatbotToggle.classList.toggle('open');
+      chatbotWindow.classList.toggle('show');
+      if (chatbotWindow.classList.contains('show')) {
+        setTimeout(() => chatbotInput.focus(), 300);
+      }
+    });
+
+    const websiteKnowledge = {
+      founders: {
+        keywords: ['founder', 'founders', 'sai', 'dishanth', 'ceo', 'cto', 'who made', 'who built'],
+        response: "HemisX was co-founded by Sai Varma Dantuluri (CEO & AI Red Team Engineer) and Dishanth C.A (CTO & Detection Engineer). Sai focuses on offensive AI security, while Dishanth specializes in blue team operations and cloud defense."
+      },
+      products: {
+        keywords: ['product', 'products', 'suite', 'tools', 'what do you do', 'services'],
+        response: "Our core suite includes: 1. Cloud Misconfiguration Scanner (CSPM for AWS), 2. HEMIS Engine (AI-powered Red Teaming), and 3. AI Blue Team (Autonomous Threat Response). We map everything to SOC 2, ISO 27001, and MITRE ATT&CK."
+      },
+      cspm: {
+        keywords: ['cloud', 'cspm', 'scanner', 'misconfiguration', 'aws', 's3', 'iam', 'ec2'],
+        response: "Our Cloud Misconfiguration Scanner automatically detects and remediates AWS security issues (IAM, S3, EC2) in under 60 seconds, mapping directly to compliance frameworks like SOC 2."
+      },
+      redteam: {
+        keywords: ['red team', 'hemis', 'offensive', 'attack', 'simulation', 'malware', 'adversarial'],
+        response: "HEMIS (Heuristic Engine for Malware Identification & Suppression) is our AI-powered Red Team engine. IT generates natural language-driven adversarial techniques to stress-test your systems."
+      },
+      blueteam: {
+        keywords: ['blue team', 'defensive', 'response', 'threat', 'soar', 'incident', 'autonomous'],
+        response: "Our AI Blue Team is a real-time threat response engine that monitors, correlates, and autonomously responds to active threats, reducing MTTR by over 70%."
+      },
+      contact: {
+        keywords: ['contact', 'email', 'sales', 'support', 'reach', 'help', 'talk to human'],
+        response: "You can reach our humans at hello@hemisx.com for general inquiries or sales. For active security incidents, contact our rapid response team at sos@hemisx.com."
+      },
+      location: {
+        keywords: ['location', 'address', 'where are you', 'office', 'hq'],
+        response: "Our Global HQ is located at 128 Brutalist Way, Tech District, San Francisco, CA."
+      },
+      careers: {
+        keywords: ['career', 'job', 'hiring', 'work', 'apply', 'join', 'opportunity'],
+        response: "Wait for the future updates - Careers are opening soon! Keep an eye on our Careers page for upcoming opportunities to join the HemisX team."
+      }
+    };
+
+    function getBotResponse(input) {
+      const query = input.toLowerCase().replace(/[^\w\s]/gi, '');
+      for (const key in websiteKnowledge) {
+        const item = websiteKnowledge[key];
+        if (item.keywords.some(keyword => query.includes(keyword))) {
+          return item.response;
+        }
+      }
+      return "I'm in development progress please contact my humans for more details! You can reach them at hello@hemisx.com.";
+    }
+
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message message-user';
+      userMsg.textContent = message;
+      chatbotBody.appendChild(userMsg);
+      chatbotInput.value = '';
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message message-bot';
+        botMsg.textContent = getBotResponse(message);
+        chatbotBody.appendChild(botMsg);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }, 600);
+    });
+  </script>
+  <script src="cursor.js"></script>
+</body>
+
+</html>
