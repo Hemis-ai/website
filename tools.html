@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
     :root {
       --yellow: #ffe17c;
@@ -874,10 +875,6 @@ Example: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"*","Re
 
   </div>
 
-  <footer class="footer">
-    © 2026 HemisX — AI cybersecurity built to hunt, decide, and respond. For authorized security testing only.
-  </footer>
-
   <script>
     // ── TAB SWITCHING ──────────────────────────────────────────
     function switchTab(tab, btn) {
@@ -1174,6 +1171,8 @@ ${input}`;
       <div>
         <h4 style="margin-bottom: 1rem;">Company</h4>
         <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; opacity: 0.7; display: flex; flex-direction: column; gap: 0.5rem;">
+          <li><a href="https://console.hemisx.com" target="_blank">HemisX Console</a></li>
+          <li><a href="products.html">All Products</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -1271,6 +1270,10 @@ ${input}`;
       careers: {
         keywords: ['career', 'job', 'hiring', 'work', 'apply', 'join', 'opportunity'],
         response: "Wait for the future updates - Careers are opening soon! Keep an eye on our Careers page for upcoming opportunities to join the HemisX team."
+      },
+      console: {
+        keywords: ['console', 'dashboard', 'login', 'app', 'portal', 'launch'],
+        response: "You can access the HemisX Console at https://console.hemisx.com. It's our unified dashboard for managing cloud security and offensive operations."
       }
     };
 

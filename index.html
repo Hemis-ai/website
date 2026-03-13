@@ -48,7 +48,8 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 6rem 1.5rem 8rem; /* Increased to prevent scroll overlap */
+        padding: 6rem 1.5rem 8rem;
+        /* Increased to prevent scroll overlap */
         background: #0d1210;
         overflow: hidden;
         border-bottom: none;
@@ -413,7 +414,8 @@
     </style>
 
     <section class="hero-x" id="top">
-      <div id="hero-globe-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+      <div id="hero-globe-container"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
       <!-- Ambient background layers -->
       <div class="hero-x__grid"></div>
 
@@ -442,8 +444,8 @@
 
         <!-- CTAs -->
         <div class="hero-x__ctas" id="heroCtas">
-          <a href="products.html" class="hero-x__btn-primary">Explore the Suite →</a>
-          <a href="#how" class="hero-x__btn-ghost">See How It Works</a>
+          <a href="https://console.hemisx.com" target="_blank" class="hero-x__btn-primary">Launch Console ⚡</a>
+          <a href="products.html" class="hero-x__btn-ghost">Explore the Suite</a>
         </div>
 
         <!-- Meta -->
@@ -1026,6 +1028,118 @@
     </script>
     <!-- ═══════ END HEMISX "HOW IT WORKS" SCROLL-PINNED ═══════ -->
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         INTERESTING CONSOLE SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <style>
+      .console-feature {
+        padding: 8rem 1.5rem;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+      }
+      .console-feature__inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .console-feature__content h2 {
+        font-family: 'Cabinet Grotesk', sans-serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        color: #fff;
+        line-height: 1;
+        margin-bottom: 2rem;
+      }
+      .console-feature__content h2 em {
+        color: var(--yellow);
+        font-style: normal;
+      }
+      .console-feature__content p {
+        font-size: 1.25rem;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 3rem;
+      }
+      .console-feature__preview {
+        position: relative;
+        background: #111;
+        border: 2px solid rgba(255,225,124,0.3);
+        border-radius: 20px;
+        aspect-ratio: 16/10;
+        box-shadow: 0 0 50px rgba(255,225,124,0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .console-feature__nav {
+        height: 35px;
+        background: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        gap: 0.5rem;
+      }
+      .console-feature__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+      }
+      .console-feature__body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+      .console-feature__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2rem;
+        background: var(--yellow);
+        color: #000;
+        border-radius: 12px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+      }
+      .console-feature__btn:hover {
+        transform: scale(1.05);
+      }
+      @media (max-width: 900px) {
+        .console-feature__inner {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+      }
+    </style>
+    <section class="console-feature reveal" id="console-spotlight">
+      <div class="console-feature__inner">
+        <div class="console-feature__content">
+          <div class="pill" style="color: var(--yellow); margin-bottom: 1rem;">The Platform</div>
+          <h2>Deep dive into our tech. <em>Check out our console.</em></h2>
+          <p>Experience the brutal clarity of our unified security dashboard. Built for high-velocity response.</p>
+          <a href="https://console.hemisx.com" target="_blank" class="console-feature__btn">Launch Console ⚡</a>
+        </div>
+        <div class="console-feature__preview">
+          <div class="console-feature__nav">
+            <div class="console-feature__dot"></div>
+            <div class="console-feature__dot"></div>
+            <div class="console-feature__dot"></div>
+          </div>
+          <div class="console-feature__body">
+            <div style="text-align: center; color: var(--yellow);">
+              <div style="font-size: 4rem; font-weight: 800; line-height: 1;">⚡</div>
+              <div style="font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;">HemisX OS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="personas reveal" id="personas">
       <div class="section__header">
         <p class="eyebrow">Built for security</p>
@@ -1117,7 +1231,7 @@
       <div class="cta__inner shadow-lg">
         <h2>See the AI security trio stop an attack in 5 minutes.</h2>
         <div class="cta__actions">
-          <a class="btn btn--primary btn--lg" href="contact.html">Book a live demo</a>
+          <a class="btn btn--primary btn--lg" href="https://console.hemisx.com" target="_blank">Try Live Demo ⚡</a>
           <a class="btn btn--ghost btn--lg" href="contact.html">Contact Sales</a>
         </div>
       </div>
@@ -1136,6 +1250,7 @@
       <div>
         <h4>Product</h4>
         <ul>
+          <li><a href="https://console.hemisx.com" target="_blank">HemisX Console</a></li>
           <li><a href="products.html">All Products</a></li>
           <li><a href="#how">Workflow</a></li>
           <li><a href="#about">About Us</a></li>
@@ -1274,14 +1389,14 @@
 
     function getBotResponse(input) {
       const query = input.toLowerCase().replace(/[^\w\s]/gi, '');
-      
+
       for (const key in websiteKnowledge) {
         const item = websiteKnowledge[key];
         if (item.keywords.some(keyword => query.includes(keyword))) {
           return item.response;
         }
       }
-      
+
       return "I'm in development progress please contact my humans for more details! You can reach them at hello@hemisx.com.";
     }
 
