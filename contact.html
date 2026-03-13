@@ -281,34 +281,65 @@
             }
         });
 
-        const botResponses = [
-            "That's a great question! Our Cloud Security Platform handles that automatically.",
-            "I'd recommend checking out our Blue Team SOAR product for automated playbooks.",
-            "You can reach our sales team directly at hello@hemisx.com!",
-            "Our Red Team Suite maps directly to MITRE ATT&CK. Want to see a demo?",
-            "I'm just a cute bot for now, but I'll make sure one of our humans gets back to you if you use the contact form!"
-        ];
+        const websiteKnowledge = {
+            founders: {
+                keywords: ['founder', 'founders', 'sai', 'dishanth', 'ceo', 'cto', 'who made', 'who built'],
+                response: "HemisX was co-founded by Sai Varma Dantuluri (CEO & AI Red Team Engineer) and Dishanth C.A (CTO & Detection Engineer). Sai focuses on offensive AI security, while Dishanth specializes in blue team operations and cloud defense."
+            },
+            products: {
+                keywords: ['product', 'products', 'suite', 'tools', 'what do you do', 'services'],
+                response: "Our core suite includes: 1. Cloud Misconfiguration Scanner (CSPM for AWS), 2. HEMIS Engine (AI-powered Red Teaming), and 3. AI Blue Team (Autonomous Threat Response). We map everything to SOC 2, ISO 27001, and MITRE ATT&CK."
+            },
+            cspm: {
+                keywords: ['cloud', 'cspm', 'scanner', 'misconfiguration', 'aws', 's3', 'iam', 'ec2'],
+                response: "Our Cloud Misconfiguration Scanner automatically detects and remediates AWS security issues (IAM, S3, EC2) in under 60 seconds, mapping directly to compliance frameworks like SOC 2."
+            },
+            redteam: {
+                keywords: ['red team', 'hemis', 'offensive', 'attack', 'simulation', 'malware', 'adversarial'],
+                response: "HEMIS (Heuristic Engine for Malware Identification & Suppression) is our AI-powered Red Team engine. IT generates natural language-driven adversarial techniques to stress-test your systems."
+            },
+            blueteam: {
+                keywords: ['blue team', 'defensive', 'response', 'threat', 'soar', 'incident', 'autonomous'],
+                response: "Our AI Blue Team is a real-time threat response engine that monitors, correlates, and autonomously responds to active threats, reducing MTTR by over 70%."
+            },
+            contact: {
+                keywords: ['contact', 'email', 'sales', 'support', 'reach', 'help', 'talk to human'],
+                response: "You can reach our humans at hello@hemisx.com for general inquiries or sales. For active security incidents, contact our rapid response team at sos@hemisx.com."
+            },
+            location: {
+                keywords: ['location', 'address', 'where are you', 'office', 'hq'],
+                response: "Our Global HQ is located at 128 Brutalist Way, Tech District, San Francisco, CA."
+            }
+        };
+
+        function getBotResponse(input) {
+            const query = input.toLowerCase().replace(/[^\w\s]/gi, '');
+            for (const key in websiteKnowledge) {
+                const item = websiteKnowledge[key];
+                if (item.keywords.some(keyword => query.includes(keyword))) {
+                    return item.response;
+                }
+            }
+            return "I'm in development progress please contact my humans for more details! You can reach them at hello@hemisx.com.";
+        }
 
         chatbotForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const message = chatbotInput.value.trim();
             if (!message) return;
-
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-message message-user';
             userMsg.textContent = message;
             chatbotBody.appendChild(userMsg);
-
             chatbotInput.value = '';
             chatbotBody.scrollTop = chatbotBody.scrollHeight;
-
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chat-message message-bot';
-                botMsg.textContent = botResponses[Math.floor(Math.random() * botResponses.length)];
+                botMsg.textContent = getBotResponse(message);
                 chatbotBody.appendChild(botMsg);
                 chatbotBody.scrollTop = chatbotBody.scrollHeight;
-            }, 800);
+            }, 600);
         });
 
     </script>
