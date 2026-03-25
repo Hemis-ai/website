@@ -145,6 +145,104 @@
         .wr-mttr { color: #34d399; }
         .wr-count { color: #f87171; }
         .wr-resp { color: #60a5fa; }
+
+        /* ── Tool Cards ── */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .tools-grid--2col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .tool-card {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: rgba(0,0,0,0.15);
+        }
+        .tool-card__icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .tool-card__info {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-card__name {
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-family: 'Cabinet Grotesk', sans-serif;
+        }
+        .tool-card__desc {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        /* Dark variant for dark-bg sections */
+        .tool-card--dark {
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.06);
+        }
+        .tool-card--dark:hover {
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .tool-card--dark .tool-card__name { color: #fff; }
+        .tool-card--dark .tool-card__desc { color: rgba(255,255,255,0.5); }
+
+        /* Blue variant */
+        .tool-card--blue {
+            border-color: rgba(96,165,250,0.15);
+            background: rgba(96,165,250,0.05);
+        }
+        .tool-card--blue:hover {
+            border-color: rgba(96,165,250,0.3);
+            box-shadow: 0 4px 12px rgba(96,165,250,0.1);
+        }
+
+        .tools-section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.45;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Satoshi', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid, .tools-grid--2col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .tools-grid, .tools-grid--2col {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
   <script src="boot.js"></script>
 </head>
@@ -187,6 +285,30 @@
                         <li><span>✓</span> SOC 2 & ISO 27001 Mapping</li>
                         <li><span>✓</span> Auto-Remediation & JIRA Tickets</li>
                     </ul>
+                    <div class="tools-section-label">Console Tools</div>
+                    <div class="tools-grid--2col" style="display:grid; gap:0.6rem; margin-bottom:1.5rem;">
+                        <div class="tool-card">
+                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">◈</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Cloud Scan</span>
+                                <span class="tool-card__desc">Full AWS config audit</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">▤</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Compliance</span>
+                                <span class="tool-card__desc">SOC 2, ISO, CIS mapping</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">◌</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Inventory</span>
+                                <span class="tool-card__desc">Resource discovery & tagging</span>
+                            </div>
+                        </div>
+                    </div>
                     <a href="tools.html#cloud" class="btn btn--primary">View Features</a>
                 </div>
                 <div class="product-vis" style="background: var(--yellow); padding: 1.5rem;">
@@ -318,6 +440,51 @@
                         <li><span>✕</span> LLM Application Security Testing</li>
                         <li><span>✕</span> MITRE ATT&CK® Coverage Reports</li>
                     </ul>
+                    <div class="tools-section-label" style="color:rgba(255,255,255,0.35);">Console Tools</div>
+                    <div class="tools-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-bottom:1.5rem;">
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">⬡</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">SAST</span>
+                                <span class="tool-card__desc">Static analysis</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">◇</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">DAST</span>
+                                <span class="tool-card__desc">Dynamic testing</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">◉</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">White Box RT</span>
+                                <span class="tool-card__desc">Source-aware attacks</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">◌</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Black Box RT</span>
+                                <span class="tool-card__desc">Zero-knowledge attacks</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">▦</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Findings Engine</span>
+                                <span class="tool-card__desc">Vuln correlation</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--dark">
+                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">▤</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Report Generator</span>
+                                <span class="tool-card__desc">Executive reports</span>
+                            </div>
+                        </div>
+                    </div>
                     <a href="tools.html#red" class="btn btn--primary">View Features</a>
                 </div>
             </div>
@@ -336,6 +503,30 @@
                         <li><span>✓</span> > 70% MTTR Reduction</li>
                         <li><span>✓</span> Autonomous Response Playbooks</li>
                     </ul>
+                    <div class="tools-section-label">Console Tools</div>
+                    <div class="tools-grid--2col" style="display:grid; gap:0.6rem; margin-bottom:1.5rem;">
+                        <div class="tool-card tool-card--blue">
+                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">◎</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Alerts</span>
+                                <span class="tool-card__desc">Centralized alert triage</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--blue">
+                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">▦</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Detection Rules</span>
+                                <span class="tool-card__desc">Sigma & Splunk rules</span>
+                            </div>
+                        </div>
+                        <div class="tool-card tool-card--blue">
+                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">◌</div>
+                            <div class="tool-card__info">
+                                <span class="tool-card__name">Playbooks</span>
+                                <span class="tool-card__desc">Automated IR workflows</span>
+                            </div>
+                        </div>
+                    </div>
                     <a href="tools.html#blue" class="btn btn--primary">View Features</a>
                 </div>
                 <div class="product-vis" style="background: #0a1628; padding: 1.5rem;">
@@ -387,9 +578,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
                 </div>
             </div>
         </section>
