@@ -1,3 +1,4 @@
+'use client'
 import type { ProductDemo } from '@/types/demo'
 
 const PRODUCT_META: Record<string, { label: string; icon: string; description: string; tags: string[] }> = {
