@@ -30,6 +30,7 @@ export function Hotspot({ x, y, width, height, accentColor }: HotspotProps) {
           boxShadow: [
             `0 0 0 0 ${accentColor}99`,
             `0 0 0 8px ${accentColor}00`,
+            `0 0 0 0 ${accentColor}99`,
           ],
         }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}

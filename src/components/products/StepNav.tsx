@@ -1,3 +1,5 @@
+'use client'
+
 interface StepNavProps {
   currentStep: number
   totalSteps: number
