@@ -75,8 +75,8 @@ export function DemoModal({ product, onClose }: DemoModalProps) {
               <p className="text-xs text-slate-500 mt-0.5">Interactive Product Demo</p>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-slate-500 bg-slate-800 rounded-md px-2.5 py-1">
-                {currentStep + 1} / {totalSteps}
+              <span className="text-xs text-slate-500 bg-slate-800 rounded-md px-2.5 py-1" aria-label={`Step ${currentStep + 1} of ${totalSteps}`}>
+                Step {currentStep + 1} of {totalSteps}
               </span>
               <button
                 onClick={onClose}

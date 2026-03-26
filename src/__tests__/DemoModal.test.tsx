@@ -14,7 +14,8 @@ describe('DemoModal', () => {
 
   it('shows step 1 of total on open', () => {
     render(<DemoModal product={product} onClose={vi.fn()} />)
-    expect(screen.getByText('Step 1 of 3')).toBeInTheDocument()
+    // "Step 1 of 3" appears in both the modal header and the tooltip
+    expect(screen.getAllByText('Step 1 of 3').length).toBeGreaterThanOrEqual(1)
   })
 
   it('calls onClose when close button is clicked', async () => {
@@ -28,7 +29,8 @@ describe('DemoModal', () => {
     render(<DemoModal product={product} onClose={vi.fn()} />)
     const nextButtons = screen.getAllByRole('button', { name: /next/i })
     await userEvent.click(nextButtons[0])
-    expect(screen.getByText('Step 2 of 3')).toBeInTheDocument()
+    // "Step 2 of 3" appears in both the header and the tooltip
+    expect(screen.getAllByText('Step 2 of 3').length).toBeGreaterThanOrEqual(1)
   })
 
   it('goes back to step 1 when Back is clicked after advancing', async () => {
@@ -36,6 +38,7 @@ describe('DemoModal', () => {
     const nextButtons = screen.getAllByRole('button', { name: /next/i })
     await userEvent.click(nextButtons[0])
     await userEvent.click(screen.getAllByRole('button', { name: /back/i })[0])
-    expect(screen.getByText('Step 1 of 3')).toBeInTheDocument()
+    // "Step 1 of 3" appears in both the header and the tooltip
+    expect(screen.getAllByText('Step 1 of 3').length).toBeGreaterThanOrEqual(1)
   })
 })
