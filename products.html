@@ -243,6 +243,113 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── Platform Overview ── */
+        .platform-overview {
+            padding: 4rem 1.5rem;
+            background: #fafafa;
+            border-bottom: var(--border);
+        }
+        .platform-overview__inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .platform-overview__header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .platform-overview__header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .platform-overview__header p {
+            opacity: 0.6;
+            font-size: 0.95rem;
+        }
+        .platform-suites {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .suite-column {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+        .suite-column:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            transform: translateY(-3px);
+        }
+        .suite-column__head {
+            padding: 1.25rem 1.25rem 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .suite-column__title {
+            font-weight: 800;
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: 'Cabinet Grotesk', sans-serif;
+        }
+        .suite-column__count {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            opacity: 0.45;
+            text-transform: uppercase;
+        }
+        .suite-column__divider {
+            height: 3px;
+            margin: 0 1.25rem;
+            border-radius: 2px;
+        }
+        .suite-column__tools {
+            padding: 0.85rem 1.25rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+        .suite-tool {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.6rem;
+            border-radius: 7px;
+            background: rgba(0,0,0,0.025);
+            transition: background 0.15s;
+        }
+        .suite-tool:hover {
+            background: rgba(0,0,0,0.055);
+        }
+        .suite-tool__icon {
+            font-size: 0.85rem;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .suite-tool__label {
+            font-weight: 600;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .suite-tool__dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin-left: auto;
+            flex-shrink: 0;
+            opacity: 0.5;
+        }
+        @media (max-width: 768px) {
+            .platform-suites {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
   <script src="boot.js"></script>
 </head>
@@ -273,10 +380,70 @@
             <a href="https://console.hemisx.com" target="_blank" class="btn btn--primary btn--lg">Try Live Demo ⚡</a>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════════
+             PLATFORM AT A GLANCE
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="platform-overview reveal">
+            <div class="platform-overview__inner">
+                <div class="platform-overview__header">
+                    <h2>12 Tools. 3 Suites. One Console.</h2>
+                    <p>Everything your security team needs — from offensive testing to cloud compliance to autonomous defense.</p>
+                </div>
+                <div class="platform-suites">
+
+                    <!-- HEMIS Suite -->
+                    <div class="suite-column">
+                        <div class="suite-column__head">
+                            <span class="suite-column__title" style="color:#dc2626;">HEMIS</span>
+                            <span class="suite-column__count">6 tools</span>
+                        </div>
+                        <div class="suite-column__divider" style="background: linear-gradient(90deg, #dc2626, #ff8784);"></div>
+                        <div class="suite-column__tools">
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">⬡</span><span class="suite-tool__label">SAST</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">◇</span><span class="suite-tool__label">DAST</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">◉</span><span class="suite-tool__label">White Box Red Teaming</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">◌</span><span class="suite-tool__label">Black Box Red Teaming</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">▦</span><span class="suite-tool__label">Findings Engine</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                            <a href="#red" class="suite-tool"><span class="suite-tool__icon">▤</span><span class="suite-tool__label">Report Generator</span><span class="suite-tool__dot" style="background:#dc2626;"></span></a>
+                        </div>
+                    </div>
+
+                    <!-- Cloud Scanner Suite -->
+                    <div class="suite-column">
+                        <div class="suite-column__head">
+                            <span class="suite-column__title" style="color:#b8860b;">Cloud Scanner</span>
+                            <span class="suite-column__count">3 tools</span>
+                        </div>
+                        <div class="suite-column__divider" style="background: linear-gradient(90deg, #b8860b, #fbbf24);"></div>
+                        <div class="suite-column__tools">
+                            <a href="#cloud" class="suite-tool"><span class="suite-tool__icon">◈</span><span class="suite-tool__label">Cloud Scan</span><span class="suite-tool__dot" style="background:#b8860b;"></span></a>
+                            <a href="#cloud" class="suite-tool"><span class="suite-tool__icon">▤</span><span class="suite-tool__label">Compliance</span><span class="suite-tool__dot" style="background:#b8860b;"></span></a>
+                            <a href="#cloud" class="suite-tool"><span class="suite-tool__icon">◌</span><span class="suite-tool__label">Inventory</span><span class="suite-tool__dot" style="background:#b8860b;"></span></a>
+                        </div>
+                    </div>
+
+                    <!-- Blue Team Suite -->
+                    <div class="suite-column">
+                        <div class="suite-column__head">
+                            <span class="suite-column__title" style="color:#2563eb;">Blue Team</span>
+                            <span class="suite-column__count">3 tools</span>
+                        </div>
+                        <div class="suite-column__divider" style="background: linear-gradient(90deg, #2563eb, #60a5fa);"></div>
+                        <div class="suite-column__tools">
+                            <a href="#blue" class="suite-tool"><span class="suite-tool__icon">◎</span><span class="suite-tool__label">Alerts</span><span class="suite-tool__dot" style="background:#2563eb;"></span></a>
+                            <a href="#blue" class="suite-tool"><span class="suite-tool__icon">▦</span><span class="suite-tool__label">Detection Rules</span><span class="suite-tool__dot" style="background:#2563eb;"></span></a>
+                            <a href="#blue" class="suite-tool"><span class="suite-tool__icon">◌</span><span class="suite-tool__label">Playbooks</span><span class="suite-tool__dot" style="background:#2563eb;"></span></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <section class="product-section reveal" id="cloud">
             <div class="product-grid">
                 <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--yellow);">CSPM / Compliance</div>
+                    <div class="badge badge--pill" style="background: var(--yellow);">CSPM / Compliance — 3 Tools</div>
                     <h2>Cloud Misconfiguration Scanner</h2>
                     <p>Automated detection and remediation of AWS security misconfigs mapping to SOC 2 and ISO 27001.
                         Scans complete in under 60 seconds.</p>
@@ -429,7 +596,7 @@
                     </div>
                 </div>
                 <div class="product-content">
-                    <div class="badge badge--pill" style="background: #272727; color: white;">AI Red Team</div>
+                    <div class="badge badge--pill" style="background: #272727; color: white;">AI Red Team — 6 Tools</div>
                     <h2>HEMIS Engine</h2>
                     <p><strong>H</strong>euristic <strong>E</strong>ngine for <strong>M</strong>alware
                         <strong>I</strong>dentification & <strong>S</strong>uppression. An AI/LLM-powered engine that
@@ -493,7 +660,7 @@
         <section class="product-section reveal" id="blue">
             <div class="product-grid">
                 <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--blue); color: white;">AI Blue Team</div>
+                    <div class="badge badge--pill" style="background: var(--blue); color: white;">AI Blue Team — 3 Tools</div>
                     <h2>AI Blue Team</h2>
                     <p>Real-time AI threat response engine that monitors, correlates, and autonomously responds to
                         active threats, reducing MTTR by over 70%.</p>
@@ -590,7 +757,7 @@
                 <div class="product-content">
                     <div class="badge badge--pill" style="background: var(--yellow); color: #000;">Web Dashboard</div>
                     <h2>The Brutalist Console.</h2>
-                    <p>The central nervous system for your security operations. Unified, high-contrast, and built for action.</p>
+                    <p>The central nervous system for your security operations. 12 tools across 3 suites — unified, high-contrast, and built for action.</p>
                     <ul class="list list--good">
                         <li><span>✓</span> Unified Threat Graph Visualization</li>
                         <li><span>✓</span> Real-time Alert Firehose</li>
@@ -602,6 +769,22 @@
                     <div style="text-align: center;">
                         <div style="font-size: 5rem; margin-bottom: 1rem;">⚡</div>
                         <div style="font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.3em; color: var(--yellow);">CONSOLE.HEMIS-X</div>
+                        <div style="margin-top: 1.2rem; display: flex; justify-content: center; gap: 1.2rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.4rem; font-weight: 800; color: #ff5f57; font-family: 'Cabinet Grotesk', sans-serif;">6</div>
+                                <div style="font-size: 0.55rem; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase;">HEMIS</div>
+                            </div>
+                            <div style="width: 1px; background: rgba(255,255,255,0.1);"></div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.4rem; font-weight: 800; color: #fbbf24; font-family: 'Cabinet Grotesk', sans-serif;">3</div>
+                                <div style="font-size: 0.55rem; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase;">Scanner</div>
+                            </div>
+                            <div style="width: 1px; background: rgba(255,255,255,0.1);"></div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.4rem; font-weight: 800; color: #60a5fa; font-family: 'Cabinet Grotesk', sans-serif;">3</div>
+                                <div style="font-size: 0.55rem; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase;">Blue Team</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
