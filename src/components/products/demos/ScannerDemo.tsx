@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { flushSync } from 'react-dom'
 import { MOCK_FINDINGS, MOCK_SCAN } from '@/data/demo-scanner'
 
 interface ScannerDemoProps {
@@ -59,11 +58,9 @@ export function ScannerDemo({ step, accentColor, onRequestNextStep }: ScannerDem
     if (step !== 1) return
     setStageIndex(0)
     const iv = setInterval(() => {
-      flushSync(() => {
-        setStageIndex(i => {
-          if (i >= SCAN_STAGES.length - 1) { clearInterval(iv); return i }
-          return i + 1
-        })
+      setStageIndex(i => {
+        if (i >= SCAN_STAGES.length - 1) { clearInterval(iv); return i }
+        return i + 1
       })
     }, 350)
     return () => clearInterval(iv)

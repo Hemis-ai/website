@@ -1,6 +1,6 @@
 // src/__tests__/ScannerDemo.test.tsx
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ScannerDemo } from '@/components/products/demos/ScannerDemo'
 
@@ -42,7 +42,7 @@ describe('ScannerDemo', () => {
     it('advances through stages as timer ticks', () => {
       render(<ScannerDemo {...defaultProps} step={1} />)
       expect(screen.getByText(/connecting to aws account/i)).toBeInTheDocument()
-      vi.advanceTimersByTime(350)
+      act(() => { vi.advanceTimersByTime(350) })
       expect(screen.getByText(/enumerating iam resources/i)).toBeInTheDocument()
     })
   })
