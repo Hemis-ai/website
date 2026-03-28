@@ -12,15 +12,15 @@ describe('ProductCard', () => {
     expect(screen.getByText('Cloud Misconfiguration Scanner')).toBeInTheDocument()
   })
 
-  it('renders the Watch Demo button', () => {
+  it('renders the View Full Features button', () => {
     render(<ProductCard product={product} onOpenDemo={vi.fn()} />)
-    expect(screen.getByRole('button', { name: /watch.*demo/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /view full features/i })).toBeInTheDocument()
   })
 
-  it('calls onOpenDemo when Watch Demo is clicked', async () => {
+  it('calls onOpenDemo when View Full Features is clicked', async () => {
     const onOpenDemo = vi.fn()
     render(<ProductCard product={product} onOpenDemo={onOpenDemo} />)
-    await userEvent.click(screen.getByRole('button', { name: /watch.*demo/i }))
+    await userEvent.click(screen.getByRole('button', { name: /view full features/i }))
     expect(onOpenDemo).toHaveBeenCalledOnce()
   })
 })

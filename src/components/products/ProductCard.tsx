@@ -63,7 +63,7 @@ export function ProductCard({ product, onOpenDemo }: ProductCardProps) {
 
       <button
         onClick={onOpenDemo}
-        aria-label={`Watch ${product.name} demo`}
+        aria-label={`View full features for ${product.name}`}
         className="flex items-center justify-center gap-2 w-full rounded-lg py-2.5 text-sm font-semibold border transition-colors"
         style={{
           color: product.accentColor,
@@ -77,7 +77,7 @@ export function ProductCard({ product, onOpenDemo }: ProductCardProps) {
         >
           ▶
         </span>
-        Watch Product Demo
+        View Full Features
       </button>
     </div>
   )

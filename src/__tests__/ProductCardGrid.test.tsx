@@ -13,14 +13,14 @@ describe('ProductCardGrid', () => {
 
   it('opens the modal when Watch Demo is clicked', async () => {
     render(<ProductCardGrid />)
-    const demoButtons = screen.getAllByRole('button', { name: /watch.*demo/i })
+    const demoButtons = screen.getAllByRole('button', { name: /view full features/i })
     await userEvent.click(demoButtons[0])
     expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
   it('closes the modal when close button is clicked', async () => {
     render(<ProductCardGrid />)
-    const demoButtons = screen.getAllByRole('button', { name: /watch.*demo/i })
+    const demoButtons = screen.getAllByRole('button', { name: /view full features/i })
     await userEvent.click(demoButtons[0])
     await userEvent.click(screen.getByRole('button', { name: /close/i }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

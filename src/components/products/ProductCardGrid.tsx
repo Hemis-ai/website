@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import { demos } from '@/data/demos'
 import type { ProductDemo } from '@/types/demo'
 import { ProductCard } from './ProductCard'
-import { DemoModal } from './DemoModal'
+import { InteractiveDemoModal } from './InteractiveDemoModal'
 
 export function ProductCardGrid() {
   const [activeDemo, setActiveDemo] = useState<ProductDemo | null>(null)
@@ -23,8 +23,10 @@ export function ProductCardGrid() {
 
       <AnimatePresence>
         {activeDemo && (
-          <DemoModal
-            product={activeDemo}
+          <InteractiveDemoModal
+            productId={activeDemo.id as 'scanner' | 'hemis' | 'blueteam'}
+            productName={activeDemo.name}
+            accentColor={activeDemo.accentColor}
             onClose={() => setActiveDemo(null)}
           />
         )}
