@@ -81,6 +81,13 @@
       width: 24px; height: 24px;
       border-color: rgba(255,95,87,0.6);
     }
+    
+    /* Hover Overrides */
+    .hx-cursor-dot.is-hovering[data-color="yellow"] { background: #fbbf24; }
+    .hx-cursor-ring.is-hovering[data-color="yellow"] { border-color: rgba(251,191,36,0.6); }
+
+    .hx-cursor-dot.is-hovering[data-color="blue"] { background: #60a5fa; }
+    .hx-cursor-ring.is-hovering[data-color="blue"] { border-color: rgba(96,165,250,0.6); }
 
     /* ── Hover: .cursor-text ── */
     .hx-cursor-dot.is-text {
@@ -196,6 +203,16 @@
       isHovering = true;
       dot.classList.add('is-hovering');
       ring.classList.add('is-hovering');
+      
+      const colorContext = interactive.closest('[data-cursor]');
+      if (colorContext) {
+          dot.dataset.color = colorContext.dataset.cursor;
+          ring.dataset.color = colorContext.dataset.cursor;
+      } else {
+          delete dot.dataset.color;
+          delete ring.dataset.color;
+      }
+      
       hoveredEl.classList.add('hx-magnet-pull');
     }
   });
