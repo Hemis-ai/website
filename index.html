@@ -629,463 +629,370 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         HEMISX "HOW IT WORKS" — Scroll-Pinned Storytelling Section
+         HOW IT WORKS — Cinematic Horizontal Scroll Sequence
          ═══════════════════════════════════════════════════════════════ -->
     <style>
-      /* ── How It Works: Scroll-Pinned Container ── */
-      .how-pinned {
+      .how-cinema {
         position: relative;
-        height: 400vh;
-        background: linear-gradient(135deg, #0d1210 0%, #1a2b25 100%);
+        height: 500vh;
+        background: #0d1210;
         overflow: clip;
       }
-
-      .how-pinned__sticky {
+      .how-cinema__pin {
         position: sticky;
         top: 0;
         height: 100vh;
+        overflow: hidden;
+      }
+      .how-cinema__track {
+        display: flex;
+        width: 400vw;
+        height: 100vh;
+        will-change: transform;
+      }
+      .how-panel {
+        width: 100vw;
+        height: 100vh;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 4rem 5rem;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
       }
 
-      .how-pinned__grid {
+      /* Panel backgrounds */
+      .how-panel--threat { background: #0d1210; }
+      .how-panel--scan   { background: #0a0f0d; }
+      .how-panel--find   { background: #0d1210; }
+      .how-panel--fix    { background: #0a120d; }
+
+      .how-panel__glow {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+      }
+      .how-panel--threat .how-panel__glow { background: radial-gradient(ellipse at 80% 60%, rgba(255,95,87,0.12) 0%, transparent 65%); }
+      .how-panel--scan   .how-panel__glow { background: radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.08) 0%, transparent 65%); }
+      .how-panel--find   .how-panel__glow { background: radial-gradient(ellipse at 30% 50%, rgba(255,95,87,0.15) 0%, transparent 65%); }
+      .how-panel--fix    .how-panel__glow { background: radial-gradient(ellipse at 50% 50%, rgba(52,211,153,0.12) 0%, transparent 65%); }
+      .how-panel.is-active .how-panel__glow { opacity: 1; }
+
+      .how-panel__content {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 5rem;
-        max-width: 1200px;
-        width: 100%;
-        padding: 0 2rem;
         align-items: center;
       }
-
-      /* ── Left Column: Dynamic Text ── */
-      .how-pinned__left {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .how-pinned__label {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-family: 'Satoshi', system-ui, sans-serif;
+      .how-panel__text { display: flex; flex-direction: column; gap: 1.5rem; }
+      .how-panel__step-label {
+        font-family: 'Satoshi', monospace;
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        color: #b7c6c2;
+        color: var(--yellow);
       }
-
-      .how-pinned__label::before {
-        content: '';
-        display: block;
-        width: 24px;
-        height: 1px;
-        background: #b7c6c2;
-        flex-shrink: 0;
-      }
-
-      .how-pinned__headline {
-        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
-        font-size: clamp(2rem, 3.5vw, 3rem);
+      .how-panel__heading {
+        font-family: 'Cabinet Grotesk', sans-serif;
+        font-size: clamp(2rem, 4vw, 3.2rem);
         font-weight: 800;
+        color: white;
         line-height: 1.1;
-        letter-spacing: -0.025em;
-        color: #ffffff;
         margin: 0;
-        min-height: 3.6em;
-      }
-
-      .how-pinned__headline em {
-        font-style: normal;
-        color: #ffe17c;
-      }
-
-      .how-pinned__headline-inner {
-        display: block;
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
       }
-
-      .how-pinned__headline-inner.is-active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .how-pinned__body {
-        font-family: 'Satoshi', system-ui, sans-serif;
+      .how-panel.is-active .how-panel__heading { opacity: 1; transform: translateY(0); }
+      .how-panel__body {
+        font-family: 'Satoshi', sans-serif;
         font-size: 1.05rem;
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.55);
-        margin: 0;
-        min-height: 4.5em;
-      }
-
-      .how-pinned__body-inner {
-        display: block;
+        color: rgba(255,255,255,0.55);
+        line-height: 1.65;
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        transition: opacity 0.6s 0.15s ease, transform 0.6s 0.15s ease;
       }
+      .how-panel.is-active .how-panel__body { opacity: 1; transform: translateY(0); }
 
-      .how-pinned__body-inner.is-active {
-        opacity: 1;
-        transform: translateY(0);
+      /* SVG Globe decoration */
+      .how-globe-svg { width: 200px; height: 200px; opacity: 0.7; }
+      .how-globe-svg circle { stroke: rgba(52,211,153,0.4); fill: none; }
+      .how-globe-arc {
+        fill: none; stroke: var(--red); stroke-width: 1.5;
+        stroke-dasharray: 60; stroke-dashoffset: 60;
+        animation: arcDraw 2s ease-in-out infinite alternate;
       }
+      .how-globe-arc--2 { stroke: rgba(255,95,87,0.6); animation-delay: 0.5s; }
+      .how-globe-arc--fix { stroke: var(--green); }
+      @keyframes arcDraw { to { stroke-dashoffset: 0; } }
 
-      /* ── Progress Dots ── */
-      .how-pinned__dots {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        padding-top: 0.5rem;
+      /* Terminal */
+      .how-terminal {
+        background: #111;
+        border: 2px solid #000;
+        box-shadow: -8px 8px 0 0 #000;
+        border-radius: 8px;
+        overflow: hidden;
+        font-family: 'SF Mono', 'Roboto Mono', monospace;
+        font-size: 0.75rem;
       }
-
-      .how-pinned__dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      .how-terminal__bar {
+        background: rgba(255,255,255,0.06);
+        padding: 0.5rem 1rem;
+        font-size: 0.7rem;
+        color: rgba(255,255,255,0.4);
+        font-weight: 700;
+        letter-spacing: 0.08em;
       }
+      .how-terminal__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.3rem; min-height: 180px; }
+      .how-terminal__line { color: rgba(52,211,153,0.8); opacity: 0; }
+      .how-terminal__line--cve { background: rgba(255,225,124,0.1); color: var(--yellow); padding: 2px 4px; border-radius: 3px; }
+      .how-panel.is-active .how-terminal__line { animation: termLineIn 0s forwards; }
+      .how-panel.is-active .how-terminal__line:nth-child(1)  { animation-delay: 0.10s; }
+      .how-panel.is-active .how-terminal__line:nth-child(2)  { animation-delay: 0.18s; }
+      .how-panel.is-active .how-terminal__line:nth-child(3)  { animation-delay: 0.26s; }
+      .how-panel.is-active .how-terminal__line:nth-child(4)  { animation-delay: 0.34s; }
+      .how-panel.is-active .how-terminal__line:nth-child(5)  { animation-delay: 0.42s; }
+      .how-panel.is-active .how-terminal__line:nth-child(6)  { animation-delay: 0.50s; }
+      .how-panel.is-active .how-terminal__line:nth-child(7)  { animation-delay: 0.58s; }
+      .how-panel.is-active .how-terminal__line:nth-child(8)  { animation-delay: 0.66s; }
+      .how-panel.is-active .how-terminal__line:nth-child(9)  { animation-delay: 0.74s; }
+      .how-panel.is-active .how-terminal__line:nth-child(10) { animation-delay: 0.82s; }
+      .how-panel.is-active .how-terminal__line:nth-child(11) { animation-delay: 0.90s; }
+      .how-panel.is-active .how-terminal__line:nth-child(12) { animation-delay: 0.98s; }
+      @keyframes termLineIn { to { opacity: 1; } }
 
-      .how-pinned__dot.is-active {
-        width: 10px;
-        height: 10px;
-        background: #ffe17c;
-        box-shadow: 0 0 8px rgba(255, 225, 124, 0.4);
-      }
-
-      /* ── Right Column: Step Cards ── */
-      .how-pinned__right {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .how-pinned__card {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        background: #1a2b25;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 14px;
+      /* Vuln card */
+      .how-vuln-card {
+        border: 2px solid black;
+        box-shadow: var(--shadow-lg);
+        background: white;
+        border-radius: 8px;
         padding: 1.5rem;
-        opacity: 0.15;
-        transform: translateX(40px);
-        transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        opacity: 0;
+        transform: translateX(-80px);
+        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
       }
+      .how-panel.is-active .how-vuln-card { opacity: 1; transform: translateX(0); }
+      .how-vuln-card__label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 0.5rem; }
+      .how-vuln-card__score {
+        font-family: 'Cabinet Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1;
+        color: #dc2626;
+        margin-bottom: 0.5rem;
+      }
+      .how-vuln-card__type { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+      .how-vuln-card__fix { font-size: 0.8rem; color: #666; background: rgba(0,0,0,0.04); padding: 0.5rem 0.75rem; border-radius: 4px; border-left: 3px solid var(--green); opacity: 0; transition: opacity 0.4s 0.8s ease; }
+      .how-panel.is-active .how-vuln-card__fix { opacity: 1; }
 
-      .how-pinned__card.is-active {
+      /* Code block + stamp */
+      .how-code-block {
+        background: #111;
+        border: 2px solid #000;
+        box-shadow: -8px 8px 0 0 #000;
+        border-radius: 8px;
+        padding: 1.25rem;
+        font-family: 'SF Mono', 'Roboto Mono', monospace;
+        font-size: 0.72rem;
+        color: rgba(52,211,153,0.9);
+        min-height: 140px;
+        position: relative;
+        white-space: pre;
+        overflow: hidden;
+      }
+      .how-patched-stamp {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-family: 'Cabinet Grotesk', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: transparent;
+        border: 3px solid var(--red);
+        padding: 0.25rem 0.75rem;
+        letter-spacing: 0.1em;
+        transform: rotate(-12deg) scale(1.4);
+        opacity: 0;
+        transform-origin: center;
+        transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+      }
+      .how-panel.is-active .how-patched-stamp.stamp-show {
         opacity: 1;
-        transform: translateX(0);
+        transform: rotate(-8deg) scale(1);
       }
 
-      .how-pinned__card.is-current {
-        border-color: rgba(255, 225, 124, 0.25);
-        box-shadow: 0 0 20px rgba(255, 225, 124, 0.06);
+      /* Progress dots */
+      .how-cinema__dots {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.75rem;
+        z-index: 100;
+        opacity: 0;
+        transition: opacity 0.3s;
       }
-
-      .how-pinned__card-num {
+      .how-cinema__dots.is-visible { opacity: 1; }
+      .how-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid black;
+        background: transparent;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        border-radius: 8px;
-        background: rgba(255, 225, 124, 0.1);
-        color: #ffe17c;
-        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
-        font-size: 0.85rem;
+        font-family: 'Cabinet Grotesk', sans-serif;
+        font-size: 0.65rem;
         font-weight: 800;
+        color: black;
+        transition: background 0.2s, color 0.2s;
+        cursor: default;
+        user-select: none;
       }
+      .how-dot.is-active { background: var(--yellow); }
 
-      .how-pinned__card-content h4 {
-        font-family: 'Cabinet Grotesk', 'Satoshi', sans-serif;
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0 0 0.35rem;
-      }
-
-      .how-pinned__card-content p {
-        font-family: 'Satoshi', system-ui, sans-serif;
-        font-size: 0.9rem;
-        line-height: 1.6;
-        color: rgba(255, 255, 255, 0.5);
-        margin: 0;
-      }
-
-      /* ── Ambient Blobs ── */
-      .how-pinned__blob {
-        position: absolute;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 0;
-        animation: howBlobFloat 10s ease-in-out infinite alternate;
-      }
-
-      .how-pinned__blob--1 {
-        width: 400px;
-        height: 400px;
-        background: rgba(255, 225, 124, 0.04);
-        top: 10%;
-        left: -5%;
-        filter: blur(100px);
-      }
-
-      .how-pinned__blob--2 {
-        width: 300px;
-        height: 300px;
-        background: rgba(183, 198, 194, 0.04);
-        bottom: 15%;
-        right: -3%;
-        filter: blur(80px);
-        animation-delay: 4s;
-      }
-
-      @keyframes howBlobFloat {
-        0% {
-          transform: translate(0, 0) scale(1);
-        }
-
-        100% {
-          transform: translate(20px, -30px) scale(1.1);
-        }
-      }
-
-      /* ── Responsive: Mobile ── */
+      /* Mobile fallback */
       @media (max-width: 768px) {
-        .how-pinned {
-          height: auto;
-          padding: 4rem 1.25rem;
-        }
-
-        .how-pinned__sticky {
-          position: relative;
-          height: auto;
-        }
-
-        .how-pinned__grid {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-          padding: 0;
-        }
-
-        .how-pinned__left {
-          text-align: center;
-          align-items: center;
-        }
-
-        /* Hide dynamic headline/body stages, show static fallback */
-        .how-pinned__headline-inner,
-        .how-pinned__body-inner {
-          display: none !important;
-        }
-
-        .how-pinned__headline-static,
-        .how-pinned__body-static {
-          display: block !important;
-        }
-
-        .how-pinned__headline {
-          min-height: auto;
-        }
-
-        .how-pinned__body {
-          min-height: auto;
-        }
-
-        .how-pinned__dots {
-          display: none;
-        }
-
-        /* Show all cards statically */
-        .how-pinned__card {
-          opacity: 1 !important;
-          transform: translateX(0) !important;
-        }
-      }
-
-      /* Desktop: hide static fallback */
-      @media (min-width: 769px) {
-
-        .how-pinned__headline-static,
-        .how-pinned__body-static {
-          display: none;
-        }
+        .how-cinema { height: auto; }
+        .how-cinema__pin { position: relative; height: auto; }
+        .how-cinema__track { flex-direction: column; width: 100%; height: auto; }
+        .how-panel { width: 100%; height: auto; min-height: 80vh; padding: 4rem 1.5rem; }
+        .how-panel__content { grid-template-columns: 1fr; gap: 2rem; }
+        .how-cinema__dots { display: none; }
+        .how-panel__heading { opacity: 1 !important; transform: none !important; }
+        .how-panel__body { opacity: 1 !important; transform: none !important; }
+        .how-vuln-card { opacity: 1 !important; transform: none !important; }
+        .how-terminal__line { opacity: 1 !important; }
+        .how-vuln-card__fix { opacity: 1 !important; }
       }
     </style>
 
-    <section class="how-pinned" id="how">
-      <!-- Ambient blobs -->
-      <div class="how-pinned__blob how-pinned__blob--1"></div>
-      <div class="how-pinned__blob how-pinned__blob--2"></div>
+    <section class="how-cinema" id="how">
+      <div class="how-cinema__pin">
+        <div class="how-cinema__track" id="howTrack">
 
-      <div class="how-pinned__sticky">
-        <div class="how-pinned__grid">
-          <!-- LEFT COLUMN — Dynamic Text -->
-          <div class="how-pinned__left">
-            <div class="how-pinned__label">How It Works</div>
-
-            <h2 class="how-pinned__headline" id="howHeadline">
-              <!-- Dynamic headlines (desktop) -->
-              <span class="how-pinned__headline-inner is-active" data-stage="0"><em>Collect.</em> Decide.
-                Respond.</span>
-              <span class="how-pinned__headline-inner" data-stage="1">Correlate. <em>Analyze.</em> Map.</span>
-              <span class="how-pinned__headline-inner" data-stage="2">Draft. <em>Decide.</em> Comply.</span>
-              <span class="how-pinned__headline-inner" data-stage="3">Respond. <em>Isolate.</em> Report.</span>
-              <!-- Static fallback (mobile) -->
-              <span class="how-pinned__headline-static">Collect. Decide. <em>Respond.</em></span>
-            </h2>
-
-            <div class="how-pinned__body" id="howBody">
-              <!-- Dynamic body paragraphs (desktop) -->
-              <span class="how-pinned__body-inner is-active" data-stage="0">HemisX ingests AWS CloudTrail, VPC Flow
-                Logs, and GuardDuty findings via Kinesis in under 5 seconds. Every event is normalized and fed into a
-                live threat graph — your real-time security nervous system.</span>
-              <span class="how-pinned__body-inner" data-stage="1">The AI engine maps every event across services and
-                identities, correlating lateral movement chains and privilege escalation patterns. Real attacks surface
-                from noise — automatically, continuously.</span>
-              <span class="how-pinned__body-inner" data-stage="2">The LLM copilot drafts verdicts, playbooks, and
-                compliance narratives with full source evidence attached. Every decision is human-in-the-loop — you
-                approve, refine, or override before action.</span>
-              <span class="how-pinned__body-inner" data-stage="3">Auto-run playbooks isolate affected assets, revoke IAM
-                credentials, and generate compliance-ready reports in minutes. Mean time to respond drops by 70% — from
-                hours to single-digit minutes.</span>
-              <!-- Static fallback (mobile) -->
-              <span class="how-pinned__body-static">From log ingestion to automated response, HemisX's AI pipeline
-                collects, correlates, decides, and acts — cutting mean time to respond by 70%.</span>
-            </div>
-
-            <div class="how-pinned__dots" id="howDots">
-              <span class="how-pinned__dot is-active" data-dot="0"></span>
-              <span class="how-pinned__dot" data-dot="1"></span>
-              <span class="how-pinned__dot" data-dot="2"></span>
-              <span class="how-pinned__dot" data-dot="3"></span>
-            </div>
-          </div>
-
-          <!-- RIGHT COLUMN — Step Cards -->
-          <div class="how-pinned__right">
-            <div class="how-pinned__card is-active is-current" data-step="0">
-              <div class="how-pinned__card-num">01</div>
-              <div class="how-pinned__card-content">
-                <h4>Collect</h4>
-                <p>Ingest AWS CloudTrail, VPC Flow Logs, and GuardDuty via Kinesis into a live threat graph in under 5
-                  seconds.</p>
+          <!-- PANEL 1: The Threat -->
+          <div class="how-panel how-panel--threat" id="howPanel1">
+            <div class="how-panel__glow"></div>
+            <div class="how-panel__content">
+              <div class="how-panel__text">
+                <div class="how-panel__step-label">01 — The Threat</div>
+                <h2 class="how-panel__heading">Attackers don't wait for your team to catch up.</h2>
+                <p class="how-panel__body">Every second of undetected intrusion is another second of access. Threat actors move faster than any manual process. HemisX sees them first.</p>
               </div>
-            </div>
-            <div class="how-pinned__card" data-step="1">
-              <div class="how-pinned__card-num">02</div>
-              <div class="how-pinned__card-content">
-                <h4>Correlate</h4>
-                <p>The AI maps every event to your live threat graph, correlating across services and identities to
-                  surface real attacks from noise.</p>
-              </div>
-            </div>
-            <div class="how-pinned__card" data-step="2">
-              <div class="how-pinned__card-num">03</div>
-              <div class="how-pinned__card-content">
-                <h4>Decide</h4>
-                <p>The LLM copilot drafts verdicts, playbooks, and compliance narratives with full source evidence —
-                  human-in-the-loop at every step.</p>
-              </div>
-            </div>
-            <div class="how-pinned__card" data-step="3">
-              <div class="how-pinned__card-num">04</div>
-              <div class="how-pinned__card-content">
-                <h4>Respond</h4>
-                <p>Auto-run playbooks isolate affected assets, revoke IAM access, and generate compliance-ready reports.
-                  MTTR drops by 70%.</p>
+              <div style="display:flex;align-items:center;justify-content:center;">
+                <svg class="how-globe-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="100" cy="100" r="80" stroke="rgba(52,211,153,0.3)" stroke-width="1.5"/>
+                  <circle cx="100" cy="100" r="55" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+                  <circle cx="100" cy="100" r="30" stroke="rgba(52,211,153,0.15)" stroke-width="1"/>
+                  <ellipse cx="100" cy="100" rx="80" ry="32" stroke="rgba(52,211,153,0.2)" stroke-width="1" fill="none"/>
+                  <ellipse cx="100" cy="100" rx="80" ry="65" stroke="rgba(52,211,153,0.15)" stroke-width="1" fill="none"/>
+                  <path class="how-globe-arc" d="M 40 60 Q 100 20 160 100"/>
+                  <path class="how-globe-arc how-globe-arc--2" d="M 20 120 Q 80 60 150 140"/>
+                  <circle cx="160" cy="100" r="4" fill="var(--red)" opacity="0.8"/>
+                  <circle cx="40" cy="60" r="3" fill="rgba(255,95,87,0.6)"/>
+                </svg>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+
+          <!-- PANEL 2: The Scan -->
+          <div class="how-panel how-panel--scan" id="howPanel2">
+            <div class="how-panel__glow"></div>
+            <div class="how-panel__content">
+              <div class="how-panel__text">
+                <div class="how-panel__step-label">02 — The Scan</div>
+                <h2 class="how-panel__heading">Enumerate. Map. Surface every weakness.</h2>
+                <p class="how-panel__body">HemisX scans your cloud surfaces and attack vectors in real time — cataloguing CVEs, misconfigs, and exposure windows before attackers find them.</p>
+              </div>
+              <div class="how-terminal">
+                <div class="how-terminal__bar">HEMISX SCAN ENGINE v2.1 — RUNNING</div>
+                <div class="how-terminal__body">
+                  <div class="how-terminal__line">&gt; Initializing scan on 10.0.0.0/24...</div>
+                  <div class="how-terminal__line">&gt; Port 22 (SSH) open — 10.0.0.4</div>
+                  <div class="how-terminal__line">&gt; Port 443 (HTTPS) open — 10.0.0.7</div>
+                  <div class="how-terminal__line">&gt; Port 3306 (MySQL) open — 10.0.0.12</div>
+                  <div class="how-terminal__line">&gt; Checking service banners...</div>
+                  <div class="how-terminal__line">&gt; OpenSSH 7.4 detected — EOL version</div>
+                  <div class="how-terminal__line how-terminal__line--cve">&gt; [CVE-2023-38408] Score: 9.8 CRITICAL</div>
+                  <div class="how-terminal__line how-terminal__line--cve">&gt; [CVE-2021-41617] Score: 7.0 HIGH</div>
+                  <div class="how-terminal__line">&gt; MySQL 5.7 unencrypted connection</div>
+                  <div class="how-terminal__line how-terminal__line--cve">&gt; [CVE-2022-32081] Score: 8.1 HIGH</div>
+                  <div class="how-terminal__line">&gt; Scan complete. 3 critical findings.</div>
+                  <div class="how-terminal__line">&gt; Generating report...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 3: The Finding -->
+          <div class="how-panel how-panel--find" id="howPanel3">
+            <div class="how-panel__glow"></div>
+            <div class="how-panel__content">
+              <div class="how-panel__text">
+                <div class="how-panel__step-label">03 — The Finding</div>
+                <h2 class="how-panel__heading">Every vulnerability scored, mapped, and explained.</h2>
+                <p class="how-panel__body">No jargon. No noise. Each finding gets a CVSS score, MITRE ATT&CK mapping, and plain-English remediation your team can act on today.</p>
+              </div>
+              <div class="how-vuln-card">
+                <div class="how-vuln-card__label">CVSS Score</div>
+                <div class="how-vuln-card__score" id="cvssScore">0.0</div>
+                <div class="how-vuln-card__type">Authentication Bypass — CVE-2023-38408</div>
+                <div class="how-vuln-card__fix">→ Upgrade OpenSSH to 9.3p1 or later. Apply patch immediately.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 4: The Fix -->
+          <div class="how-panel how-panel--fix" id="howPanel4">
+            <div class="how-panel__glow"></div>
+            <div class="how-panel__content">
+              <div class="how-panel__text">
+                <div class="how-panel__step-label">04 — The Fix</div>
+                <h2 class="how-panel__heading">Remediation code. Not just advice.</h2>
+                <p class="how-panel__body">HemisX generates IaC-ready fix code for your exact environment. Apply it, verify it, and generate your compliance evidence — automatically.</p>
+              </div>
+              <div style="position:relative;">
+                <div class="how-code-block"><span id="howTypedCode"></span></div>
+                <div class="how-patched-stamp" id="howPatchedStamp">PATCHED</div>
+                <div style="margin-top:1rem;">
+                  <svg class="how-globe-svg" style="width:160px;height:160px;opacity:0.5;" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="100" cy="100" r="80" stroke="rgba(52,211,153,0.4)" stroke-width="1.5"/>
+                    <ellipse cx="100" cy="100" rx="80" ry="32" stroke="rgba(52,211,153,0.25)" stroke-width="1" fill="none"/>
+                    <circle cx="100" cy="100" r="4" fill="var(--green)" opacity="0.9"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /track -->
+      </div><!-- /pin -->
     </section>
 
-    <script>
-      (function howPinnedScroll() {
-        const container = document.querySelector('.how-pinned');
-        if (!container) return;
-
-        const headlines = container.querySelectorAll('.how-pinned__headline-inner');
-        const bodies = container.querySelectorAll('.how-pinned__body-inner');
-        const dots = container.querySelectorAll('.how-pinned__dot');
-        const cards = container.querySelectorAll('.how-pinned__card');
-
-        let currentStage = 0;
-
-        function updateStage(stage) {
-          if (stage === currentStage) return;
-          currentStage = stage;
-
-          // Update headlines
-          headlines.forEach(h => {
-            const s = parseInt(h.dataset.stage, 10);
-            h.classList.toggle('is-active', s === stage);
-          });
-
-          // Update body paragraphs
-          bodies.forEach(b => {
-            const s = parseInt(b.dataset.stage, 10);
-            b.classList.toggle('is-active', s === stage);
-          });
-
-          // Update dots
-          dots.forEach(d => {
-            const s = parseInt(d.dataset.dot, 10);
-            d.classList.toggle('is-active', s === stage);
-          });
-
-          // Update cards — activate up to current stage
-          cards.forEach(c => {
-            const s = parseInt(c.dataset.step, 10);
-            c.classList.toggle('is-active', s <= stage);
-            c.classList.toggle('is-current', s === stage);
-          });
-        }
-
-        // Skip scroll logic on mobile
-        const mql = window.matchMedia('(max-width: 768px)');
-        if (mql.matches) return;
-
-        function onScroll() {
-          const rect = container.getBoundingClientRect();
-          const containerHeight = container.offsetHeight;
-          const windowHeight = window.innerHeight;
-          const scrollable = containerHeight - windowHeight;
-
-          if (scrollable <= 0) return;
-
-          const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-          const stage = Math.min(3, Math.floor(progress * 4));
-
-          updateStage(stage);
-        }
-
-        // Use rAF-throttled scroll
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-          if (!ticking) {
-            requestAnimationFrame(() => {
-              onScroll();
-              ticking = false;
-            });
-            ticking = true;
-          }
-        }, { passive: true });
-
-        // Initial check
-        onScroll();
-      })();
-    </script>
-    <!-- ═══════ END HEMISX "HOW IT WORKS" SCROLL-PINNED ═══════ -->
+    <!-- Progress dots (outside the pin so they stay fixed) -->
+    <div class="how-cinema__dots" id="howDots">
+      <div class="how-dot is-active">1</div>
+      <div class="how-dot">2</div>
+      <div class="how-dot">3</div>
+      <div class="how-dot">4</div>
+    </div>
+    <!-- ═══════ END HOW IT WORKS CINEMA ═══════ -->
 
     <!-- ═══════════════════════════════════════════════════════════════
          INTERESTING CONSOLE SECTION
