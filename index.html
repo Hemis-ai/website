@@ -1404,6 +1404,178 @@
     });
   </script>
   <script src="cursor.js"></script>
+
+  <!-- GSAP + ScrollTrigger (loaded after boot.js and globe.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+  (function initCinematicAnimations() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function waitForBoot(cb) {
+      if (document.body.classList.contains('boot-complete') ||
+          document.body.style.overflow !== 'hidden') {
+        cb(); return;
+      }
+      let attempts = 0;
+      const check = setInterval(() => {
+        attempts++;
+        if (document.body.style.overflow !== 'hidden' ||
+            document.body.classList.contains('boot-complete') ||
+            attempts > 30) {
+          clearInterval(check);
+          cb();
+        }
+      }, 100);
+    }
+
+    document.fonts.ready.then(() => {
+      waitForBoot(() => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── Hero scroll depth → globe camera ──────────────────────────
+      if (!reduceMotion && window.globeSetScrollDepth) {
+        ScrollTrigger.create({
+          trigger: '.hero-x',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+          onUpdate: (self) => window.globeSetScrollDepth(self.progress)
+        });
+      }
+
+      // ── Features grid staggered entry ─────────────────────────────
+      const featureCards = document.querySelectorAll('.feature[data-reveal]');
+      featureCards.forEach(card => {
+        const dir = card.dataset.reveal;
+        const fromX = dir === 'left' ? -80 : dir === 'right' ? 80 : 0;
+        const fromY = dir === 'up' ? 80 : 0;
+        if (reduceMotion) {
+          gsap.set(card, { opacity: 1, x: 0, y: 0 });
+        } else {
+          gsap.fromTo(card,
+            { opacity: 0, x: fromX, y: fromY },
+            {
+              opacity: 1, x: 0, y: 0,
+              duration: 0.7,
+              ease: 'power3.out',
+              scrollTrigger: { trigger: card, start: 'top 75%', once: true },
+              onComplete: () => { card.style.willChange = 'auto'; }
+            }
+          );
+        }
+        ScrollTrigger.create({
+          trigger: card,
+          start: 'top 75%',
+          once: true,
+          onEnter: () => card.classList.add('glow-active')
+        });
+      });
+
+      // ── CVSS counter + typing animation state ─────────────────────
+      const cvssEl = document.getElementById('cvssScore');
+      let cvssAnimated = false;
+
+      const codeSnippet = `resource "aws_instance" "web" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t3.micro"
+  # CVE-2023-38408 patch applied
+  metadata_options {
+    http_tokens = "required"
+  }
+}`;
+      const typedEl = document.getElementById('howTypedCode');
+      const stampEl = document.getElementById('howPatchedStamp');
+      let typingInterval = null;
+      let codeAnimated = false;
+
+      function triggerCVSSCounter() {
+        if (cvssAnimated || !cvssEl) return;
+        cvssAnimated = true;
+        if (reduceMotion) { cvssEl.textContent = '9.2'; return; }
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: 9.2, duration: 1.2, ease: 'power2.out',
+          onUpdate: () => { cvssEl.textContent = obj.val.toFixed(1); }
+        });
+      }
+
+      function triggerCodeTyping() {
+        if (codeAnimated) return;
+        codeAnimated = true;
+        if (reduceMotion) {
+          if (typedEl) typedEl.textContent = codeSnippet;
+          if (stampEl) stampEl.classList.add('stamp-show');
+          return;
+        }
+        if (typingInterval) clearInterval(typingInterval);
+        let i = 0;
+        typingInterval = setInterval(() => {
+          if (!typedEl) { clearInterval(typingInterval); return; }
+          typedEl.textContent = codeSnippet.slice(0, i);
+          i++;
+          if (i > codeSnippet.length) {
+            clearInterval(typingInterval);
+            typingInterval = null;
+            setTimeout(() => { if (stampEl) stampEl.classList.add('stamp-show'); }, 300);
+          }
+        }, 18);
+      }
+
+      // ── How Cinema: horizontal scroll (desktop only) ───────────────
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const mm = gsap.matchMedia();
+
+      if (!isMobile && !reduceMotion) {
+        mm.add('(min-width: 769px)', () => {
+          const track = document.getElementById('howTrack');
+          if (!track) return;
+
+          const st = gsap.to(track, {
+            x: () => -(track.scrollWidth - window.innerWidth),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.how-cinema',
+              pin: true,
+              scrub: 1,
+              end: () => '+=' + (track.scrollWidth - window.innerWidth),
+              onUpdate: (self) => {
+                const progress = self.progress;
+                const panelIndex = Math.min(3, Math.floor(progress * 4));
+                document.querySelectorAll('.how-dot').forEach((d, i) => {
+                  d.classList.toggle('is-active', i === panelIndex);
+                });
+                ['howPanel1','howPanel2','howPanel3','howPanel4'].forEach((id, i) => {
+                  const panel = document.getElementById(id);
+                  if (panel) panel.classList.toggle('is-active', i <= panelIndex);
+                });
+                const dots = document.getElementById('howDots');
+                if (dots) {
+                  if (progress > 0 && progress < 1) dots.classList.add('is-visible');
+                  else dots.classList.remove('is-visible');
+                }
+                if (panelIndex >= 2) triggerCVSSCounter();
+                if (panelIndex >= 3) triggerCodeTyping();
+              }
+            }
+          });
+
+          return () => { st.kill(); };
+        });
+      } else {
+        ['howPanel1','howPanel2','howPanel3','howPanel4'].forEach(id => {
+          const p = document.getElementById(id);
+          if (p) p.classList.add('is-active');
+        });
+        triggerCVSSCounter();
+        triggerCodeTyping();
+      }
+
+      ScrollTrigger.refresh();
+      }); // end waitForBoot
+    }); // end document.fonts.ready
+  })();
+  </script>
 </body>
 
 </html>

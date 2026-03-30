@@ -283,6 +283,221 @@
         .wr-count { color: #f87171; }
         .wr-resp { color: #60a5fa; }
 
+        /* ── Threat Intel Marquee in Header ── */
+        .threat-marquee-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .threat-marquee-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(23,30,25,0.85);
+            z-index: 2;
+        }
+        .threat-marquee-inner {
+            display: inline-block;
+            white-space: nowrap;
+            font-family: monospace;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.15);
+            animation: threatMarqueeScroll 35s linear infinite;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        @keyframes threatMarqueeScroll {
+            0%   { transform: translateY(-50%) translateX(0); }
+            100% { transform: translateY(-50%) translateX(-50%); }
+        }
+
+        /* ── Product Stages ── */
+        .product-stages { display: flex; flex-direction: column; }
+
+        .product-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem 2rem;
+            background: var(--white);
+            border-top: 4px solid black;
+            overflow: hidden;
+        }
+        .product-divider__line {
+            flex: 1;
+            height: 2px;
+            background: black;
+            transform: scaleX(0);
+            transform-origin: left center;
+        }
+        .product-divider__num {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: black;
+            line-height: 1;
+            opacity: 0;
+        }
+
+        .product-stage {
+            min-height: 90vh;
+            display: grid;
+            grid-template-columns: 48% 52%;
+            border-bottom: 4px solid black;
+            position: relative;
+            overflow: hidden;
+            background: var(--white);
+        }
+        .product-stage:nth-child(even) { grid-template-columns: 52% 48%; }
+        .product-stage:nth-child(even) .stage-preview { order: -1; }
+
+        .stage-identity {
+            padding: 6rem 3rem 6rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+            border-right: 4px solid black;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-stage:nth-child(even) .stage-identity { border-right: none; border-left: 4px solid black; padding: 6rem 4rem 6rem 3rem; }
+
+        .stage-num {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: rgba(0,0,0,0.25);
+            letter-spacing: 0.1em;
+        }
+        .stage-name {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin: 0;
+            will-change: transform;
+        }
+        .stage-punch {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(0,0,0,0.6);
+            line-height: 1.6;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .stage-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .stage-badge {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border: 2px solid black;
+            border-radius: 100px;
+            background: white;
+            opacity: 0;
+            transform: scale(0);
+        }
+        .stage-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.75rem;
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background: black;
+            color: white;
+            border: 2px solid black;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            align-self: flex-start;
+        }
+        .stage-cta:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 0 black; }
+
+        .stage-preview {
+            padding: 4rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stage-glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+        .product-stage.is-revealed .stage-glow { opacity: 1; }
+        .stage-glow--blue  { background: radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.12) 0%, transparent 70%); }
+        .stage-glow--red   { background: radial-gradient(ellipse at 50% 50%, rgba(255,95,87,0.12) 0%, transparent 70%); }
+        .stage-glow--green { background: radial-gradient(ellipse at 50% 50%, rgba(52,211,153,0.12) 0%, transparent 70%); }
+
+        /* Cloud Scanner Preview */
+        .scanner-preview { width: 100%; max-width: 420px; }
+        .scanner-card { border: 2px solid black; background: white; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; box-shadow: 3px 3px 0 0 black; display: flex; align-items: center; justify-content: space-between; opacity: 0; }
+        .scanner-card.sc-revealed { opacity: 1; transition: opacity 0.2s ease; }
+        .scanner-card--misconfigured { border-color: var(--red); animation: misconfigPulse 2s ease-in-out infinite; }
+        @keyframes misconfigPulse { 0%,100% { box-shadow: 3px 3px 0 0 var(--red); } 50% { box-shadow: 3px 3px 0 0 var(--red), 0 0 12px rgba(255,95,87,0.3); } }
+        .scanner-card__name { font-family: 'Satoshi', sans-serif; font-weight: 700; font-size: 0.8rem; }
+        .scanner-card__badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+        .badge-pass  { background: #16a34a; color: white; }
+        .badge-fail  { background: var(--red); color: white; }
+        .badge-warn  { background: #f97316; color: white; }
+        .scanner-meter { margin-top: 1rem; }
+        .scanner-meter__label { font-family: 'Satoshi', sans-serif; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
+        .scanner-meter__track { height: 8px; background: rgba(0,0,0,0.1); border-radius: 100px; overflow: hidden; border: 1px solid black; }
+        .scanner-meter__fill { height: 100%; background: #16a34a; border-radius: 100px; width: 0; transition: width 1.5s cubic-bezier(0.25,1,0.5,1); }
+
+        /* Red Team Preview */
+        .redteam-preview { width: 100%; max-width: 420px; }
+        .redteam-terminal { background: #111; border: 2px solid black; box-shadow: -8px 8px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.72rem; }
+        .redteam-terminal__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.08em; }
+        .redteam-terminal__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; min-height: 160px; position: relative; }
+        .rt-line { color: rgba(52,211,153,0.8); opacity: 0; }
+        .rt-line--crit { color: var(--red); background: rgba(255,95,87,0.1); padding: 2px 4px; border-radius: 3px; border-left: 3px solid var(--red); }
+        .rt-banner { position: absolute; bottom: 0.75rem; right: 0.75rem; background: var(--red); color: white; font-weight: 800; font-size: 0.7rem; padding: 0.4rem 0.85rem; border: 2px solid black; box-shadow: 4px 4px 0 0 black; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); letter-spacing: 0.08em; }
+        .rt-banner.show { transform: translateX(0); }
+
+        /* Blue Team Preview */
+        .blueteam-preview { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .radar-container { position: relative; width: 240px; height: 240px; }
+        .radar-circle { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(52,211,153,0.4); }
+        .radar-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(52,211,153,0.2); animation: radarPulse 2s ease-in-out infinite; }
+        .radar-ring--2 { animation-delay: 0.66s; }
+        .radar-ring--3 { animation-delay: 1.33s; }
+        @keyframes radarPulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
+        .radar-blip { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--red); transform: translate(-50%,-50%); opacity: 0; }
+        .radar-check { position: absolute; width: 18px; height: 18px; transform: translate(-50%,-50%) scale(0); }
+        .radar-check svg { width: 18px; height: 18px; }
+        .radar-glow { position: absolute; inset: -20px; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,95,87,0.15) 0%, transparent 70%); transition: background 0.8s ease; pointer-events: none; }
+        .radar-glow.intercepted { background: radial-gradient(ellipse, rgba(52,211,153,0.15) 0%, transparent 70%); }
+        .blueteam-status { font-family: 'Satoshi', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.4); }
+
+        /* Stage reveal animations (GSAP-driven — initial state) */
+        .stage-identity, .stage-preview { opacity: 0; }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .product-stage { grid-template-columns: 1fr; min-height: auto; }
+            .product-stage:nth-child(even) { grid-template-columns: 1fr; }
+            .product-stage:nth-child(even) .stage-preview { order: 0; }
+            .stage-identity { padding: 4rem 1.5rem; border-right: none; border-bottom: 4px solid black; }
+            .product-stage:nth-child(even) .stage-identity { border-left: none; border-bottom: 4px solid black; }
+            .stage-preview { padding: 3rem 1.5rem; }
+        }
+        @media (max-width: 600px) { .stage-preview { display: none; } .stage-identity { opacity: 1 !important; } }
+
         /* ── Tool Cards ── */
         .tools-grid {
             display: grid;
@@ -657,6 +872,11 @@
 
     <main>
         <section class="page-header dot-grid reveal">
+            <!-- Threat Intel Marquee Background -->
+            <div class="threat-marquee-wrap">
+                <div class="threat-marquee-overlay"></div>
+                <div class="threat-marquee-inner">CVE-2024-xxxx · CRITICAL · RCE · SQL INJECTION · LATERAL MOVEMENT · PRIVILEGE ESCALATION · ZERO-DAY · C2 BEACON · DATA EXFIL · RANSOMWARE · SUPPLY CHAIN · CREDENTIAL STUFFING · CVE-2024-xxxx · CRITICAL · RCE · SQL INJECTION · LATERAL MOVEMENT · PRIVILEGE ESCALATION · ZERO-DAY · C2 BEACON · DATA EXFIL · RANSOMWARE · SUPPLY CHAIN · CREDENTIAL STUFFING · </div>
+            </div>
             <div class="hero-watermark" id="heroWatermark">HEMISX</div>
             <div class="pill" style="margin: 0 auto 1rem; color: var(--black);">The Suite</div>
             <h1>Our Products.</h1>
@@ -732,442 +952,148 @@
             </div>
         </div>
 
-        <section class="product-section reveal" id="cloud" data-cursor="yellow">
-            <div class="section-numeral left">01</div>
-            <div class="product-grid">
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--yellow);">CSPM / Compliance — 3 Tools</div>
-                    <h2>Cloud Misconfiguration Scanner</h2>
-                    <p>Automated detection and remediation of AWS security misconfigs mapping to SOC 2 and ISO 27001.
-                        Scans complete in under 60 seconds.</p>
-                    <ul class="list list--good">
-                        <li><span>✓</span> AWS IAM, S3, EC2 Checks</li>
-                        <li><span>✓</span> SOC 2 & ISO 27001 Mapping</li>
-                        <li><span>✓</span> Auto-Remediation & JIRA Tickets</li>
-                    </ul>
-                    <div class="tools-section-label">Console Tools</div>
-                    <div class="tools-grid--2col" style="display:grid; gap:0.6rem; margin-bottom:1.5rem;">
-                        <div class="tool-card">
-                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">◈</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">Cloud Scan</span>
-                                <span class="tool-card__desc">Full AWS config audit</span>
-                            </div>
-                        </div>
-                        <div class="tool-card">
-                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">▤</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">Compliance</span>
-                                <span class="tool-card__desc">SOC 2, ISO, CIS mapping</span>
-                            </div>
-                        </div>
-                        <div class="tool-card">
-                            <div class="tool-card__icon" style="background:rgba(0,0,0,0.08); color:#111;">◌</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">Inventory</span>
-                                <span class="tool-card__desc">Resource discovery & tagging</span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="tools.html#cloud" class="btn btn--primary btn--lg" style="width: 100%; border: 2px solid var(--black); box-shadow: 4px 4px 0 0 var(--black); margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">View Full Features ⚡</a>
-                </div>
-                <div class="product-vis" style="background: var(--yellow); padding: 1.5rem;">
-                    <!-- ── Cloud Compliance Dashboard ── -->
-                    <div class="vis-dashboard">
-                        <div class="vis-bar" style="background:rgba(0,0,0,0.13); margin-bottom:0.75rem;">
-                            <span class="vis-bar-title">⚡ AWS Scan — acme-prod</span>
-                            <span class="vis-badge-warn" style="background:#ca8a04;">RISK: 74/100</span>
-                        </div>
+        <div class="product-stages">
 
-                        <!-- IAM row -->
-                        <div class="vis-row">
-                            <span class="vis-check">✓</span>
-                            <span style="flex:1; font-weight:600;">IAM — Root MFA</span>
-                            <div class="vis-track"><div class="vis-fill" style="--w:100%"></div></div>
-                            <span class="vis-scan-label">100%</span>
-                        </div>
-                        <!-- S3 row -->
-                        <div class="vis-row">
-                            <span class="vis-check">✓</span>
-                            <span style="flex:1; font-weight:600;">S3 — Public ACLs</span>
-                            <div class="vis-track"><div class="vis-fill" style="--w:92%; animation-delay:0.15s"></div></div>
-                            <span class="vis-scan-label">92%</span>
-                        </div>
-                        <!-- EC2 row -->
-                        <div class="vis-row">
-                            <span class="vis-x">✕</span>
-                            <span style="flex:1; font-weight:600;">EC2 — Open SGs</span>
-                            <div class="vis-track"><div class="vis-fill vis-fill-warn" style="--w:61%; animation-delay:0.3s"></div></div>
-                            <span class="vis-scan-label">61%</span>
-                        </div>
-                        <!-- CloudTrail -->
-                        <div class="vis-row">
-                            <span class="vis-check">✓</span>
-                            <span style="flex:1; font-weight:600;">CloudTrail — Logging</span>
-                            <div class="vis-track"><div class="vis-fill" style="--w:100%; animation-delay:0.45s"></div></div>
-                            <span class="vis-scan-label">100%</span>
-                        </div>
+          <!-- Divider 01 -->
+          <div class="product-divider" id="div01">
+            <div class="product-divider__line" id="divLine01"></div>
+            <div class="product-divider__num" id="divNum01">01</div>
+            <div class="product-divider__line" id="divLine01b"></div>
+          </div>
 
-                        <div style="display:flex; gap:0.5rem; margin-top:0.75rem;">
-                            <div style="flex:1; background:rgba(0,0,0,0.1); border-radius:8px; padding:0.5rem 0.7rem; text-align:center;">
-                                <div style="font-size:1.1rem; font-weight:800; color:#16a34a;">247</div>
-                                <div style="font-size:0.55rem; opacity:0.6; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">Resources</div>
-                            </div>
-                            <div style="flex:1; background:rgba(0,0,0,0.1); border-radius:8px; padding:0.5rem 0.7rem; text-align:center;">
-                                <div style="font-size:1.1rem; font-weight:800; color:var(--yellow);">61%</div>
-                                <div style="font-size:0.55rem; opacity:0.6; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">SOC2 Cvrg</div>
-                            </div>
-                            <div style="flex:1; background:rgba(0,0,0,0.1); border-radius:8px; padding:0.5rem 0.7rem; text-align:center;">
-                                <div style="display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; color:#dc2626;">11</div>
-                                <div style="font-size:0.55rem; opacity:0.6; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">Findings</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <!-- Stage 1: Cloud Scanner -->
+          <!-- id="cloud" preserves anchor links from index.html features grid -->
+          <div class="product-stage" id="stage01" data-stage="1"><a id="cloud" style="position:absolute;top:0;"></a>
+            <div class="stage-identity" id="stage01-identity">
+              <div class="stage-num">Product 01</div>
+              <h2 class="stage-name" id="stage01-name">Cloud<br>Scanner</h2>
+              <div class="stage-punch"><span class="stage-punch__typed" id="stage01-punch"></span></div>
+              <div class="stage-badges" id="stage01-badges">
+                <span class="stage-badge">AWS</span>
+                <span class="stage-badge">Azure</span>
+                <span class="stage-badge">GCP</span>
+                <span class="stage-badge">CIS Benchmark</span>
+                <span class="stage-badge">SOC 2</span>
+              </div>
+              <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Launch Scanner &#x26A1;</a>
             </div>
-        </section>
-
-        <section class="product-section reveal" id="red">
-            <div class="section-numeral right">02</div>
-            <div class="product-grid">
-                <div class="product-vis" style="background: #060606; padding: 1.5rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); min-height: 360px;">
-                    
-                    <!-- ── SAST Visual ── -->
-                    <div id="hemis-vis-0" class="hemis-vis-group active" style="width: 100%; height: 100%;">
-                        <div style="font-family: monospace; font-size: 0.75rem; color: #ff8784; background: #050505; padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,95,87,0.3); height: 100%; min-height: 280px; display: flex; flex-direction: column; gap: 8px; box-shadow: inset 0 0 30px rgba(255,95,87,0.05); text-align: left;">
-                            <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,95,87,0.2); padding-bottom:0.75rem; margin-bottom:0.5rem; opacity:0.8;">
-                                <span>[HEMIS_SAST] -> Scanning AST_TREE...</span> <span>PID: 8492</span>
-                            </div>
-                            <div style="opacity: 0.7;">> analyzing config/database.yml ... [82ms]</div>
-                            <div style="opacity: 0.7;">> analyzing src/auth/jwt.js ... [142ms]</div>
-                            <div style="opacity: 0.7;">> scanning 14,092 LOC across 123 files...</div>
-                            <div class="glitch-anim" style="color:#000; background:#ff5f57; padding: 4px 8px; font-weight: 800; border-radius: 2px; margin: 4px 0;">[CRITICAL] VULN DETECTED: Hardcoded AWS Secret</div>
-                            <div style="opacity: 0.7;">> rules compiled: 67/67</div>
-                            <div style="opacity: 0.7;">> mapping to OWASP Top 10 A07:2021...</div>
-                            <div style="margin-top: auto; color: #ff5f57; font-weight: 800; border-top: 1px dashed rgba(255,95,87,0.3); padding-top: 0.75rem;">> EXECUTION HALTED. 1 BLOCKING FINDING.</div>
-                        </div>
-                    </div>
-
-                    <!-- ── DAST Visual ── -->
-                    <div id="hemis-vis-1" class="hemis-vis-group" style="width: 100%; height: 100%; display: none;">
-                        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                            <!-- Radial Radar -->
-                            <circle cx="160" cy="130" r="100" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4, 12" opacity="0.3">
-                                <animateTransform attributeName="transform" type="rotate" from="0 160 130" to="360 160 130" dur="20s" repeatCount="indefinite" />
-                            </circle>
-                            <circle cx="160" cy="130" r="70" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.4"/>
-                            <circle cx="160" cy="130" r="40" fill="rgba(251,191,36,0.1)" stroke="#fbbf24" stroke-width="2"/>
-                            
-                            <!-- Crosshairs -->
-                            <line x1="20" y1="130" x2="300" y2="130" stroke="#fbbf24" stroke-width="1" opacity="0.3"/>
-                            <line x1="160" y1="20" x2="160" y2="240" stroke="#fbbf24" stroke-width="1" opacity="0.3"/>
-                            
-                            <!-- Glowing Center -->
-                            <circle cx="160" cy="130" r="8" fill="#fbbf24" filter="url(#glow)"/>
-                            
-                            <!-- API Target 1 -->
-                            <rect x="180" y="60" width="100" height="22" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" rx="4"/>
-                            <text x="186" y="74" fill="#fbbf24" font-size="9" font-family="monospace">POST /api/auth</text>
-                            <circle cx="170" cy="71" r="3" fill="#fbbf24">
-                                <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
-                            </circle>
-                            <line x1="160" y1="130" x2="180" y2="71" stroke="#fbbf24" stroke-dasharray="2,2" opacity="0.6"/>
-
-                            <!-- API Target 2 -->
-                            <rect x="40" y="170" width="100" height="22" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" rx="4"/>
-                            <text x="46" y="184" fill="#fbbf24" font-size="9" font-family="monospace">GET /graphql</text>
-                            <circle cx="150" cy="170" r="3" fill="#fbbf24">
-                                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <line x1="160" y1="130" x2="140" y2="170" stroke="#fbbf24" stroke-dasharray="2,2" opacity="0.6"/>
-                            
-                            <!-- Attack Logs -->
-                            <text x="160" y="240" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="monospace" opacity="0.8">> FUZZING HEADERS (PAYLOAD: 3942)</text>
-                        </svg>
-                    </div>
-
-                    <!-- ── White Box RT Visual (Original Graph) ── -->
-                    <div id="hemis-vis-2" class="hemis-vis-group" style="width: 100%; height: 100%; display: none;">
-                        <!-- ── Attack Path Graph ── -->
-                    <div class="vis-graph">
-                        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <filter id="glow">
-                                    <feGaussianBlur stdDeviation="3" result="blur"/>
-                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                </filter>
-                                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                                    <path d="M0,0 L0,6 L8,3 z" fill="#ff5f57"/>
-                                </marker>
-                            </defs>
-
-                            <!-- Attacker node (left) -->
-                            <circle cx="40" cy="130" r="18" fill="#ff5f57" filter="url(#glow)" opacity="0.95"/>
-                            <circle class="node-pulse" cx="40" cy="130" r="18" fill="none" stroke="#ff5f57" stroke-width="2" opacity="0.3"/>
-                            <text x="40" y="134" text-anchor="middle" fill="white" font-size="11" font-weight="800" font-family="monospace">ATK</text>
-                            <text x="40" y="157" text-anchor="middle" fill="#ff5f57" font-size="8" font-family="monospace" opacity="0.8">ATTACKER</text>
-
-                            <!-- IAM node -->
-                            <circle cx="140" cy="65" r="16" fill="#272727" stroke="#ff5f57" stroke-width="1.5"/>
-                            <circle class="node-pulse-2" cx="140" cy="65" r="16" fill="none" stroke="#ff5f57" stroke-width="2" opacity="0.3"/>
-                            <text x="140" y="69" text-anchor="middle" fill="#ff8784" font-size="9" font-weight="800" font-family="monospace">IAM</text>
-                            <text x="140" y="88" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="monospace">PrivEsc</text>
-
-                            <!-- EC2 node -->
-                            <circle cx="140" cy="195" r="16" fill="#272727" stroke="#fbbf24" stroke-width="1.5"/>
-                            <text x="140" y="199" text-anchor="middle" fill="#fde68a" font-size="9" font-weight="800" font-family="monospace">EC2</text>
-                            <text x="140" y="218" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="monospace">Pivot</text>
-
-                            <!-- S3 node -->
-                            <circle cx="240" cy="100" r="16" fill="#272727" stroke="#fbbf24" stroke-width="1.5"/>
-                            <text x="240" y="104" text-anchor="middle" fill="#fde68a" font-size="9" font-weight="800" font-family="monospace">S3</text>
-                            <text x="240" y="121" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="monospace">Exfil</text>
-
-                            <!-- DB node (target) -->
-                            <circle cx="280" cy="190" r="18" fill="#1e1e1e" stroke="#ff5f57" stroke-width="2"/>
-                            <circle class="node-pulse-3" cx="280" cy="190" r="18" fill="none" stroke="#ff5f57" stroke-width="2" opacity="0.3"/>
-                            <text x="280" y="187" text-anchor="middle" fill="#ff8784" font-size="9" font-weight="800" font-family="monospace">DB</text>
-                            <text x="280" y="198" text-anchor="middle" fill="#ff5f57" font-size="7" font-weight="800" font-family="monospace">TARGET</text>
-                            <text x="280" y="213" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="monospace">RDS</text>
-
-                            <!-- Edges -->
-                            <line class="path-draw" x1="58" y1="120" x2="124" y2="73" stroke="#ff5f57" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.85"/>
-                            <line class="path-draw-2" x1="58" y1="138" x2="124" y2="187" stroke="#ff5f57" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.7"/>
-                            <line class="path-draw-3" x1="156" y1="73" x2="224" y2="97" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.7"/>
-                            <line class="path-draw-4" x1="156" y1="200" x2="262" y2="190" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.7"/>
-
-                            <!-- MITRE badge -->
-                            <rect x="8" y="8" width="110" height="22" rx="5" fill="rgba(255,95,87,0.15)" stroke="rgba(255,95,87,0.4)" stroke-width="1"/>
-                            <text class="badge-blink" x="63" y="22" text-anchor="middle" fill="#ff8784" font-size="8" font-weight="700" font-family="monospace">MITRE ATT&amp;CK® — T1078</text>
-
-                            <!-- Completed label -->
-                            <rect x="200" y="232" width="112" height="20" rx="5" fill="rgba(255,95,87,0.15)" stroke="rgba(255,95,87,0.4)" stroke-width="1"/>
-                            <text x="256" y="245" text-anchor="middle" fill="#ff8784" font-size="8" font-weight="700" font-family="monospace">4 ATTACK VECTORS MAPPED</text>
-                        </svg>
-                        </div>
-                    </div>
-
-                    <!-- ── Black Box RT Visual ── -->
-                    <div id="hemis-vis-3" class="hemis-vis-group" style="width: 100%; height: 100%; display: none;">
-                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; min-height: 280px;">
-                            <div style="font-family:'Cabinet Grotesk', sans-serif; font-size:4.5rem; font-weight:800; color:#34d399; text-shadow:0 0 30px rgba(52,211,153,0.4); line-height: 1;">
-                                82<span style="font-size:2rem; opacity:0.5;">/100</span>
-                            </div>
-                            <div style="font-family:monospace; font-size:0.85rem; color:#34d399; letter-spacing:0.15em; font-weight: 700; opacity:0.8;">AVERAGE RISK SCORE</div>
-                            
-                            <div style="margin-top:1.5rem; width:80%; height:6px; background:rgba(52,211,153,0.2); border-radius:3px; overflow:hidden;">
-                                <div style="width:82%; height:100%; background:#34d399; border-radius:3px; box-shadow:0 0 10px #34d399;"></div>
-                            </div>
-                            
-                            <div style="margin-top:2.5rem; padding:0.75rem 1.5rem; border:1px solid rgba(52,211,153,0.3); border-radius:6px; font-family:monospace; font-size:0.7rem; color:#34d399; background:rgba(52,211,153,0.05); text-align: center;">
-                                > SIMULATING EXFILTRATION <br>> BYPASSING WAF: SUCCESS
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="stage-preview" id="stage01-preview">
+              <div class="stage-glow stage-glow--blue"></div>
+              <div class="scanner-preview">
+                <div class="scanner-card" id="sc1"><span class="scanner-card__name">S3 Bucket ACL</span><span class="scanner-card__badge badge-fail">PUBLIC READ</span></div>
+                <div class="scanner-card" id="sc2"><span class="scanner-card__name">CloudTrail Logging</span><span class="scanner-card__badge badge-fail">DISABLED</span></div>
+                <div class="scanner-card" id="sc3"><span class="scanner-card__name">IAM Root MFA</span><span class="scanner-card__badge badge-warn">NOT SET</span></div>
+                <div class="scanner-card scanner-card--misconfigured" id="sc4"><span class="scanner-card__name">Security Groups</span><span class="scanner-card__badge badge-fail">0.0.0.0/0</span></div>
+                <div class="scanner-card" id="sc5"><span class="scanner-card__name">KMS Encryption</span><span class="scanner-card__badge badge-pass">ENABLED</span></div>
+                <div class="scanner-card" id="sc6"><span class="scanner-card__name">VPC Flow Logs</span><span class="scanner-card__badge badge-pass">ACTIVE</span></div>
+                <div class="scanner-meter" id="scannerMeter">
+                  <div class="scanner-meter__label">
+                    <span id="scannerLabel">SCANNING...</span>
+                    <span id="scannerPct">0%</span>
+                  </div>
+                  <div class="scanner-meter__track"><div class="scanner-meter__fill" id="scannerFill"></div></div>
                 </div>
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: #272727; color: white;">AI Red Team — 6 Tools</div>
-                    <h2>HEMIS Engine</h2>
-                    <p><strong>H</strong>euristic <strong>E</strong>ngine for <strong>M</strong>alware
-                        <strong>I</strong>dentification & <strong>S</strong>uppression. An AI/LLM-powered engine that
-                        attacks your systems using natural language-driven adversarial techniques.
-                    </p>
-                    <ul class="list list--bad">
-                        <li><span>✕</span> Natural Language Attack Generation</li>
-                        <li><span>✕</span> LLM Application Security Testing</li>
-                        <li><span>✕</span> MITRE ATT&CK® Coverage Reports</li>
-                    </ul>
-                    <div class="tools-section-label" style="color:rgba(0,0,0,0.45);">Console Tools</div>
-                    <div class="tools-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-bottom:1.5rem;">
-                        <div class="tool-card tool-card--dark active" onclick="activateHemis(0, this, '#ff8784')">
-                            <div class="tool-card__icon" style="background:rgba(255,95,87,0.15); color:#ff8784;">⬡</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">SAST</span>
-                                <span class="tool-card__desc">Static analysis</span>
-                            </div>
-                        </div>
-                        <div class="tool-card tool-card--dark" onclick="activateHemis(1, this, '#fbbf24')">
-                            <div class="tool-card__icon" style="background:rgba(251,191,36,0.15); color:#fbbf24;">◇</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">DAST</span>
-                                <span class="tool-card__desc">Dynamic testing</span>
-                            </div>
-                        </div>
-                        <div class="tool-card tool-card--dark" onclick="activateHemis(2, this, '#a78bfa')">
-                            <div class="tool-card__icon" style="background:rgba(167,139,250,0.15); color:#a78bfa;">◉</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">White Box RT</span>
-                                <span class="tool-card__desc">Source-aware attacks</span>
-                            </div>
-                        </div>
-                        <div class="tool-card tool-card--dark" onclick="activateHemis(3, this, '#34d399')">
-                            <div class="tool-card__icon" style="background:rgba(52,211,153,0.15); color:#34d399;">◌</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">Black Box RT</span>
-                                <span class="tool-card__desc">Adversary simulation</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="hemis-0" class="hemis-details active" style="border-left-color: #ff8784;">
-                        <strong style="color: #ff8784; display:block; margin-bottom: 0.5rem; font-size: 1.1rem;">SAST Engine Configuration</strong>
-                        <p style="margin-bottom: 0.5rem; font-size: 0.9rem;"><strong>67 Active Rules</strong> across AST and Regex scanning paradigms, designed to meticulously parse and map semantic structures to the OWASP Top 10.</p>
-                        <p style="margin-bottom: 0; font-size: 0.9rem;">Analyzes source code across 8 programming languages with an average scan execution of <strong>~342ms</strong>. Integrates zero-noise secret detection, catching leaked API keys, tokens, and misconfigured environment variables before they merge.</p>
-                    </div>
-                    <div id="hemis-1" class="hemis-details" style="border-left-color: #fbbf24;">
-                        <strong style="color: #fbbf24; display:block; margin-bottom: 0.5rem; font-size: 1.1rem;">DAST Active Scanner</strong>
-                        <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">Powered by an extreme iteration of <strong>OWASP ZAP</strong> alongside proprietary AI-enriched analysis engines. The DAST module actively crawls, spiders, and attacks the live surface of your running application.</p>
-                        <p style="margin-bottom: 0; font-size: 0.9rem;">Supports tiered profiles ranging from Quick Scans (API / GraphQL fuzzing only) to full, authenticated Deep Integration routines orchestrating complex, compliance-mapped injection attacks against stateful targets.</p>
-                    </div>
-                    <div id="hemis-2" class="hemis-details" style="border-left-color: #a78bfa;">
-                        <strong style="color: #a78bfa; display:block; margin-bottom: 0.5rem; font-size: 1.1rem;">White Box Red Teaming</strong>
-                        <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">The most advanced source-code aware engine on the market. HemisX consumes your entire repository tree and dynamically maps potential adversary pathways into comprehensive <strong>Attack Graphs</strong>.</p>
-                        <p style="margin-bottom: 0; font-size: 0.9rem;">Simulates multi-stage kill chains (e.g., initial access through a vulnerable dependency -> pivoting via excessive IAM roles -> exfiltration) entirely in simulation, exposing high-impact compliance gaps mathematically.</p>
-                    </div>
-                    <div id="hemis-3" class="hemis-details" style="border-left-color: #34d399;">
-                        <strong style="color: #34d399; display:block; margin-bottom: 0.5rem; font-size: 1.1rem;">Black Box Red Teaming</strong>
-                        <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">External, zero-knowledge adversarial simulation designed to brutally test your perimeter defenses and SOC response times. The engine discovers exposed assets autonomously.</p>
-                        <p style="margin-bottom: 0; font-size: 0.9rem;">Currently computing an <strong>Average Risk Score of 82/100</strong> across targeted infrastructure elements. Safely attempts to validate exploit chains mapped directly to MITRE ATT&CK (e.g., T1078 Valid Accounts to Data Exfiltration).</p>
-                    </div>
-                    
-                    <script>
-                        function activateHemis(index, el, color) {
-                            // Text Details
-                            document.querySelectorAll('.hemis-details').forEach(d => d.classList.remove('active'));
-                            document.querySelectorAll('.tool-card--dark').forEach(c => c.classList.remove('active'));
-                            
-                            // Visual Blocks
-                            document.querySelectorAll('.hemis-vis-group').forEach(g => { 
-                                g.style.display = 'none'; 
-                                g.classList.remove('active'); 
-                            });
-
-                            // Activate new
-                            document.getElementById('hemis-' + index).classList.add('active');
-                            el.classList.add('active');
-                            
-                            const visual = document.getElementById('hemis-vis-' + index);
-                            if (visual) {
-                                visual.style.display = 'block';
-                                void visual.offsetWidth; // Reflow for animation
-                                visual.classList.add('active');
-                                
-                                // Randomize glitch if SAST
-                                if (index === 0) {
-                                    const glitch = visual.querySelector('.glitch-anim');
-                                    if(glitch) {
-                                        glitch.style.animation = 'none';
-                                        void glitch.offsetWidth;
-                                        glitch.style.animation = 'scanGlitch 0.4s ease-in-out forwards';
-                                    }
-                                }
-                            }
-                        }
-                    </script>
-                    </div>
-                    <a href="tools.html#red" class="btn btn--primary btn--lg" style="width: 100%; border: 2px solid var(--black); box-shadow: 4px 4px 0 0 var(--black); margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">View Full Features ⚡</a>
-                </div>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <section class="product-section reveal" id="blue" data-cursor="blue">
-            <div class="section-numeral left">03</div>
-            <div class="product-grid">
-                <div class="product-content">
-                    <div class="badge badge--pill" style="background: var(--blue); color: white;">AI Blue Team — 3 Tools</div>
-                    <h2>AI Blue Team</h2>
-                    <p>Full-spectrum defensive suite: unified cross-layer detection, automated orchestration, and active deception — purpose-built to stop attackers before they reach critical assets.</p>
-                    <ul class="list list--good">
-                        <li><span>✓</span> Cross-layer XDR: Endpoint, Network &amp; Cloud</li>
-                        <li><span>✓</span> SOAR Playbooks — Automated IR in &lt;5s</li>
-                        <li><span>✓</span> Deception Grids — Honeypots &amp; Honeytokens</li>
-                    </ul>
-                    <div class="tools-section-label">Console Tools</div>
-                    <div class="tools-grid--2col" style="display:grid; gap:0.6rem; margin-bottom:1.5rem;">
-                        <div class="tool-card tool-card--blue">
-                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">⬡</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">XDR</span>
-                                <span class="tool-card__desc">Extended Detection &amp; Response</span>
-                            </div>
-                        </div>
-                        <div class="tool-card tool-card--blue">
-                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">▦</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">SOAR</span>
-                                <span class="tool-card__desc">Orchestration &amp; Auto-Response</span>
-                            </div>
-                        </div>
-                        <div class="tool-card tool-card--blue">
-                            <div class="tool-card__icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">◎</div>
-                            <div class="tool-card__info">
-                                <span class="tool-card__name">DECT</span>
-                                <span class="tool-card__desc">Deception Technology</span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="tools.html#blue" class="btn btn--primary btn--lg" style="width: 100%; border: 2px solid var(--black); box-shadow: 4px 4px 0 0 var(--black); margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">View Full Features ⚡</a>
-                </div>
-                <div class="product-vis blue-team-wrapper" style="background: #0a1628; padding: 1.5rem;">
-                    <div class="blue-overlay">
-                        <div class="blue-overlay-text">
-                            <span>🛡️</span>
-                            <span>IN DEVELOPMENT</span>
-                        </div>
-                        <div class="blue-overlay-sub">Q4 2026 RELEASE CANDIDATE</div>
-                    </div>
-                    <!-- ── War Room ── -->
-                    <div class="vis-warroom" style="filter: blur(1.5px);">
-                        <div class="wr-header">
-                            <span class="wr-title">⚡ Threat War Room</span>
-                            <span class="wr-live"><span class="wr-live-dot"></span>LIVE</span>
-                        </div>
+          <!-- Divider 02 -->
+          <div class="product-divider" id="div02">
+            <div class="product-divider__line" id="divLine02"></div>
+            <div class="product-divider__num" id="divNum02">02</div>
+            <div class="product-divider__line" id="divLine02b"></div>
+          </div>
 
-                        <div class="wr-row wr-row--crit">
-                            <span class="wr-sev wr-sev--crit">CRIT</span>
-                            <span class="wr-msg">Lateral movement — 10.0.4.22 → RDS cluster</span>
-                            <span class="wr-time">0s ago</span>
-                        </div>
-                        <div class="wr-row wr-row--med">
-                            <span class="wr-sev wr-sev--med">MED</span>
-                            <span class="wr-msg">Unusual IAM role assumption — prod-worker</span>
-                            <span class="wr-time">4s ago</span>
-                        </div>
-                        <div class="wr-row wr-row--low">
-                            <span class="wr-sev wr-sev--low">LOW</span>
-                            <span class="wr-msg">S3 bucket policy modified — acme-backups</span>
-                            <span class="wr-time">11s ago</span>
-                        </div>
-                        <div class="wr-row wr-row--med2">
-                            <span class="wr-sev wr-sev--med">MED</span>
-                            <span class="wr-msg">Brute-force attempt — SSH 203.0.113.9</span>
-                            <span class="wr-time">19s ago</span>
-                        </div>
-                        <div class="wr-row wr-row--crit2">
-                            <span class="wr-sev wr-sev--crit">CRIT</span>
-                            <span class="wr-msg">Data exfil pattern — 2.3 GB egress spike</span>
-                            <span class="wr-time">34s ago</span>
-                        </div>
-
-                        <div class="wr-stat-row">
-                            <div class="wr-stat">
-                                <span class="wr-stat-num wr-mttr">−72%</span>
-                                <span class="wr-stat-lbl">MTTR</span>
-                            </div>
-                            <div class="wr-stat">
-                                <span class="wr-stat-num wr-count">3</span>
-                                <span class="wr-stat-lbl">Active</span>
-                            </div>
-                            <div class="wr-stat">
-                                <span class="wr-stat-num wr-resp">&lt;5s</span>
-                                <span class="wr-stat-lbl">Ingest</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <!-- Stage 2: HEMIS Red Team -->
+          <!-- id="red" preserves anchor links from index.html features grid -->
+          <div class="product-stage" id="stage02" data-stage="2"><a id="red" style="position:absolute;top:0;"></a>
+            <div class="stage-identity" id="stage02-identity">
+              <div class="stage-num">Product 02</div>
+              <h2 class="stage-name" id="stage02-name">HEMIS<br>Red Team</h2>
+              <div class="stage-punch"><span class="stage-punch__typed" id="stage02-punch"></span></div>
+              <div class="stage-badges" id="stage02-badges">
+                <span class="stage-badge">MITRE ATT&amp;CK</span>
+                <span class="stage-badge">AI/LLM</span>
+                <span class="stage-badge">OWASP Top 10</span>
+                <span class="stage-badge">Payload Gen</span>
+              </div>
+              <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Launch HEMIS &#x26A1;</a>
             </div>
-        </section>
+            <div class="stage-preview" id="stage02-preview">
+              <div class="stage-glow stage-glow--red"></div>
+              <div class="redteam-preview">
+                <div class="redteam-terminal">
+                  <div class="redteam-terminal__bar">HEMIS RED TEAM ENGINE &#x2014; ACTIVE SIMULATION</div>
+                  <div class="redteam-terminal__body">
+                    <div class="rt-line" id="rt1">&gt; Initializing engagement: Target Corp</div>
+                    <div class="rt-line" id="rt2">&gt; Recon phase... enumerating subdomains</div>
+                    <div class="rt-line" id="rt3">&gt; Found: api.target.internal:8080</div>
+                    <div class="rt-line" id="rt4">&gt; Testing authentication endpoints...</div>
+                    <div class="rt-line" id="rt5">&gt; Fuzzing login parameters...</div>
+                    <div class="rt-line rt-line--crit" id="rt6">&gt; [CRITICAL] CVE-2024-3094 &#x2014; Auth Bypass</div>
+                    <div class="rt-line" id="rt7">&gt; Payload delivered. Session token captured.</div>
+                    <div class="rt-line" id="rt8">&gt; Lateral movement vector identified...</div>
+                    <div class="rt-banner" id="rtBanner">&#x26A0; CRITICAL FINDING</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider 03 -->
+          <div class="product-divider" id="div03">
+            <div class="product-divider__line" id="divLine03"></div>
+            <div class="product-divider__num" id="divNum03">03</div>
+            <div class="product-divider__line" id="divLine03b"></div>
+          </div>
+
+          <!-- Stage 3: Blue Team -->
+          <!-- id="blue" preserves anchor links from index.html features grid -->
+          <div class="product-stage" id="stage03" data-stage="3"><a id="blue" style="position:absolute;top:0;"></a>
+            <div class="stage-identity" id="stage03-identity">
+              <div class="stage-num">Product 03</div>
+              <h2 class="stage-name" id="stage03-name">AI Blue<br>Team</h2>
+              <div class="stage-punch"><span class="stage-punch__typed" id="stage03-punch"></span></div>
+              <div class="stage-badges" id="stage03-badges">
+                <span class="stage-badge">Autonomous</span>
+                <span class="stage-badge">SIEM</span>
+                <span class="stage-badge">Sigma Rules</span>
+                <span class="stage-badge">Real-time</span>
+              </div>
+              <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Activate Defense &#x26A1;</a>
+            </div>
+            <div class="stage-preview" id="stage03-preview">
+              <div class="stage-glow stage-glow--green"></div>
+              <div class="blueteam-preview">
+                <div class="radar-container">
+                  <div class="radar-glow" id="radarGlow"></div>
+                  <div class="radar-circle"></div>
+                  <div class="radar-ring"></div>
+                  <div class="radar-ring radar-ring--2"></div>
+                  <div class="radar-ring radar-ring--3"></div>
+                  <div class="radar-blip" id="blip1" style="left:75%;top:30%;"></div>
+                  <div class="radar-check" id="check1" style="left:75%;top:30%;">
+                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="radar-blip" id="blip2" style="left:25%;top:65%;"></div>
+                  <div class="radar-check" id="check2" style="left:25%;top:65%;">
+                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="radar-blip" id="blip3" style="left:60%;top:70%;"></div>
+                  <div class="radar-check" id="check3" style="left:60%;top:70%;">
+                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="radar-blip" id="blip4" style="left:35%;top:25%;"></div>
+                  <div class="radar-check" id="check4" style="left:35%;top:25%;">
+                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+                <div class="blueteam-status" id="btStatus">MONITORING THREATS</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /product-stages -->
 
         <!-- ═══════════════════════════════════════════════════════════════
              BRUTALIST CONSOLE SECTION
@@ -1497,6 +1423,229 @@
         }
     </script>
     <script src="cursor.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+  (function initProductAnimations() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const punchLines = {
+      'stage01-punch': 'Automated cloud misconfiguration detection.',
+      'stage02-punch': 'AI-powered red team simulation engine.',
+      'stage03-punch': 'Autonomous real-time threat interception.'
+    };
+
+    function typePunch(elId, text, cb) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (reduceMotion) { el.textContent = text; if (cb) cb(); return; }
+      let i = 0;
+      const iv = setInterval(() => {
+        el.textContent = text.slice(0, i);
+        i++;
+        if (i > text.length) { clearInterval(iv); if (cb) cb(); }
+      }, 16);
+    }
+
+    function animateBadges(containerId) {
+      const badges = document.querySelectorAll('#' + containerId + ' .stage-badge');
+      if (reduceMotion) {
+        badges.forEach(b => { b.style.opacity = 1; b.style.transform = 'scale(1)'; });
+        return;
+      }
+      gsap.to(badges, {
+        opacity: 1, scale: 1,
+        duration: 0.35, ease: 'back.out(1.7)',
+        stagger: 0.05,
+        onStart: () => badges.forEach(b => { b.style.transform = 'scale(0)'; })
+      });
+    }
+
+    function waitForBoot(cb) {
+      if (document.body.classList.contains('boot-complete') ||
+          document.body.style.overflow !== 'hidden') {
+        cb(); return;
+      }
+      let attempts = 0;
+      const check = setInterval(() => {
+        attempts++;
+        if (document.body.classList.contains('boot-complete') ||
+            document.body.style.overflow !== 'hidden' || attempts > 30) {
+          clearInterval(check); cb();
+        }
+      }, 100);
+    }
+
+    document.fonts.ready.then(() => {
+      waitForBoot(() => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── Dividers ────────────────────────────────────────────────────
+      [['divLine01','divNum01','divLine01b'],
+       ['divLine02','divNum02','divLine02b'],
+       ['divLine03','divNum03','divLine03b']].forEach(([l1, num, l2]) => {
+        const trigger = document.getElementById(num)?.parentElement;
+        if (!trigger) return;
+        ScrollTrigger.create({
+          trigger,
+          start: 'top 80%',
+          once: true,
+          onEnter: () => {
+            if (reduceMotion) {
+              ['#'+l1,'#'+num,'#'+l2].forEach(id => {
+                const el = document.querySelector(id);
+                if (el) { el.style.opacity = 1; el.style.transform = 'none'; }
+              });
+              return;
+            }
+            gsap.to('#'+l1, { scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left center' });
+            gsap.to('#'+l2, { scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'right center' });
+            gsap.to('#'+num, { opacity: 1, duration: 0.4, delay: 0.2 });
+          }
+        });
+      });
+
+      // ── Stage reveal + live previews ───────────────────────────────
+      document.querySelectorAll('.product-stage').forEach(stage => {
+        const identity = stage.querySelector('.stage-identity');
+        const preview = stage.querySelector('.stage-preview');
+
+        if (reduceMotion) {
+          if (identity) { identity.style.opacity = 1; identity.style.transform = 'none'; }
+          if (preview)  { preview.style.opacity = 1;  preview.style.transform = 'none'; }
+        }
+
+        ScrollTrigger.create({
+          trigger: stage,
+          start: 'top 60%',
+          once: true,
+          onEnter: () => {
+            stage.classList.add('is-revealed');
+
+            if (!reduceMotion) {
+              if (identity) gsap.fromTo(identity, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { identity.style.willChange = 'auto'; } });
+              if (preview)  gsap.fromTo(preview,  { x: 80, opacity: 0 },  { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { preview.style.willChange = 'auto'; } });
+            }
+
+            const num = stage.dataset.stage;
+            const punchId = 'stage0' + num + '-punch';
+            const badgesId = 'stage0' + num + '-badges';
+            typePunch(punchId, punchLines[punchId] || '', () => animateBadges(badgesId));
+
+            const nameEl = document.getElementById('stage0' + num + '-name');
+            if (nameEl && !reduceMotion) {
+              gsap.to(nameEl, {
+                y: -60,
+                ease: 'none',
+                scrollTrigger: { trigger: stage, start: 'top bottom', end: 'bottom top', scrub: true }
+              });
+            }
+
+            if (num === '1') animateScannerPreview();
+            if (num === '2') animateRedTeamPreview();
+            if (num === '3') animateBlueTeamPreview();
+          }
+        });
+      });
+
+      // ── Cloud Scanner Preview ──────────────────────────────────────
+      function animateScannerPreview() {
+        const fill = document.getElementById('scannerFill');
+        const label = document.getElementById('scannerLabel');
+        const pct = document.getElementById('scannerPct');
+        const cards = ['sc1','sc2','sc3','sc4','sc5','sc6'];
+
+        if (reduceMotion) {
+          cards.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('sc-revealed'); });
+          if (fill) fill.style.width = '73%';
+          if (label) label.textContent = '73% COMPLIANT';
+          if (pct) pct.textContent = '73%';
+          return;
+        }
+
+        cards.forEach((id, i) => {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('sc-revealed');
+          }, i * 60);
+        });
+        setTimeout(() => {
+          if (fill) fill.style.width = '73%';
+          let n = 0;
+          const iv = setInterval(() => {
+            n = Math.min(73, n + 1);
+            if (pct) pct.textContent = n + '%';
+            if (n >= 73) { clearInterval(iv); if (label) label.textContent = '73% COMPLIANT'; }
+          }, 20);
+        }, 400);
+      }
+
+      // ── Red Team Preview ───────────────────────────────────────────
+      function animateRedTeamPreview() {
+        const lines = ['rt1','rt2','rt3','rt4','rt5','rt6','rt7','rt8'];
+        const banner = document.getElementById('rtBanner');
+
+        if (reduceMotion) {
+          lines.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = 1; });
+          if (banner) banner.classList.add('show');
+          return;
+        }
+
+        lines.forEach((id, i) => {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) gsap.to(el, { opacity: 1, duration: 0.1 });
+          }, i * 120);
+        });
+        setTimeout(() => {
+          if (banner) banner.classList.add('show');
+        }, lines.length * 120 + 200);
+      }
+
+      // ── Blue Team Preview ──────────────────────────────────────────
+      function animateBlueTeamPreview() {
+        const blips = ['blip1','blip2','blip3','blip4'];
+        const checks = ['check1','check2','check3','check4'];
+        const radarGlow = document.getElementById('radarGlow');
+        const btStatus = document.getElementById('btStatus');
+
+        if (reduceMotion) {
+          blips.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = 0; });
+          checks.forEach(id => { const el = document.getElementById(id); if (el) el.style.transform = 'translate(-50%,-50%) scale(1)'; });
+          if (radarGlow) radarGlow.classList.add('intercepted');
+          if (btStatus) btStatus.textContent = 'ALL THREATS NEUTRALISED';
+          return;
+        }
+
+        blips.forEach((id, i) => {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) gsap.to(el, { opacity: 1, duration: 0.2 });
+          }, i * 300);
+        });
+
+        checks.forEach((id, i) => {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) gsap.fromTo(el, { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(1.7)' });
+            const blip = document.getElementById(blips[i]);
+            if (blip) gsap.to(blip, { opacity: 0, duration: 0.2 });
+          }, i * 300 + 600);
+        });
+
+        setTimeout(() => {
+          if (radarGlow) radarGlow.classList.add('intercepted');
+          if (btStatus) btStatus.textContent = 'ALL THREATS NEUTRALISED';
+        }, checks.length * 300 + 1000);
+      }
+
+      ScrollTrigger.refresh();
+      }); // end waitForBoot
+    }); // end document.fonts.ready
+  })();
+  </script>
 </body>
 
 </html>
