@@ -8,6 +8,9 @@
   --black: #000000;
   --shadow-sm: 4px 4px 0 0 var(--black);
   --shadow-lg: 8px 8px 0 0 var(--black);
+  --shadow-xl: 12px 12px 0 0 var(--black);
+  --red: #ff5f57;
+  --green: #34d399;
   --border: 2px solid var(--black);
 }
 
@@ -533,6 +536,10 @@ main {
 .feature:hover {
   transform: translate(4px, 4px);
   box-shadow: 0 0 0 0 var(--black);
+}
+
+.feature.gsap-hidden {
+  opacity: 0;
 }
 
 .feature__icon {
@@ -1233,5 +1240,65 @@ main {
     left: 1rem;
     width: auto;
     max-width: none;
+  }
+}
+/* ── Cinematic: Ambient Card Glows ── */
+.card-glow-blue::before,
+.card-glow-red::before,
+.card-glow-green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: cardGlowPulse 8s ease-in-out infinite;
+}
+.card-glow-blue::before  { background: radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.18) 0%, transparent 70%); }
+.card-glow-red::before   { background: radial-gradient(ellipse at 50% 80%, rgba(255,95,87,0.18) 0%, transparent 70%); animation-delay: -2.5s; }
+.card-glow-green::before { background: radial-gradient(ellipse at 50% 80%, rgba(52,211,153,0.18) 0%, transparent 70%); animation-delay: -5s; }
+.card-glow-blue.glow-active::before,
+.card-glow-red.glow-active::before,
+.card-glow-green.glow-active::before { opacity: 1; }
+
+@keyframes cardGlowPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* ── Cinematic: Scan-line Sweep ── */
+.scan-line-btn,
+.scan-line-card {
+  position: relative;
+  overflow: hidden;
+}
+.scan-line-btn::after,
+.scan-line-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,225,124,0.35), transparent);
+  transition: none;
+  pointer-events: none;
+}
+.scan-line-btn:hover::after,
+.scan-line-card:hover::after {
+  animation: scanLineSweep 0.35s ease forwards;
+}
+@keyframes scanLineSweep {
+  from { left: -60%; }
+  to   { left: 140%; }
+}
+
+/* ── Accessibility: Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

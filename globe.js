@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Scene setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const containerW = () => container.clientWidth || window.innerWidth;
+  const containerH = () => container.clientHeight || window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(45, containerW() / containerH(), 0.1, 1000);
   camera.position.z = 240;
   
   // no offset, keep globe perfectly centered
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(containerW(), containerH());
   container.appendChild(renderer.domElement);
 
   const globeGroup = new THREE.Group();
@@ -375,12 +377,19 @@ document.addEventListener('DOMContentLoaded', () => {
   
   animate();
 
+  // Scroll depth hook — called from GSAP ScrollTrigger in index.html
+  const baseZ = 240;
+  window.globeSetScrollDepth = function(ratio) {
+    // ratio: 0 (top of hero) → 1 (bottom of hero)
+    camera.position.z = baseZ + ratio * (baseZ * 0.5);
+  };
+
   // 6. Resize handler
   window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = containerW() / containerH();
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    
+    renderer.setSize(containerW(), containerH());
+
     camera.position.x = 0;
   });
 });
