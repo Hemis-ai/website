@@ -538,6 +538,10 @@ main {
   box-shadow: 0 0 0 0 var(--black);
 }
 
+.feature.gsap-hidden {
+  opacity: 0;
+}
+
 .feature__icon {
   width: 24px;
   height: 24px;
