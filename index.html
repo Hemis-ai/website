@@ -650,12 +650,13 @@
       .how-cinema {
         position: relative;
         background: #0d1210;
-        overflow: clip;
+        overflow: hidden;
+        height: 100vh;
       }
       .how-cinema__pin {
-        position: sticky;
-        top: 0;
+        position: relative;
         height: 100vh;
+        width: 100%;
         overflow: hidden;
       }
       .how-cinema__track {
@@ -850,7 +851,7 @@
 
       /* Progress dots */
       .how-cinema__dots {
-        position: fixed;
+        position: absolute;
         bottom: 2rem;
         left: 50%;
         transform: translateX(-50%);
@@ -865,7 +866,7 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        border: 2px solid black;
+        border: 2px solid rgba(255,255,255,0.3);
         background: transparent;
         display: flex;
         align-items: center;
@@ -873,21 +874,25 @@
         font-family: 'Cabinet Grotesk', sans-serif;
         font-size: 0.65rem;
         font-weight: 800;
-        color: black;
-        transition: background 0.2s, color 0.2s;
+        color: rgba(255,255,255,0.5);
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
         cursor: default;
         user-select: none;
       }
-      .how-dot.is-active { background: var(--yellow); }
+      .how-dot.is-active { 
+        background: var(--yellow); 
+        color: black;
+        border-color: var(--yellow);
+      }
 
       /* Mobile fallback */
       @media (max-width: 768px) {
         .how-cinema { height: auto; }
-        .how-cinema__pin { position: relative; height: auto; }
+        .how-cinema__pin { padding: 4rem 0; height: auto; }
         .how-cinema__track { flex-direction: column; width: 100%; height: auto; }
         .how-panel { width: 100%; height: auto; min-height: 80vh; padding: 4rem 1.5rem; }
         .how-panel__content { grid-template-columns: 1fr; gap: 2rem; }
-        .how-cinema__dots { display: none; }
+        .how-cinema__dots { display: none !important; }
         .how-panel__heading { opacity: 1 !important; transform: none !important; }
         .how-panel__body { opacity: 1 !important; transform: none !important; }
         .how-vuln-card { opacity: 1 !important; transform: none !important; }
@@ -996,16 +1001,17 @@
           </div>
 
         </div><!-- /track -->
+
+        <!-- Progress dots (moved inside the pin so they stay with the section) -->
+        <div class="how-cinema__dots" id="howDots">
+          <div class="how-dot is-active">1</div>
+          <div class="how-dot">2</div>
+          <div class="how-dot">3</div>
+          <div class="how-dot">4</div>
+        </div>
+
       </div><!-- /pin -->
     </section>
-
-    <!-- Progress dots (outside the pin so they stay fixed) -->
-    <div class="how-cinema__dots" id="howDots">
-      <div class="how-dot is-active">1</div>
-      <div class="how-dot">2</div>
-      <div class="how-dot">3</div>
-      <div class="how-dot">4</div>
-    </div>
     <!-- ═══════ END HOW IT WORKS CINEMA ═══════ -->
 
     <!-- ═══════════════════════════════════════════════════════════════
@@ -1546,13 +1552,24 @@
           if (!track) return;
 
           const st = gsap.to(track, {
-            x: () => -(track.scrollWidth - window.innerWidth),
+            x: () => -(window.innerWidth * 3),
             ease: 'none',
             scrollTrigger: {
               trigger: '.how-cinema',
               pin: true,
-              scrub: 1,
-              end: () => '+=' + (track.scrollWidth - window.innerWidth + window.innerWidth * 0.5),
+              pinSpacing: true,
+              scrub: true,
+              end: '+=1200vw',
+              snap: {
+                snapTo: 1 / 3, // 4 panels -> 3 intervals
+                duration: { min: 0.2, max: 0.8 },
+                delay: 0.1,
+                ease: 'power1.inOut'
+              },
+              onEnter: () => { const d = document.getElementById('howDots'); if(d) d.style.display = 'flex'; },
+              onLeave: () => { const d = document.getElementById('howDots'); if(d) d.style.display = 'none'; },
+              onEnterBack: () => { const d = document.getElementById('howDots'); if(d) d.style.display = 'flex'; },
+              onLeaveBack: () => { const d = document.getElementById('howDots'); if(d) d.style.display = 'none'; },
               onUpdate: (self) => {
                 const progress = self.progress;
                 const panelIndex = Math.min(3, Math.floor(progress * 4));
@@ -1565,7 +1582,7 @@
                 });
                 const dots = document.getElementById('howDots');
                 if (dots) {
-                  if (progress > 0 && progress < 1) dots.classList.add('is-visible');
+                  if (progress > 0) dots.classList.add('is-visible');
                   else dots.classList.remove('is-visible');
                 }
                 if (panelIndex >= 2) triggerCVSSCounter();
@@ -1586,6 +1603,21 @@
       }
 
       ScrollTrigger.refresh();
+      
+      // ── Vanilla Intersection Observer Fallback for Dots ──
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const dots = document.getElementById('howDots');
+            if (dots) dots.style.setProperty('display', 'none', 'important');
+          }
+        });
+      }, { threshold: 0.1 });
+      const consoleFeature = document.getElementById('console-spotlight');
+      const footer = document.querySelector('.footer');
+      if (consoleFeature) observer.observe(consoleFeature);
+      if (footer) observer.observe(footer);
+      
       }); // end waitForBoot
     }); // end document.fonts.ready
   })();
