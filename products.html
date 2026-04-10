@@ -1962,6 +1962,7 @@
         </svg>
     </button>
 
+    <script src="chatbot-kb.js"></script>
     <script>
         const backToTopButton = document.getElementById("backToTop");
         window.addEventListener("scroll", () => {
@@ -1982,51 +1983,7 @@
             if (chatbotWindow.classList.contains('show')) setTimeout(() => chatbotInput.focus(), 300);
         });
 
-        const websiteKnowledge = {
-            founders: {
-                keywords: ['founder', 'founders', 'sai', 'dishanth', 'ceo', 'cto', 'who made', 'who built'],
-                response: "HemisX was forged in the shadows by a crew of security engineers who believe offense is the best defense. The team stays stealth — but the tech speaks for itself."
-            },
-            products: {
-                keywords: ['product', 'products', 'suite', 'tools', 'what do you do', 'services'],
-                response: "Our platform includes three product suites: 1. HEMIS Engine (SAST, DAST, White Box Red Teaming, Black Box Red Teaming, Findings Engine, Report Generator), 2. Cloud Scanner (Cloud Scan, Compliance, Inventory), and 3. Blue Team (XDR, SOAR, DECT). All mapped to SOC 2, ISO 27001, CIS, and MITRE ATT&CK."
-            },
-            cspm: {
-                keywords: ['cloud', 'cspm', 'scanner', 'misconfiguration', 'aws', 's3', 'iam', 'ec2'],
-                response: "Our Cloud Misconfiguration Scanner automatically detects and remediates AWS security issues (IAM, S3, EC2) in under 60 seconds, mapping directly to compliance frameworks like SOC 2."
-            },
-            redteam: {
-                keywords: ['red team', 'hemis', 'offensive', 'attack', 'simulation', 'malware', 'adversarial'],
-                response: "HEMIS (Heuristic Engine for Malware Identification & Suppression) is our AI-powered Red Team engine. IT generates natural language-driven adversarial techniques to stress-test your systems."
-            },
-            blueteam: {
-                keywords: ['blue team', 'defensive', 'response', 'threat', 'soar', 'incident', 'autonomous'],
-                response: "Our AI Blue Team suite includes three tools: XDR (Extended Detection & Response) for unified cross-layer threat visibility across endpoint, network, and cloud; SOAR for automated security orchestration and incident response playbooks; and DECT (Deception Technology) for honeypots, honeytokens, and active deception grids that detect attackers early."
-            },
-            contact: {
-                keywords: ['contact', 'email', 'sales', 'support', 'reach', 'help', 'talk to human'],
-                response: "For general inquiries, reach us at info@hemisx.com. For security incidents or urgent matters, contact@hemisx.com."
-            },
-            location: {
-                keywords: ['location', 'address', 'where are you', 'office', 'hq'],
-                response: "Our Global HQ is located at 128 Brutalist Way, Tech District, San Francisco, CA."
-            },
-            careers: {
-                keywords: ['career', 'job', 'hiring', 'work', 'apply', 'join', 'opportunity'],
-                response: "Wait for the future updates - Careers are opening soon! Keep an eye on our Careers page for upcoming opportunities to join the HemisX team."
-            }
-        };
-
-        function getBotResponse(input) {
-            const query = input.toLowerCase().replace(/[^\w\s]/gi, '');
-            for (const key in websiteKnowledge) {
-                const item = websiteKnowledge[key];
-                if (item.keywords.some(keyword => query.includes(keyword))) {
-                    return item.response;
-                }
-            }
-            return "I'm still learning — reach the team at info@hemisx.com or contact@hemisx.com for more details!";
-        }
+        // Knowledge base loaded from chatbot-kb.js
 
         chatbotForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -2041,7 +1998,7 @@
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chat-message message-bot';
-                botMsg.textContent = getBotResponse(message);
+                botMsg.innerHTML = getBotResponse(message);
                 chatbotBody.appendChild(botMsg);
                 chatbotBody.scrollTop = chatbotBody.scrollHeight;
             }, 600);
