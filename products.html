@@ -861,47 +861,95 @@
         .stage-feature-panel { display: none; animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1); }
         .stage-feature-panel.active { display: block; }
 
+        .feature-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0,0,0,0.06);
+        }
+        .feature-header__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            box-shadow: 3px 3px 0 0 rgba(0,0,0,0.1);
+        }
+        .feature-header__text { flex: 1; }
         .feature-title {
             font-family: 'Cabinet Grotesk', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 800;
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.01em;
+            margin-bottom: 0.15rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
         .feature-subtitle {
             font-family: 'Satoshi', sans-serif;
-            font-size: 0.85rem;
-            color: rgba(0,0,0,0.5);
-            margin-bottom: 1rem;
+            font-size: 0.78rem;
+            color: rgba(0,0,0,0.45);
+            line-height: 1.4;
         }
-        .feature-list { list-style: none; padding: 0; margin: 0 0 1rem 0; display: flex; flex-direction: column; gap: 0.4rem; }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
         .feature-list li {
             font-family: 'Satoshi', sans-serif;
             font-size: 0.78rem;
-            color: rgba(0,0,0,0.7);
-            padding: 0.35rem 0;
-            padding-left: 1.4rem;
+            color: rgba(0,0,0,0.65);
+            padding: 0.55rem 0.75rem;
+            padding-left: 2.2rem;
             position: relative;
             line-height: 1.5;
+            background: rgba(0,0,0,0.025);
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.15s ease;
+        }
+        .feature-list li:hover {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.08);
+            transform: translateX(2px);
         }
         .feature-list li::before {
-            content: '▸';
+            content: '✓';
             position: absolute;
-            left: 0;
-            color: rgba(0,0,0,0.3);
+            left: 0.75rem;
+            top: 0.55rem;
+            color: #16a34a;
             font-weight: 800;
+            font-size: 0.7rem;
         }
-        .feature-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+        .feature-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
         .feature-badge {
             font-family: 'Satoshi', sans-serif;
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 700;
-            padding: 0.2rem 0.6rem;
-            border: 1.5px solid rgba(0,0,0,0.12);
+            padding: 0.25rem 0.65rem;
+            border: 1.5px solid rgba(0,0,0,0.1);
             border-radius: 100px;
-            color: rgba(0,0,0,0.45);
+            color: rgba(0,0,0,0.4);
             letter-spacing: 0.06em;
             text-transform: uppercase;
+            background: rgba(0,0,0,0.02);
+            transition: all 0.15s ease;
+        }
+        .feature-badge:hover {
+            border-color: rgba(0,0,0,0.25);
+            color: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.04);
         }
 
         /* ── Preview Visual Panels ── */
@@ -1316,8 +1364,13 @@
               </div>
               <!-- IAM Panel -->
               <div class="stage-feature-panel active" data-panel="cloud-iam">
-                <div class="feature-title">IAM Security Checks</div>
-                <div class="feature-subtitle">10 checks covering identity and access management</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon">&#x1F512;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">IAM Security Checks</div>
+                    <div class="feature-subtitle">10 checks covering identity &amp; access management</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Root account access key detection &amp; MFA enforcement</li>
                   <li>Credential rotation monitoring (flags 90+ day old keys)</li>
@@ -1331,8 +1384,13 @@
               </div>
               <!-- Data Panel -->
               <div class="stage-feature-panel" data-panel="cloud-data">
-                <div class="feature-title">Data Protection Checks</div>
-                <div class="feature-subtitle">S3, RDS, secrets, and encryption validation</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon">&#x1F4BE;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Data Protection Checks</div>
+                    <div class="feature-subtitle">S3, RDS, secrets &amp; encryption validation</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>S3 public access detection &amp; encryption enforcement</li>
                   <li>RDS encryption and automated backup verification</li>
@@ -1346,8 +1404,13 @@
               </div>
               <!-- Network Panel -->
               <div class="stage-feature-panel" data-panel="cloud-network">
-                <div class="feature-title">Network Security Checks</div>
-                <div class="feature-subtitle">VPC, security groups, and traffic analysis</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon">&#x1F310;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Network Security Checks</div>
+                    <div class="feature-subtitle">VPC, security groups &amp; traffic analysis</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Overpermissive security group detection (0.0.0.0/0)</li>
                   <li>VPC Flow Logs validation across all regions</li>
@@ -1361,8 +1424,13 @@
               </div>
               <!-- Compliance Panel -->
               <div class="stage-feature-panel" data-panel="cloud-compliance">
-                <div class="feature-title">Compliance Scoring</div>
-                <div class="feature-subtitle">Real-time mapping to industry frameworks</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon">&#x1F4CB;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Compliance Scoring</div>
+                    <div class="feature-subtitle">Real-time mapping to industry frameworks</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>CIS Benchmark, PCI-DSS, SOC 2, HIPAA control mapping</li>
                   <li>ISO 27001 alignment with gap analysis</li>
@@ -1376,8 +1444,13 @@
               </div>
               <!-- Attack Chain Panel -->
               <div class="stage-feature-panel" data-panel="cloud-attack">
-                <div class="feature-title">Attack Scenario Engine</div>
-                <div class="feature-subtitle">Chained exploitation paths with business impact</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#dc2626;">&#x26A1;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Attack Scenario Engine</div>
+                    <div class="feature-subtitle">Chained exploitation paths with business impact</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Automated attack path generation from misconfigurations</li>
                   <li>Financial impact estimation &amp; records-at-risk calculation</li>
@@ -1413,8 +1486,13 @@
               </div>
               <!-- SAST Panel -->
               <div class="stage-feature-panel active" data-panel="red-sast">
-                <div class="feature-title">Static Application Security Testing</div>
-                <div class="feature-subtitle">Source code analysis before deployment</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#dc2626;">&#x2B22;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Static Application Security Testing</div>
+                    <div class="feature-subtitle">Source code analysis before deployment</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>55+ rule-based scanner covering SQL injection, command injection, LDAP/XPath injection</li>
                   <li>Secret detection: 20+ patterns (AWS keys, GitHub tokens, Stripe, JWT, PEM keys)</li>
@@ -1431,8 +1509,13 @@
               </div>
               <!-- DAST Panel -->
               <div class="stage-feature-panel" data-panel="red-dast">
-                <div class="feature-title">Dynamic Application Security Testing</div>
-                <div class="feature-subtitle">Active probing of running web applications</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#dc2626;">&#x25C7;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Dynamic Application Security Testing</div>
+                    <div class="feature-subtitle">Active probing of running web applications</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>OWASP ZAP integration with spider crawl + active scanning</li>
                   <li>Built-in fallback scanner when ZAP is unavailable</li>
@@ -1448,8 +1531,13 @@
               </div>
               <!-- WBRT Panel -->
               <div class="stage-feature-panel" data-panel="red-wbrt">
-                <div class="feature-title">White Box Red Teaming</div>
-                <div class="feature-subtitle">Insider threat simulation using full code knowledge</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#dc2626;">&#x25C9;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">White Box Red Teaming</div>
+                    <div class="feature-subtitle">Insider threat simulation with full code knowledge</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Imports SAST findings as starting point for attack graphs</li>
                   <li>Architecture mapping: tech stack, cloud providers, auth mechanisms, data classes</li>
@@ -1464,8 +1552,13 @@
               </div>
               <!-- BBRT Panel -->
               <div class="stage-feature-panel" data-panel="red-bbrt">
-                <div class="feature-title">Black Box Red Teaming</div>
-                <div class="feature-subtitle">External attacker simulation with zero prior knowledge</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#dc2626;">&#x25CC;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Black Box Red Teaming</div>
+                    <div class="feature-subtitle">External attacker simulation with zero prior knowledge</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Subdomain/DNS recon via crt.sh, HackerTarget, AlienVault OTX, URLscan</li>
                   <li>Subdomain takeover detection &amp; 73-port service discovery</li>
@@ -1655,8 +1748,13 @@
               </div>
               <!-- XDR Panel -->
               <div class="stage-feature-panel active" data-panel="blue-xdr">
-                <div class="feature-title">Extended Detection &amp; Response</div>
-                <div class="feature-subtitle">Cross-layer threat correlation and autonomous hunting</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#2563eb;">&#x2B22;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Extended Detection &amp; Response</div>
+                    <div class="feature-subtitle">Cross-layer threat correlation &amp; autonomous hunting</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Alert sources: endpoint, network, cloud, identity, email, SaaS, deception, NHI</li>
                   <li>Entity risk scoring (UEBA): 0-100 behavioral scores with baseline deviation</li>
@@ -1671,8 +1769,13 @@
               </div>
               <!-- SOAR Panel -->
               <div class="stage-feature-panel" data-panel="blue-soar">
-                <div class="feature-title">Security Orchestration &amp; Response</div>
-                <div class="feature-subtitle">Automated alert triage and incident response playbooks</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#2563eb;">&#x25A6;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Security Orchestration &amp; Response</div>
+                    <div class="feature-subtitle">Automated alert triage &amp; incident response playbooks</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>OCSF-aligned alert normalization with fingerprint deduplication</li>
                   <li>Claude AI auto-triage: entity criticality, false positive likelihood, auto-execute</li>
@@ -1687,8 +1790,13 @@
               </div>
               <!-- DECT Panel -->
               <div class="stage-feature-panel" data-panel="blue-dect">
-                <div class="feature-title">Deception &amp; Engagement Tactics</div>
-                <div class="feature-subtitle">Decoys, traps, and canary tokens to detect attackers early</div>
+                <div class="feature-header">
+                  <div class="feature-header__icon" style="background:#2563eb;">&#x25CE;</div>
+                  <div class="feature-header__text">
+                    <div class="feature-title">Deception &amp; Engagement Tactics</div>
+                    <div class="feature-subtitle">Decoys, traps &amp; canary tokens to detect attackers early</div>
+                  </div>
+                </div>
                 <ul class="feature-list">
                   <li>Decoy types: fake endpoints, databases, S3 ghost buckets, shadow APIs, containers</li>
                   <li>Canary tokens: URL, DNS, document, AWS keys, Azure SP, GCP SA, K8s secrets</li>
