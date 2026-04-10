@@ -838,6 +838,183 @@
             opacity: 0.8;
             font-weight: 500;
         }
+
+        /* ── Product Feature Tabs ── */
+        .stage-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+        .stage-tab {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.45rem 1rem;
+            border: 2px solid rgba(0,0,0,0.15);
+            border-radius: 100px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.5);
+        }
+        .stage-tab:hover { border-color: rgba(0,0,0,0.4); color: rgba(0,0,0,0.8); }
+        .stage-tab.active { background: #000; color: #fff; border-color: #000; box-shadow: 3px 3px 0 0 rgba(0,0,0,0.15); }
+
+        .stage-feature-panel { display: none; animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .stage-feature-panel.active { display: block; }
+
+        .feature-title {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        .feature-subtitle {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+        }
+        .feature-list { list-style: none; padding: 0; margin: 0 0 1rem 0; display: flex; flex-direction: column; gap: 0.4rem; }
+        .feature-list li {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(0,0,0,0.7);
+            padding: 0.35rem 0;
+            padding-left: 1.4rem;
+            position: relative;
+            line-height: 1.5;
+        }
+        .feature-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: rgba(0,0,0,0.3);
+            font-weight: 800;
+        }
+        .feature-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+        .feature-badge {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border: 1.5px solid rgba(0,0,0,0.12);
+            border-radius: 100px;
+            color: rgba(0,0,0,0.45);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        /* ── Preview Visual Panels ── */
+        .preview-panel { display: none; width: 100%; max-width: 420px; }
+        .preview-panel.active { display: block; animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1); }
+
+        /* SAST Terminal */
+        .sast-preview { width: 100%; }
+        .sast-terminal { background: #0d1117; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; }
+        .sast-terminal__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; display: flex; justify-content: space-between; }
+        .sast-terminal__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+        .sast-line { color: rgba(255,255,255,0.5); }
+        .sast-line--vuln { color: #f87171; background: rgba(248,113,113,0.08); padding: 2px 4px; border-radius: 3px; border-left: 3px solid #f87171; }
+        .sast-line--safe { color: #34d399; }
+        .sast-line--warn { color: #fbbf24; }
+        .sast-line--info { color: #60a5fa; }
+
+        /* DAST Scanner */
+        .dast-preview { width: 100%; }
+        .dast-panel { background: #111; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; color: #fff; }
+        .dast-panel__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .dast-panel__bar-title { color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; }
+        .dast-panel__bar-status { color: #34d399; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .dast-panel__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+        .dast-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.4rem; border-radius: 4px; }
+        .dast-row--crit { background: rgba(248,113,113,0.1); border-left: 3px solid #f87171; }
+        .dast-row--high { background: rgba(251,146,60,0.08); border-left: 3px solid #fb923c; }
+        .dast-row--med { background: rgba(251,191,36,0.08); border-left: 3px solid #fbbf24; }
+        .dast-sev { font-size: 0.58rem; font-weight: 800; width: 30px; text-align: center; border-radius: 3px; padding: 1px 0; flex-shrink: 0; }
+        .dast-sev--crit { background: rgba(248,113,113,0.2); color: #fca5a5; }
+        .dast-sev--high { background: rgba(251,146,60,0.15); color: #fdba74; }
+        .dast-sev--med { background: rgba(251,191,36,0.15); color: #fde68a; }
+        .dast-msg { color: rgba(255,255,255,0.7); font-size: 0.65rem; flex: 1; }
+        .dast-owasp { color: rgba(255,255,255,0.3); font-size: 0.55rem; }
+        .dast-stat-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .dast-stat { flex: 1; text-align: center; }
+        .dast-stat__num { font-size: 1rem; font-weight: 800; display: block; }
+        .dast-stat__lbl { font-size: 0.55rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        /* WBRT Attack Graph */
+        .wbrt-preview { width: 100%; }
+        .wbrt-panel { background: #111; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; color: #fff; }
+        .wbrt-panel__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; }
+        .wbrt-panel__body { padding: 1rem; }
+        .wbrt-chain { display: flex; flex-direction: column; gap: 0.3rem; }
+        .wbrt-step { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.04); position: relative; }
+        .wbrt-step__num { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 800; flex-shrink: 0; }
+        .wbrt-step__num--red { background: rgba(248,113,113,0.2); color: #fca5a5; }
+        .wbrt-step__num--yellow { background: rgba(251,191,36,0.15); color: #fde68a; }
+        .wbrt-step__num--green { background: rgba(52,211,153,0.15); color: #6ee7b7; }
+        .wbrt-step__text { color: rgba(255,255,255,0.65); font-size: 0.65rem; flex: 1; }
+        .wbrt-step__tactic { color: rgba(255,255,255,0.3); font-size: 0.55rem; }
+        .wbrt-arrow { text-align: center; color: rgba(255,255,255,0.15); font-size: 0.7rem; padding: 0.1rem 0; }
+
+        /* BBRT Recon */
+        .bbrt-preview { width: 100%; }
+        .bbrt-panel { background: #111; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; color: #fff; }
+        .bbrt-panel__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; }
+        .bbrt-panel__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+        .bbrt-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.4rem; border-radius: 4px; background: rgba(255,255,255,0.04); }
+        .bbrt-row__icon { font-size: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
+        .bbrt-row__type { font-size: 0.55rem; font-weight: 700; color: rgba(255,255,255,0.3); width: 50px; text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0; }
+        .bbrt-row__val { color: rgba(255,255,255,0.65); font-size: 0.65rem; flex: 1; }
+        .bbrt-row__risk { font-size: 0.55rem; font-weight: 800; padding: 1px 6px; border-radius: 3px; }
+        .bbrt-row__risk--high { background: rgba(248,113,113,0.2); color: #fca5a5; }
+        .bbrt-row__risk--med { background: rgba(251,191,36,0.15); color: #fde68a; }
+        .bbrt-row__risk--low { background: rgba(52,211,153,0.15); color: #6ee7b7; }
+
+        /* XDR War Room */
+        .xdr-preview { width: 100%; }
+
+        /* SOAR Playbook */
+        .soar-preview { width: 100%; }
+        .soar-panel { background: #111; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; color: #fff; }
+        .soar-panel__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; }
+        .soar-panel__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .soar-step { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.5rem; border-radius: 5px; border: 1px solid rgba(255,255,255,0.06); }
+        .soar-step__status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .soar-step__status--done { background: #34d399; }
+        .soar-step__status--running { background: #60a5fa; animation: pulseDot 1s ease-in-out infinite; }
+        .soar-step__status--pending { background: rgba(255,255,255,0.2); }
+        .soar-step__text { color: rgba(255,255,255,0.65); font-size: 0.65rem; flex: 1; }
+        .soar-step__time { color: rgba(255,255,255,0.25); font-size: 0.55rem; }
+
+        /* DECT Honeypot */
+        .dect-preview { width: 100%; }
+        .dect-panel { background: #111; border: 2px solid black; box-shadow: 4px 4px 0 0 black; border-radius: 8px; overflow: hidden; font-family: 'SF Mono', 'Roboto Mono', monospace; font-size: 0.68rem; color: #fff; }
+        .dect-panel__bar { background: rgba(255,255,255,0.06); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .dect-panel__bar-title { color: rgba(255,255,255,0.4); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.08em; }
+        .dect-panel__body { padding: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+        .dect-trap { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.04); }
+        .dect-trap__icon { font-size: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
+        .dect-trap__name { color: rgba(255,255,255,0.65); font-size: 0.65rem; flex: 1; }
+        .dect-trap__status { font-size: 0.55rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; }
+        .dect-trap__status--armed { background: rgba(52,211,153,0.15); color: #6ee7b7; }
+        .dect-trap__status--triggered { background: rgba(248,113,113,0.2); color: #fca5a5; animation: pulseDot 1.5s ease-in-out infinite; }
+
+        /* Cloud Scanner sub-tabs */
+        .cloud-iam-preview, .cloud-data-preview, .cloud-net-preview { width: 100%; }
+
+        /* ── Glow variants for new tabs ── */
+        .stage-glow--yellow { background: radial-gradient(ellipse at 50% 50%, rgba(251,191,36,0.12) 0%, transparent 70%); }
+
+        /* All stages: preview LEFT, identity RIGHT */
+        .product-stage { grid-template-columns: 52% 48% !important; }
+        .product-stage .stage-preview { order: -1; }
+        .product-stage .stage-identity { border-right: none; border-left: 4px solid black; padding: 6rem 4rem 6rem 3rem; }
+        .product-stage:nth-child(even) .stage-identity { border-right: none; border-left: 4px solid black; padding: 6rem 4rem 6rem 3rem; }
+
+        @media (max-width: 900px) {
+            .stage-tabs { justify-content: center; }
+            .product-stage .stage-identity { border-left: none; border-bottom: 4px solid black; padding: 4rem 1.5rem; }
+        }
     </style>
   <script src="boot.js"></script>
 </head>
@@ -962,38 +1139,256 @@
           </div>
 
           <!-- Stage 1: Cloud Scanner -->
-          <!-- id="cloud" preserves anchor links from index.html features grid -->
           <div class="product-stage" id="stage01" data-stage="1"><a id="cloud" style="position:absolute;top:0;"></a>
+            <div class="stage-preview" id="stage01-preview">
+              <div class="stage-glow stage-glow--blue"></div>
+              <!-- IAM Preview (default) -->
+              <div class="preview-panel active" data-preview="cloud-iam">
+                <div class="scanner-preview">
+                  <div class="scanner-card" id="sc1"><span class="scanner-card__name">Root Account Keys</span><span class="scanner-card__badge badge-fail">ACTIVE</span></div>
+                  <div class="scanner-card" id="sc2"><span class="scanner-card__name">MFA Enforcement</span><span class="scanner-card__badge badge-warn">PARTIAL</span></div>
+                  <div class="scanner-card" id="sc3"><span class="scanner-card__name">Credential Rotation</span><span class="scanner-card__badge badge-fail">90+ DAYS</span></div>
+                  <div class="scanner-card scanner-card--misconfigured" id="sc4"><span class="scanner-card__name">Wildcard IAM Policy</span><span class="scanner-card__badge badge-fail">*:*</span></div>
+                  <div class="scanner-card" id="sc5"><span class="scanner-card__name">Password Policy</span><span class="scanner-card__badge badge-pass">STRONG</span></div>
+                  <div class="scanner-card" id="sc6"><span class="scanner-card__name">Access Analyzer</span><span class="scanner-card__badge badge-pass">ENABLED</span></div>
+                  <div class="scanner-meter" id="scannerMeter">
+                    <div class="scanner-meter__label">
+                      <span id="scannerLabel">SCANNING...</span>
+                      <span id="scannerPct">0%</span>
+                    </div>
+                    <div class="scanner-meter__track"><div class="scanner-meter__fill" id="scannerFill"></div></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Data Preview -->
+              <div class="preview-panel" data-preview="cloud-data">
+                <div class="vis-dashboard" style="border:2px solid black;border-radius:8px;padding:1.5rem;box-shadow:4px 4px 0 0 black;background:#fff;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+                    <div style="font-weight:800;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;font-family:'Cabinet Grotesk',sans-serif;">Data Protection</div>
+                    <div style="font-size:0.6rem;font-weight:700;color:#dc2626;display:flex;align-items:center;gap:4px;"><span class="vis-pulse-dot" style="background:#dc2626;"></span>3 ISSUES</div>
+                  </div>
+                  <div class="vis-bar" style="border-left:3px solid #dc2626;background:rgba(220,38,38,0.06);"><span class="vis-bar-title">S3 Public Access</span><span class="vis-badge-warn" style="background:#dc2626;">EXPOSED</span></div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-x">&#x2717;</span><span style="font-weight:700;font-size:0.75rem;">S3 Encryption</span>
+                    <div class="vis-track"><div class="vis-fill vis-fill-warn" style="--w:40%;"></div></div>
+                    <span class="vis-scan-label">SSE-S3 only</span>
+                  </div>
+                  <div class="vis-bar" style="border-left:3px solid #dc2626;background:rgba(220,38,38,0.06);"><span class="vis-bar-title">RDS Encryption</span><span class="vis-badge-warn" style="background:#dc2626;">DISABLED</span></div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-check">&#x2713;</span><span style="font-weight:700;font-size:0.75rem;">RDS Backup</span>
+                    <div class="vis-track"><div class="vis-fill" style="--w:100%;"></div></div>
+                    <span class="vis-scan-label">ENABLED</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-x">&#x2717;</span><span style="font-weight:700;font-size:0.75rem;">Secrets Rotation</span>
+                    <div class="vis-track"><div class="vis-fill vis-fill-warn" style="--w:30%;"></div></div>
+                    <span class="vis-scan-label">MANUAL</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;">
+                    <span class="vis-check">&#x2713;</span><span style="font-weight:700;font-size:0.75rem;">KMS Key Policy</span>
+                    <div class="vis-track"><div class="vis-fill" style="--w:100%;"></div></div>
+                    <span class="vis-scan-label">COMPLIANT</span>
+                  </div>
+                  <div style="margin-top:0.75rem;display:flex;gap:0.5rem;">
+                    <div style="flex:1;background:rgba(220,38,38,0.08);border-radius:6px;padding:0.5rem;text-align:center;">
+                      <div style="font-size:1.2rem;font-weight:800;color:#dc2626;">2</div>
+                      <div style="font-size:0.55rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.05em;">Critical</div>
+                    </div>
+                    <div style="flex:1;background:rgba(249,115,22,0.08);border-radius:6px;padding:0.5rem;text-align:center;">
+                      <div style="font-size:1.2rem;font-weight:800;color:#f97316;">1</div>
+                      <div style="font-size:0.55rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.05em;">Warning</div>
+                    </div>
+                    <div style="flex:1;background:rgba(22,163,74,0.08);border-radius:6px;padding:0.5rem;text-align:center;">
+                      <div style="font-size:1.2rem;font-weight:800;color:#16a34a;">3</div>
+                      <div style="font-size:0.55rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.05em;">Passed</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Network Preview -->
+              <div class="preview-panel" data-preview="cloud-network">
+                <div class="vis-dashboard" style="border:2px solid black;border-radius:8px;padding:1.5rem;box-shadow:4px 4px 0 0 black;background:#fff;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+                    <div style="font-weight:800;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;font-family:'Cabinet Grotesk',sans-serif;">Network Security</div>
+                    <div style="font-size:0.6rem;font-weight:700;color:#f97316;display:flex;align-items:center;gap:4px;"><span class="vis-pulse-dot" style="background:#f97316;"></span>2 EXPOSED</div>
+                  </div>
+                  <div class="vis-bar" style="border-left:3px solid #dc2626;background:rgba(220,38,38,0.06);">
+                    <div>
+                      <span class="vis-bar-title">Security Groups</span>
+                      <div style="font-size:0.62rem;opacity:0.5;margin-top:1px;">Inbound 0.0.0.0/0 on port 22, 3389</div>
+                    </div>
+                    <span class="vis-badge-warn" style="background:#dc2626;">0.0.0.0/0</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-check">&#x2713;</span><span style="font-weight:700;font-size:0.75rem;">VPC Flow Logs</span>
+                    <div class="vis-track"><div class="vis-fill" style="--w:100%;"></div></div>
+                    <span class="vis-scan-label">ALL REGIONS</span>
+                  </div>
+                  <div class="vis-bar" style="border-left:3px solid #dc2626;background:rgba(220,38,38,0.06);">
+                    <div>
+                      <span class="vis-bar-title">Public RDS</span>
+                      <div style="font-size:0.62rem;opacity:0.5;margin-top:1px;">db-prod-01.xxxx.rds.amazonaws.com</div>
+                    </div>
+                    <span class="vis-badge-warn" style="background:#dc2626;">EXPOSED</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-x">&#x2717;</span><span style="font-weight:700;font-size:0.75rem;">Internet Gateway</span>
+                    <div class="vis-track"><div class="vis-fill vis-fill-warn" style="--w:55%;"></div></div>
+                    <span class="vis-scan-label">UNRESTRICTED</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;margin-bottom:0.35rem;">
+                    <span class="vis-check">&#x2713;</span><span style="font-weight:700;font-size:0.75rem;">NACLs</span>
+                    <div class="vis-track"><div class="vis-fill" style="--w:90%;"></div></div>
+                    <span class="vis-scan-label">CONFIGURED</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;">
+                    <span class="vis-check">&#x2713;</span><span style="font-weight:700;font-size:0.75rem;">CloudTrail</span>
+                    <div class="vis-track"><div class="vis-fill" style="--w:100%;"></div></div>
+                    <span class="vis-scan-label">ALL REGIONS</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Compliance Preview -->
+              <div class="preview-panel" data-preview="cloud-compliance">
+                <div class="vis-dashboard" style="border:2px solid black;border-radius:8px;padding:1.5rem;box-shadow:4px 4px 0 0 black;background:#fff;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+                    <div style="font-weight:800;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;font-family:'Cabinet Grotesk',sans-serif;">Compliance Dashboard</div>
+                    <div style="font-size:0.6rem;font-weight:700;color:#f97316;">SCORE: 72/100</div>
+                  </div>
+                  <div style="margin-bottom:0.6rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:3px;"><span>CIS Benchmark</span><span style="color:#f97316;">78%</span></div>
+                    <div class="vis-track" style="height:8px;"><div class="vis-fill vis-fill-warn" style="--w:78%;height:100%;"></div></div>
+                  </div>
+                  <div style="margin-bottom:0.6rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:3px;"><span>PCI-DSS</span><span style="color:#dc2626;">62%</span></div>
+                    <div class="vis-track" style="height:8px;"><div class="vis-fill vis-fill-red" style="--w:62%;height:100%;"></div></div>
+                  </div>
+                  <div style="margin-bottom:0.6rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:3px;"><span>SOC 2</span><span style="color:#f97316;">71%</span></div>
+                    <div class="vis-track" style="height:8px;"><div class="vis-fill vis-fill-warn" style="--w:71%;height:100%;"></div></div>
+                  </div>
+                  <div style="margin-bottom:0.6rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:3px;"><span>HIPAA</span><span style="color:#16a34a;">89%</span></div>
+                    <div class="vis-track" style="height:8px;"><div class="vis-fill" style="--w:89%;height:100%;"></div></div>
+                  </div>
+                  <div style="margin-bottom:0.6rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:3px;"><span>ISO 27001</span><span style="color:#f97316;">74%</span></div>
+                    <div class="vis-track" style="height:8px;"><div class="vis-fill vis-fill-warn" style="--w:74%;height:100%;"></div></div>
+                  </div>
+                  <div style="margin-top:0.5rem;padding:0.6rem 0.75rem;background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.15);border-radius:6px;display:flex;align-items:center;justify-content:space-between;">
+                    <div>
+                      <div style="font-size:0.68rem;font-weight:800;color:#dc2626;">ESTIMATED BREACH COST</div>
+                      <div style="font-size:0.58rem;opacity:0.5;margin-top:1px;">Based on current risk posture</div>
+                    </div>
+                    <div style="font-size:1.3rem;font-weight:800;color:#dc2626;font-family:'Cabinet Grotesk',sans-serif;">$1.8M</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Attack Scenarios Preview -->
+              <div class="preview-panel" data-preview="cloud-attack">
+                <div class="wbrt-panel">
+                  <div class="wbrt-panel__bar">ATTACK SCENARIO &#x2014; S3 TO LATERAL MOVEMENT</div>
+                  <div class="wbrt-panel__body">
+                    <div class="wbrt-chain">
+                      <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">1</div><div class="wbrt-step__text">Public S3 bucket exposes config files</div><div class="wbrt-step__tactic">INITIAL ACCESS</div></div>
+                      <div class="wbrt-arrow">↓</div>
+                      <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">2</div><div class="wbrt-step__text">Leaked IAM credentials in .env file</div><div class="wbrt-step__tactic">CRED ACCESS</div></div>
+                      <div class="wbrt-arrow">↓</div>
+                      <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--yellow">3</div><div class="wbrt-step__text">Wildcard policy allows EC2 describe + assume role</div><div class="wbrt-step__tactic">PRIV ESCALATION</div></div>
+                      <div class="wbrt-arrow">↓</div>
+                      <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">4</div><div class="wbrt-step__text">RDS data exfiltration via public endpoint</div><div class="wbrt-step__tactic">EXFILTRATION</div></div>
+                    </div>
+                    <div style="margin-top:0.6rem;padding:0.4rem 0.5rem;background:rgba(248,113,113,0.1);border-radius:4px;border-left:3px solid #f87171;color:#fca5a5;font-size:0.6rem;font-weight:700;">ESTIMATED BREACH COST: $2.4M &#x2014; 340K RECORDS AT RISK</div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="stage-identity" id="stage01-identity">
               <div class="stage-num">Product 01</div>
               <h2 class="stage-name" id="stage01-name">Cloud<br>Scanner</h2>
               <div class="stage-punch"><span class="stage-punch__typed" id="stage01-punch"></span></div>
-              <div class="stage-badges" id="stage01-badges">
-                <span class="stage-badge">AWS</span>
-                <span class="stage-badge">Azure</span>
-                <span class="stage-badge">GCP</span>
-                <span class="stage-badge">CIS Benchmark</span>
-                <span class="stage-badge">SOC 2</span>
+              <div class="stage-tabs" data-stage-tabs="cloud">
+                <button class="stage-tab active" data-tab="cloud-iam">IAM</button>
+                <button class="stage-tab" data-tab="cloud-data">Data</button>
+                <button class="stage-tab" data-tab="cloud-network">Network</button>
+                <button class="stage-tab" data-tab="cloud-compliance">Compliance</button>
+                <button class="stage-tab" data-tab="cloud-attack">Attack Chains</button>
               </div>
-              <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Launch Scanner &#x26A1;</a>
-            </div>
-            <div class="stage-preview" id="stage01-preview">
-              <div class="stage-glow stage-glow--blue"></div>
-              <div class="scanner-preview">
-                <div class="scanner-card" id="sc1"><span class="scanner-card__name">S3 Bucket ACL</span><span class="scanner-card__badge badge-fail">PUBLIC READ</span></div>
-                <div class="scanner-card" id="sc2"><span class="scanner-card__name">CloudTrail Logging</span><span class="scanner-card__badge badge-fail">DISABLED</span></div>
-                <div class="scanner-card" id="sc3"><span class="scanner-card__name">IAM Root MFA</span><span class="scanner-card__badge badge-warn">NOT SET</span></div>
-                <div class="scanner-card scanner-card--misconfigured" id="sc4"><span class="scanner-card__name">Security Groups</span><span class="scanner-card__badge badge-fail">0.0.0.0/0</span></div>
-                <div class="scanner-card" id="sc5"><span class="scanner-card__name">KMS Encryption</span><span class="scanner-card__badge badge-pass">ENABLED</span></div>
-                <div class="scanner-card" id="sc6"><span class="scanner-card__name">VPC Flow Logs</span><span class="scanner-card__badge badge-pass">ACTIVE</span></div>
-                <div class="scanner-meter" id="scannerMeter">
-                  <div class="scanner-meter__label">
-                    <span id="scannerLabel">SCANNING...</span>
-                    <span id="scannerPct">0%</span>
-                  </div>
-                  <div class="scanner-meter__track"><div class="scanner-meter__fill" id="scannerFill"></div></div>
+              <!-- IAM Panel -->
+              <div class="stage-feature-panel active" data-panel="cloud-iam">
+                <div class="feature-title">IAM Security Checks</div>
+                <div class="feature-subtitle">10 checks covering identity and access management</div>
+                <ul class="feature-list">
+                  <li>Root account access key detection &amp; MFA enforcement</li>
+                  <li>Credential rotation monitoring (flags 90+ day old keys)</li>
+                  <li>Wildcard IAM policy detection (prevents *:* policies)</li>
+                  <li>Password policy strength validation</li>
+                  <li>IAM Access Analyzer integration</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">AWS</span><span class="feature-badge">CIS</span><span class="feature-badge">SOC 2</span><span class="feature-badge">HIPAA</span>
                 </div>
               </div>
+              <!-- Data Panel -->
+              <div class="stage-feature-panel" data-panel="cloud-data">
+                <div class="feature-title">Data Protection Checks</div>
+                <div class="feature-subtitle">S3, RDS, secrets, and encryption validation</div>
+                <ul class="feature-list">
+                  <li>S3 public access detection &amp; encryption enforcement</li>
+                  <li>RDS encryption and automated backup verification</li>
+                  <li>Secrets Manager rotation policy checks</li>
+                  <li>KMS key policy compliance scanning</li>
+                  <li>CloudFormation/Terraform template auto-generation</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">S3</span><span class="feature-badge">RDS</span><span class="feature-badge">KMS</span><span class="feature-badge">PCI-DSS</span>
+                </div>
+              </div>
+              <!-- Network Panel -->
+              <div class="stage-feature-panel" data-panel="cloud-network">
+                <div class="feature-title">Network Security Checks</div>
+                <div class="feature-subtitle">VPC, security groups, and traffic analysis</div>
+                <ul class="feature-list">
+                  <li>Overpermissive security group detection (0.0.0.0/0)</li>
+                  <li>VPC Flow Logs validation across all regions</li>
+                  <li>Public RDS instance exposure scanning</li>
+                  <li>Internet Gateway misconfiguration detection</li>
+                  <li>CloudTrail multi-region logging enforcement</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">VPC</span><span class="feature-badge">SG</span><span class="feature-badge">NACL</span><span class="feature-badge">CIS</span>
+                </div>
+              </div>
+              <!-- Compliance Panel -->
+              <div class="stage-feature-panel" data-panel="cloud-compliance">
+                <div class="feature-title">Compliance Scoring</div>
+                <div class="feature-subtitle">Real-time mapping to industry frameworks</div>
+                <ul class="feature-list">
+                  <li>CIS Benchmark, PCI-DSS, SOC 2, HIPAA control mapping</li>
+                  <li>ISO 27001 alignment with gap analysis</li>
+                  <li>Risk scoring (0-100) with estimated breach cost in USD</li>
+                  <li>Prioritized remediation queue with effort estimates</li>
+                  <li>Confused-deputy protection for IAM role assumption</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">CIS</span><span class="feature-badge">PCI-DSS</span><span class="feature-badge">SOC 2</span><span class="feature-badge">HIPAA</span><span class="feature-badge">ISO 27001</span>
+                </div>
+              </div>
+              <!-- Attack Chain Panel -->
+              <div class="stage-feature-panel" data-panel="cloud-attack">
+                <div class="feature-title">Attack Scenario Engine</div>
+                <div class="feature-subtitle">Chained exploitation paths with business impact</div>
+                <ul class="feature-list">
+                  <li>Automated attack path generation from misconfigurations</li>
+                  <li>Financial impact estimation &amp; records-at-risk calculation</li>
+                  <li>Remediation roadmap with 5min to 1-week effort estimates</li>
+                  <li>AWS IAM role assumption with confused-deputy protection</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">MITRE</span><span class="feature-badge">NIST</span><span class="feature-badge">GDPR</span>
+                </div>
+              </div>
+              <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Launch Scanner &#x26A1;</a>
             </div>
           </div>
 
@@ -1005,35 +1400,168 @@
           </div>
 
           <!-- Stage 2: HEMIS Red Team -->
-          <!-- id="red" preserves anchor links from index.html features grid -->
           <div class="product-stage" id="stage02" data-stage="2"><a id="red" style="position:absolute;top:0;"></a>
             <div class="stage-identity" id="stage02-identity">
               <div class="stage-num">Product 02</div>
               <h2 class="stage-name" id="stage02-name">HEMIS<br>Red Team</h2>
               <div class="stage-punch"><span class="stage-punch__typed" id="stage02-punch"></span></div>
-              <div class="stage-badges" id="stage02-badges">
-                <span class="stage-badge">MITRE ATT&amp;CK</span>
-                <span class="stage-badge">AI/LLM</span>
-                <span class="stage-badge">OWASP Top 10</span>
-                <span class="stage-badge">Payload Gen</span>
+              <div class="stage-tabs" data-stage-tabs="red">
+                <button class="stage-tab active" data-tab="red-sast">SAST</button>
+                <button class="stage-tab" data-tab="red-dast">DAST</button>
+                <button class="stage-tab" data-tab="red-wbrt">WBRT</button>
+                <button class="stage-tab" data-tab="red-bbrt">BBRT</button>
+              </div>
+              <!-- SAST Panel -->
+              <div class="stage-feature-panel active" data-panel="red-sast">
+                <div class="feature-title">Static Application Security Testing</div>
+                <div class="feature-subtitle">Source code analysis before deployment</div>
+                <ul class="feature-list">
+                  <li>55+ rule-based scanner covering SQL injection, command injection, LDAP/XPath injection</li>
+                  <li>Secret detection: 20+ patterns (AWS keys, GitHub tokens, Stripe, JWT, PEM keys)</li>
+                  <li>Dependency scanner (SCA) for package.json, requirements.txt, go.mod, pom.xml</li>
+                  <li>AST engine parsing JS/TS/Python for unsafe code patterns</li>
+                  <li>Taint analysis tracing data from HTTP input to sinks (eval, SQL, innerHTML)</li>
+                  <li>Shannon entropy detection for random-looking API keys</li>
+                  <li>LLM scanner (Gemini 2.0 Flash) for deep 800-line chunk analysis</li>
+                  <li>Build gate blocking CI/CD if severity thresholds exceeded</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">CWE</span><span class="feature-badge">OWASP</span><span class="feature-badge">SARIF</span><span class="feature-badge">PCI-DSS</span><span class="feature-badge">SOC 2</span>
+                </div>
+              </div>
+              <!-- DAST Panel -->
+              <div class="stage-feature-panel" data-panel="red-dast">
+                <div class="feature-title">Dynamic Application Security Testing</div>
+                <div class="feature-subtitle">Active probing of running web applications</div>
+                <ul class="feature-list">
+                  <li>OWASP ZAP integration with spider crawl + active scanning</li>
+                  <li>Built-in fallback scanner when ZAP is unavailable</li>
+                  <li>CVSS severity scoring with OWASP Top 10 mapping</li>
+                  <li>Claude AI enrichment: executive summaries, remediation code, vuln correlation</li>
+                  <li>Cron-like scan scheduling with before/after diff comparison</li>
+                  <li>Real-time telemetry with live scan progress streaming</li>
+                  <li>Pause, resume, and cancel active scans</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">ZAP</span><span class="feature-badge">CVSS</span><span class="feature-badge">OWASP</span><span class="feature-badge">PDF</span><span class="feature-badge">JSON</span>
+                </div>
+              </div>
+              <!-- WBRT Panel -->
+              <div class="stage-feature-panel" data-panel="red-wbrt">
+                <div class="feature-title">White Box Red Teaming</div>
+                <div class="feature-subtitle">Insider threat simulation using full code knowledge</div>
+                <ul class="feature-list">
+                  <li>Imports SAST findings as starting point for attack graphs</li>
+                  <li>Architecture mapping: tech stack, cloud providers, auth mechanisms, data classes</li>
+                  <li>Claude AI attack graph engine with probability scoring per node</li>
+                  <li>Full MITRE ATT&amp;CK mapping: tactic &#x2192; technique &#x2192; sub-technique</li>
+                  <li>Kill chain generation with estimated time to exploit &amp; detection difficulty</li>
+                  <li>Impact scorer: financial impact, records at risk, compliance violations (1-100)</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">MITRE ATT&amp;CK</span><span class="feature-badge">CWE</span><span class="feature-badge">AI/LLM</span><span class="feature-badge">PDF</span>
+                </div>
+              </div>
+              <!-- BBRT Panel -->
+              <div class="stage-feature-panel" data-panel="red-bbrt">
+                <div class="feature-title">Black Box Red Teaming</div>
+                <div class="feature-subtitle">External attacker simulation with zero prior knowledge</div>
+                <ul class="feature-list">
+                  <li>Subdomain/DNS recon via crt.sh, HackerTarget, AlienVault OTX, URLscan</li>
+                  <li>Subdomain takeover detection &amp; 73-port service discovery</li>
+                  <li>Tech stack fingerprinting (Wappalyzer-based) with CVE tracking</li>
+                  <li>Vuln intelligence: NVD CVE lookup, CISA KEV catalog, OSV database</li>
+                  <li>Cloud asset detection across AWS, GCP, Azure</li>
+                  <li>Wayback Machine historical recon for leaked credentials</li>
+                  <li>Exploit chain generation with industry-aware business impact scoring</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">OSINT</span><span class="feature-badge">CVE</span><span class="feature-badge">CISA KEV</span><span class="feature-badge">DNS</span>
+                </div>
               </div>
               <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Launch HEMIS &#x26A1;</a>
             </div>
             <div class="stage-preview" id="stage02-preview">
               <div class="stage-glow stage-glow--red"></div>
-              <div class="redteam-preview">
-                <div class="redteam-terminal">
-                  <div class="redteam-terminal__bar">HEMIS RED TEAM ENGINE &#x2014; ACTIVE SIMULATION</div>
-                  <div class="redteam-terminal__body">
-                    <div class="rt-line" id="rt1">&gt; Initializing engagement: Target Corp</div>
-                    <div class="rt-line" id="rt2">&gt; Recon phase... enumerating subdomains</div>
-                    <div class="rt-line" id="rt3">&gt; Found: api.target.internal:8080</div>
-                    <div class="rt-line" id="rt4">&gt; Testing authentication endpoints...</div>
-                    <div class="rt-line" id="rt5">&gt; Fuzzing login parameters...</div>
-                    <div class="rt-line rt-line--crit" id="rt6">&gt; [CRITICAL] CVE-2024-3094 &#x2014; Auth Bypass</div>
-                    <div class="rt-line" id="rt7">&gt; Payload delivered. Session token captured.</div>
-                    <div class="rt-line" id="rt8">&gt; Lateral movement vector identified...</div>
-                    <div class="rt-banner" id="rtBanner">&#x26A0; CRITICAL FINDING</div>
+              <!-- SAST Preview (default) -->
+              <div class="preview-panel active" data-preview="red-sast">
+                <div class="sast-preview">
+                  <div class="sast-terminal">
+                    <div class="sast-terminal__bar"><span>SAST ENGINE &#x2014; SCANNING</span><span style="color:#34d399;">55 RULES</span></div>
+                    <div class="sast-terminal__body">
+                      <div class="sast-line sast-line--info">&gt; Scanning src/auth/login.ts...</div>
+                      <div class="sast-line sast-line--vuln">&gt; [CRITICAL] SQL Injection at line 47 &#x2014; CWE-89</div>
+                      <div class="sast-line sast-line--vuln">&gt; [HIGH] Hardcoded AWS key detected &#x2014; AKIAIOSFODNN7</div>
+                      <div class="sast-line sast-line--warn">&gt; [MEDIUM] eval() with user input &#x2014; CWE-95</div>
+                      <div class="sast-line sast-line--safe">&gt; [PASS] CSRF token validated</div>
+                      <div class="sast-line sast-line--info">&gt; Taint: req.body.user &#x2192; db.query() &#x2014; UNSAFE</div>
+                      <div class="sast-line sast-line--vuln">&gt; [HIGH] JWT secret in .env &#x2014; Entropy: 4.8</div>
+                      <div class="sast-line sast-line--warn">&gt; [MEDIUM] innerHTML with unsanitized input &#x2014; CWE-79</div>
+                      <div class="sast-line" style="color:rgba(255,255,255,0.3);margin-top:0.3rem;">&gt; 4 critical · 2 high · 2 medium · CI/CD gate: BLOCKED</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- DAST Preview -->
+              <div class="preview-panel" data-preview="red-dast">
+                <div class="dast-preview">
+                  <div class="dast-panel">
+                    <div class="dast-panel__bar">
+                      <span class="dast-panel__bar-title">DAST SCANNER &#x2014; LIVE</span>
+                      <span class="dast-panel__bar-status"><span style="width:6px;height:6px;border-radius:50%;background:#34d399;display:inline-block;animation:pulseDot 1s infinite;"></span> CRAWLING</span>
+                    </div>
+                    <div class="dast-panel__body">
+                      <div class="dast-row dast-row--crit"><span class="dast-sev dast-sev--crit">CRIT</span><span class="dast-msg">Reflected XSS on /search?q=</span><span class="dast-owasp">A03</span></div>
+                      <div class="dast-row dast-row--crit"><span class="dast-sev dast-sev--crit">CRIT</span><span class="dast-msg">SQL Injection on /api/users?id=</span><span class="dast-owasp">A03</span></div>
+                      <div class="dast-row dast-row--high"><span class="dast-sev dast-sev--high">HIGH</span><span class="dast-msg">Missing CSP header on all responses</span><span class="dast-owasp">A05</span></div>
+                      <div class="dast-row dast-row--high"><span class="dast-sev dast-sev--high">HIGH</span><span class="dast-msg">CORS wildcard allows credential theft</span><span class="dast-owasp">A01</span></div>
+                      <div class="dast-row dast-row--med"><span class="dast-sev dast-sev--med">MED</span><span class="dast-msg">Session cookie without Secure flag</span><span class="dast-owasp">A02</span></div>
+                      <div class="dast-stat-row">
+                        <div class="dast-stat"><span class="dast-stat__num" style="color:#f87171;">2</span><span class="dast-stat__lbl">Critical</span></div>
+                        <div class="dast-stat"><span class="dast-stat__num" style="color:#fb923c;">2</span><span class="dast-stat__lbl">High</span></div>
+                        <div class="dast-stat"><span class="dast-stat__num" style="color:#fbbf24;">1</span><span class="dast-stat__lbl">Medium</span></div>
+                        <div class="dast-stat"><span class="dast-stat__num" style="color:#34d399;">147</span><span class="dast-stat__lbl">URLs Crawled</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- WBRT Preview -->
+              <div class="preview-panel" data-preview="red-wbrt">
+                <div class="wbrt-preview">
+                  <div class="wbrt-panel">
+                    <div class="wbrt-panel__bar">KILL CHAIN &#x2014; INSIDER THREAT SIMULATION</div>
+                    <div class="wbrt-panel__body">
+                      <div class="wbrt-chain">
+                        <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--yellow">1</div><div class="wbrt-step__text">Import SAST findings (4 critical vulns)</div><div class="wbrt-step__tactic">RECON</div></div>
+                        <div class="wbrt-arrow">↓</div>
+                        <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">2</div><div class="wbrt-step__text">SQL injection &#x2192; admin session hijack</div><div class="wbrt-step__tactic">INITIAL ACCESS</div></div>
+                        <div class="wbrt-arrow">↓</div>
+                        <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">3</div><div class="wbrt-step__text">Hardcoded AWS key &#x2192; S3 bucket access</div><div class="wbrt-step__tactic">PRIV ESCALATION</div></div>
+                        <div class="wbrt-arrow">↓</div>
+                        <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">4</div><div class="wbrt-step__text">Lateral movement to production DB</div><div class="wbrt-step__tactic">LATERAL MOVE</div></div>
+                        <div class="wbrt-arrow">↓</div>
+                        <div class="wbrt-step"><div class="wbrt-step__num wbrt-step__num--red">5</div><div class="wbrt-step__text">PII exfiltration via DNS tunneling</div><div class="wbrt-step__tactic">EXFILTRATION</div></div>
+                      </div>
+                      <div style="margin-top:0.5rem;padding:0.35rem 0.5rem;background:rgba(248,113,113,0.1);border-radius:4px;border-left:3px solid #f87171;color:#fca5a5;font-size:0.58rem;font-weight:700;">DETECTION DIFFICULTY: HIGH &#x2014; EST. TIME TO EXPLOIT: 4.2 HRS</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- BBRT Preview -->
+              <div class="preview-panel" data-preview="red-bbrt">
+                <div class="bbrt-preview">
+                  <div class="bbrt-panel">
+                    <div class="bbrt-panel__bar">RECON &#x2014; EXTERNAL ATTACK SURFACE</div>
+                    <div class="bbrt-panel__body">
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x1F310;</span><span class="bbrt-row__type">DNS</span><span class="bbrt-row__val">api.target.com (A: 52.14.x.x)</span><span class="bbrt-row__risk bbrt-row__risk--med">MED</span></div>
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x1F50D;</span><span class="bbrt-row__type">SUB</span><span class="bbrt-row__val">staging.target.com &#x2014; CNAME dangling</span><span class="bbrt-row__risk bbrt-row__risk--high">HIGH</span></div>
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x1F6E1;</span><span class="bbrt-row__type">PORT</span><span class="bbrt-row__val">:8080 Jenkins (CVE-2024-23897)</span><span class="bbrt-row__risk bbrt-row__risk--high">CRIT</span></div>
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x2601;</span><span class="bbrt-row__type">CLOUD</span><span class="bbrt-row__val">S3: target-backups (public-read)</span><span class="bbrt-row__risk bbrt-row__risk--high">HIGH</span></div>
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x1F4DA;</span><span class="bbrt-row__type">TECH</span><span class="bbrt-row__val">React 18 · Express 4.18 · Nginx 1.24</span><span class="bbrt-row__risk bbrt-row__risk--low">LOW</span></div>
+                      <div class="bbrt-row"><span class="bbrt-row__icon">&#x23F3;</span><span class="bbrt-row__type">HIST</span><span class="bbrt-row__val">Wayback: .env with DB_PASS leaked 2023</span><span class="bbrt-row__risk bbrt-row__risk--high">CRIT</span></div>
+                      <div style="margin-top:0.5rem;padding:0.35rem 0.5rem;background:rgba(96,165,250,0.1);border-radius:4px;border-left:3px solid #60a5fa;color:#93c5fd;font-size:0.58rem;font-weight:700;">3 EXPLOIT CHAINS GENERATED &#x2014; FINTECH RISK: SEVERE</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1048,48 +1576,132 @@
           </div>
 
           <!-- Stage 3: Blue Team -->
-          <!-- id="blue" preserves anchor links from index.html features grid -->
           <div class="product-stage" id="stage03" data-stage="3"><a id="blue" style="position:absolute;top:0;"></a>
+            <div class="stage-preview" id="stage03-preview">
+              <div class="stage-glow stage-glow--green"></div>
+              <!-- XDR Preview (default) -->
+              <div class="preview-panel active" data-preview="blue-xdr">
+                <div class="xdr-preview">
+                  <div class="product-vis" style="background:#111;border-color:rgba(96,165,250,0.3);box-shadow:4px 4px 0 0 black;padding:1.5rem;min-height:auto;transform:none;font-size:0.7rem;">
+                    <div class="vis-warroom">
+                      <div class="wr-header"><span class="wr-title">XDR &#x2014; WAR ROOM</span><span class="wr-live"><span class="wr-live-dot"></span> LIVE</span></div>
+                      <div class="wr-row wr-row--crit"><span class="wr-sev wr-sev--crit">P1</span><span class="wr-msg">Endpoint: Cobalt Strike beacon detected on WS-042</span><span class="wr-time">2m ago</span></div>
+                      <div class="wr-row wr-row--crit2"><span class="wr-sev wr-sev--crit">P1</span><span class="wr-msg">Identity: Impossible travel &#x2014; NYC to Moscow in 4min</span><span class="wr-time">5m ago</span></div>
+                      <div class="wr-row wr-row--med"><span class="wr-sev wr-sev--med">P2</span><span class="wr-msg">Cloud: AWS root console login from unknown IP</span><span class="wr-time">12m ago</span></div>
+                      <div class="wr-row wr-row--med2"><span class="wr-sev wr-sev--med">P3</span><span class="wr-msg">Email: Phishing link clicked by 3 users</span><span class="wr-time">18m ago</span></div>
+                      <div class="wr-row wr-row--low"><span class="wr-sev wr-sev--low">P4</span><span class="wr-msg">Deception: Canary token triggered in /admin/.env</span><span class="wr-time">23m ago</span></div>
+                      <div class="wr-stat-row">
+                        <div class="wr-stat"><span class="wr-stat-num wr-mttr">4.2m</span><span class="wr-stat-lbl">MTTR</span></div>
+                        <div class="wr-stat"><span class="wr-stat-num wr-count">12</span><span class="wr-stat-lbl">Open</span></div>
+                        <div class="wr-stat"><span class="wr-stat-num wr-resp">94%</span><span class="wr-stat-lbl">Auto</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- SOAR Preview -->
+              <div class="preview-panel" data-preview="blue-soar">
+                <div class="soar-preview">
+                  <div class="soar-panel">
+                    <div class="soar-panel__bar">PLAYBOOK &#x2014; PHISHING RESPONSE [P2-EXEC]</div>
+                    <div class="soar-panel__body">
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--done"></span><span class="soar-step__text">Alert normalized (OCSF) &amp; deduplicated</span><span class="soar-step__time">0.2s</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--done"></span><span class="soar-step__text">Claude AI triage: P2, confidence 94%</span><span class="soar-step__time">1.1s</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--done"></span><span class="soar-step__text">IOC enrichment: URL reputation MALICIOUS</span><span class="soar-step__time">0.8s</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--done"></span><span class="soar-step__text">Auto-quarantine email from mailbox</span><span class="soar-step__time">2.3s</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--running"></span><span class="soar-step__text">Block sender domain across org</span><span class="soar-step__time">running...</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--pending"></span><span class="soar-step__text">Reset passwords for clicked users</span><span class="soar-step__time">pending</span></div>
+                      <div class="soar-step"><span class="soar-step__status soar-step__status--pending"></span><span class="soar-step__text">Approval gate: isolate endpoint?</span><span class="soar-step__time">human</span></div>
+                      <div style="margin-top:0.5rem;display:flex;gap:0.5rem;font-size:0.58rem;">
+                        <div style="flex:1;text-align:center;padding:0.3rem;background:rgba(52,211,153,0.1);border-radius:4px;color:#6ee7b7;font-weight:700;">MTTR: 3.2 min</div>
+                        <div style="flex:1;text-align:center;padding:0.3rem;background:rgba(96,165,250,0.1);border-radius:4px;color:#93c5fd;font-weight:700;">AUTOMATION: 71%</div>
+                        <div style="flex:1;text-align:center;padding:0.3rem;background:rgba(251,191,36,0.1);border-radius:4px;color:#fde68a;font-weight:700;">SLA: ON TRACK</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- DECT Preview -->
+              <div class="preview-panel" data-preview="blue-dect">
+                <div class="dect-preview">
+                  <div class="dect-panel">
+                    <div class="dect-panel__bar">
+                      <span class="dect-panel__bar-title">DECEPTION GRID &#x2014; CAMPAIGN ACTIVE</span>
+                    </div>
+                    <div class="dect-panel__body">
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F578;</span><span class="dect-trap__name">Fake /admin endpoint (honeypot)</span><span class="dect-trap__status dect-trap__status--triggered">TRIGGERED</span></div>
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F511;</span><span class="dect-trap__name">Canary AWS key (AKIAEXAMPLE...)</span><span class="dect-trap__status dect-trap__status--triggered">TRIGGERED</span></div>
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F4C4;</span><span class="dect-trap__name">Honey doc (credentials.xlsx)</span><span class="dect-trap__status dect-trap__status--armed">ARMED</span></div>
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F5C4;</span><span class="dect-trap__name">Ghost S3 bucket (backups-internal)</span><span class="dect-trap__status dect-trap__status--armed">ARMED</span></div>
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F464;</span><span class="dect-trap__name">Fake AD user (svc_backup_admin)</span><span class="dect-trap__status dect-trap__status--armed">ARMED</span></div>
+                      <div class="dect-trap"><span class="dect-trap__icon">&#x1F310;</span><span class="dect-trap__name">Shadow API (/api/v1/internal)</span><span class="dect-trap__status dect-trap__status--triggered">TRIGGERED</span></div>
+                      <div style="margin-top:0.5rem;padding:0.4rem 0.5rem;background:rgba(248,113,113,0.1);border-radius:4px;border-left:3px solid #f87171;">
+                        <div style="color:#fca5a5;font-size:0.6rem;font-weight:700;">ATTACKER PROFILE: Sophistication ADVANCED &#x2014; Dwell: 47min</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:0.55rem;margin-top:2px;">IP: 185.x.x.x &#x2014; TOR exit node &#x2014; MITRE: T1078, T1530, T1059</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="stage-identity" id="stage03-identity">
               <div class="stage-num">Product 03</div>
               <h2 class="stage-name" id="stage03-name">AI Blue<br>Team</h2>
               <div class="stage-punch"><span class="stage-punch__typed" id="stage03-punch"></span></div>
-              <div class="stage-badges" id="stage03-badges">
-                <span class="stage-badge">Autonomous</span>
-                <span class="stage-badge">SIEM</span>
-                <span class="stage-badge">Sigma Rules</span>
-                <span class="stage-badge">Real-time</span>
+              <div class="stage-tabs" data-stage-tabs="blue">
+                <button class="stage-tab active" data-tab="blue-xdr">XDR</button>
+                <button class="stage-tab" data-tab="blue-soar">SOAR</button>
+                <button class="stage-tab" data-tab="blue-dect">DECT</button>
+              </div>
+              <!-- XDR Panel -->
+              <div class="stage-feature-panel active" data-panel="blue-xdr">
+                <div class="feature-title">Extended Detection &amp; Response</div>
+                <div class="feature-subtitle">Cross-layer threat correlation and autonomous hunting</div>
+                <ul class="feature-list">
+                  <li>Alert sources: endpoint, network, cloud, identity, email, SaaS, deception, NHI</li>
+                  <li>Entity risk scoring (UEBA): 0-100 behavioral scores with baseline deviation</li>
+                  <li>Claude AI threat hunting with natural language queries &amp; 72-hour lookback</li>
+                  <li>Kill chain analysis with sequential attack step tracking &amp; evidence linking</li>
+                  <li>Response actions: isolate, disable, block, quarantine, revoke, rollback</li>
+                  <li>Real-time streaming via SSE/WebSocket with deception integration</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">UEBA</span><span class="feature-badge">MITRE</span><span class="feature-badge">SSE</span><span class="feature-badge">AI</span>
+                </div>
+              </div>
+              <!-- SOAR Panel -->
+              <div class="stage-feature-panel" data-panel="blue-soar">
+                <div class="feature-title">Security Orchestration &amp; Response</div>
+                <div class="feature-subtitle">Automated alert triage and incident response playbooks</div>
+                <ul class="feature-list">
+                  <li>OCSF-aligned alert normalization with fingerprint deduplication</li>
+                  <li>Claude AI auto-triage: entity criticality, false positive likelihood, auto-execute</li>
+                  <li>Case management: P1-P4 priority, SLA tracking, audit trail</li>
+                  <li>DAG-based playbook system with condition-action logic &amp; human approval gates</li>
+                  <li>Evidence management with SHA-256 chain-of-custody hashing</li>
+                  <li>Metrics: MTTR, automation rate, false positive rate, playbook stats</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">OCSF</span><span class="feature-badge">SLA</span><span class="feature-badge">DAG</span><span class="feature-badge">SHA-256</span>
+                </div>
+              </div>
+              <!-- DECT Panel -->
+              <div class="stage-feature-panel" data-panel="blue-dect">
+                <div class="feature-title">Deception &amp; Engagement Tactics</div>
+                <div class="feature-subtitle">Decoys, traps, and canary tokens to detect attackers early</div>
+                <ul class="feature-list">
+                  <li>Decoy types: fake endpoints, databases, S3 ghost buckets, shadow APIs, containers</li>
+                  <li>Canary tokens: URL, DNS, document, AWS keys, Azure SP, GCP SA, K8s secrets</li>
+                  <li>Honey credentials: fake AD users, SSH keys, OAuth tokens, CI/CD identities</li>
+                  <li>Attacker profiling: sophistication classification, dwell time, lateral movement</li>
+                  <li>MITRE mapping per interaction + SOAR/XDR auto-trigger integration</li>
+                  <li>Deception-as-Code: exportable config, version tracking, IaC templates</li>
+                </ul>
+                <div class="feature-badges">
+                  <span class="feature-badge">HONEYPOT</span><span class="feature-badge">CANARY</span><span class="feature-badge">MITRE</span><span class="feature-badge">IAC</span>
+                </div>
               </div>
               <a href="https://console.hemisx.com" target="_blank" class="stage-cta scan-line-btn">Activate Defense &#x26A1;</a>
-            </div>
-            <div class="stage-preview" id="stage03-preview">
-              <div class="stage-glow stage-glow--green"></div>
-              <div class="blueteam-preview">
-                <div class="radar-container">
-                  <div class="radar-glow" id="radarGlow"></div>
-                  <div class="radar-circle"></div>
-                  <div class="radar-ring"></div>
-                  <div class="radar-ring radar-ring--2"></div>
-                  <div class="radar-ring radar-ring--3"></div>
-                  <div class="radar-blip" id="blip1" style="left:75%;top:30%;"></div>
-                  <div class="radar-check" id="check1" style="left:75%;top:30%;">
-                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                  <div class="radar-blip" id="blip2" style="left:25%;top:65%;"></div>
-                  <div class="radar-check" id="check2" style="left:25%;top:65%;">
-                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                  <div class="radar-blip" id="blip3" style="left:60%;top:70%;"></div>
-                  <div class="radar-check" id="check3" style="left:60%;top:70%;">
-                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                  <div class="radar-blip" id="blip4" style="left:35%;top:25%;"></div>
-                  <div class="radar-check" id="check4" style="left:35%;top:25%;">
-                    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--green)"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-                <div class="blueteam-status" id="btStatus">MONITORING THREATS</div>
-              </div>
             </div>
           </div>
 
@@ -1525,8 +2137,8 @@
             stage.classList.add('is-revealed');
 
             if (!reduceMotion) {
-              if (identity) gsap.fromTo(identity, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { identity.style.willChange = 'auto'; } });
-              if (preview)  gsap.fromTo(preview,  { x: 80, opacity: 0 },  { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { preview.style.willChange = 'auto'; } });
+              if (preview)  gsap.fromTo(preview,  { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { preview.style.willChange = 'auto'; } });
+              if (identity) gsap.fromTo(identity, { x: 80, opacity: 0 },  { x: 0, opacity: 1, duration: 0.7, ease: 'power3.out', onComplete: () => { identity.style.willChange = 'auto'; } });
             }
 
             const num = stage.dataset.stage;
@@ -1642,6 +2254,36 @@
       }
 
       ScrollTrigger.refresh();
+
+      // ── Tab switching logic ─────────────────────────────────────────
+      document.querySelectorAll('.stage-tabs').forEach(tabsContainer => {
+        tabsContainer.addEventListener('click', (e) => {
+          const tab = e.target.closest('.stage-tab');
+          if (!tab) return;
+          const tabId = tab.dataset.tab;
+          const stage = tabsContainer.closest('.product-stage');
+
+          // Switch active tab
+          tabsContainer.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          // Switch feature panel (right side info)
+          const identity = stage.querySelector('.stage-identity');
+          identity.querySelectorAll('.stage-feature-panel').forEach(p => p.classList.remove('active'));
+          const targetPanel = identity.querySelector('[data-panel="' + tabId + '"]');
+          if (targetPanel) targetPanel.classList.add('active');
+
+          // Switch preview panel (left side visual)
+          const preview = stage.querySelector('.stage-preview');
+          preview.querySelectorAll('.preview-panel').forEach(p => p.classList.remove('active'));
+          const targetPreview = preview.querySelector('[data-preview="' + tabId + '"]');
+          if (targetPreview) targetPreview.classList.add('active');
+
+          // Re-animate scanner cards if switching to cloud-iam
+          if (tabId === 'cloud-iam') animateScannerPreview();
+        });
+      });
+
       }); // end waitForBoot
     }); // end document.fonts.ready
   })();
